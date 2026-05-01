@@ -6,12 +6,13 @@ namespace Bites\Foundation\Org\Entities;
 
 use Bites\Foundation\Person\Entities\Staff;
 use Bites\Support\Shared\Entities\Attribute;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+#[Fillable([
     'organization_id',
     'name',
     'owner_staff_id',

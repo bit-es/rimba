@@ -6,13 +6,14 @@ namespace Bites\Foundation\Job\Entities;
 
 use Bites\Foundation\Org\Entities\OrgUnit;
 use Bites\Support\Shared\Entities\Attribute;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+#[Fillable([
     'org_unit_id',
     'effective_from',
     'effective_to',

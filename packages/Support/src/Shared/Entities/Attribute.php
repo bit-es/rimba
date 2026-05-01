@@ -7,10 +7,11 @@ namespace Bites\Support\Shared\Entities;
 use Bites\Foundation\Job\Entities\JobPosition;
 use Bites\Foundation\Org\Entities\Organization;
 use Bites\Foundation\Person\Entities\Staff;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+#[Fillable([
     'code',        // e.g. plant, grade, skill, cost_center
     'value',       // string / json
     'value_type',  // string|number|boolean|json

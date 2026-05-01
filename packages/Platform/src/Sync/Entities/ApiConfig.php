@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Bites\Platform\Sync\Entities;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+#[Fillable([
     'name',
     'source_type',
     'source_config',
@@ -20,6 +21,7 @@ class ApiConfig extends Model
     {
         return $this->hasMany(ApiData::class);
     }
+
     protected function casts(): array
     {
         return [

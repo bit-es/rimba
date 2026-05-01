@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Bites\Foundation\Access\Services;
@@ -19,23 +20,23 @@ final class AbacRoleDeriver
         /* =====================================================
          | STAFF SELF
          |===================================================== */
-        $roles[] = "s.view.self";
+        $roles[] = 's.view.self';
 
         /* =====================================================
          | EMPLOYEE ROLES
          |===================================================== */
         if (in_array($staff->staff_type, ['FTE', 'FTC'], true)) {
-            $roles[] = "e.access.hr";
+            $roles[] = 'e.access.hr';
         }
 
         /* =====================================================
          | ORG TEAMS
          |===================================================== */
         foreach ($staff->teams as $team) {
-            $roles[] = 't.member.' . $team->id;
+            $roles[] = 't.member.'.$team->id;
 
             if ($team->owner_staff_id === $staff->id) {
-                $roles[] = 't.lead.' . $team->id;
+                $roles[] = 't.lead.'.$team->id;
             }
         }
 
@@ -58,14 +59,14 @@ final class AbacRoleDeriver
              | ORG UNIT OWNERSHIP
              |--------------------------------------------- */
             if ($unit->owner_job_position_id === $position->id) {
-                $roles[] = 'd.manage.' . $unit->id;
+                $roles[] = 'd.manage.'.$unit->id;
             }
 
             /* ---------------------------------------------
              | POSITION ROLES
              |--------------------------------------------- */
             foreach ($position->roles as $role) {
-                $roles[] = 'p.execute.' . $role->code;
+                $roles[] = 'p.execute.'.$role->code;
             }
 
             /* ---------------------------------------------
@@ -73,7 +74,7 @@ final class AbacRoleDeriver
              |--------------------------------------------- */
             foreach ($position->attributes as $attr) {
                 if ($attr->code === 'approval_scope') {
-                    $roles[] = 'p.approve.' . $attr->value;
+                    $roles[] = 'p.approve.'.$attr->value;
                 }
             }
         }

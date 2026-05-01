@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Bites\Foundation\Person\Entities;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[\Illuminate\Database\Eloquent\Attributes\Fillable(['staff_id', 'employee_no'])]
+#[Fillable(['staff_id', 'employee_no'])]
 class Employee extends Model
 {
     public function staff(): BelongsTo

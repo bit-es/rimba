@@ -6,11 +6,7 @@ namespace Bites\Platform\Sync\Jobs;
 
 use Bites\Platform\Sync\Entities\ApiData;
 use Bites\Platform\Sync\Services\ProcessingService;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 
 class ProcessApiDataJob implements ShouldQueue
 {

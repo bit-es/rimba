@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Bites\Platform\Sync\Entities;
 
 use Bites\Platform\Sync\Observers\ApiDataObserver;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Model;
 
 #[ObservedBy([ApiDataObserver::class])]
-#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+#[Fillable([
     'api_config_id',
     'payload',
     'fingerprint',
@@ -40,6 +41,7 @@ class ApiData extends Model
             'error' => $message,
         ]);
     }
+
     protected function casts(): array
     {
         return [
