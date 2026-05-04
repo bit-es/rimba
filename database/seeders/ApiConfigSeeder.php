@@ -6,7 +6,7 @@
 
 namespace Database\Seeders;
 
-use Bites\Platform\Sync\Entities\ApiConfig;
+use Bites\Platform\Sync\Models\ApiConfig;
 use Illuminate\Database\Seeder;
 
 class ApiConfigSeeder extends Seeder
@@ -107,30 +107,31 @@ class ApiConfigSeeder extends Seeder
          * ------------------------------------------------
          */
         ApiConfig::updateOrCreate(
-            ['name' => 'External Employees Database'],
+            ['name' => 'External Employees'],
             [
                 'source_type' => 'database',
+
                 'source_config' => [
                     'connection' => 'external_hr',
                     'query' => '
-SELECT
-  (
-    SELECT * FROM HrmDepartment ORDER BY uuid
-    FOR JSON PATH
-  ) AS departments,
-  (
-    SELECT * FROM HrmLocations ORDER BY uuid
-    FOR JSON PATH
-  ) AS locations,
-  (
-    SELECT * FROM HrmJobTitles ORDER BY uuid
-    FOR JSON PATH
-  ) AS job_titles
-FOR JSON PATH, WITHOUT_ARRAY_WRAPPER;
-                    ',
+            SELECT
+                r.*,
+                d.uuid AS department_uuid,
+                j.uuid AS job_title_uuid,
+                l.uuid AS location_uuid,
+                m.uuid AS manager_uuid,
+                c.*
+            FROM HrmResource r
+            LEFT JOIN HrmDepartment d ON r.departmentid = d.id
+            LEFT JOIN HrmJobTitles j ON r.jobtitle = j.id
+            LEFT JOIN HrmLocations l ON r.locationid = l.id
+            LEFT JOIN HrmResource m ON r.managerid = m.id
+            LEFT JOIN cus_fielddata c ON r.id = c.id
+            WHERE r.workcode IS NOT NULL
+            ORDER BY r.uuid
+            ',
                 ],
-
-                // DB results already return rows
+                // DB returns rows directly
                 'data_path' => null,
 
                 'mapping' => [
@@ -144,6 +145,108 @@ FOR JSON PATH, WITHOUT_ARRAY_WRAPPER;
                             ['from' => 'emp_id', 'to' => 'external_id'],
                             ['from' => 'full_name', 'to' => 'name'],
                             ['from' => 'department_code', 'to' => 'department_code'],
+                        ],
+                    ],
+                ],
+
+                'active' => true,
+            ]
+        );
+        ApiConfig::updateOrCreate(
+            ['name' => 'External Departments'],
+            [
+                'source_type' => 'database',
+
+                'source_config' => [
+                    'connection' => 'external_hr',
+                    'query' => '
+                SELECT *
+                FROM HrmDepartment
+                ORDER BY uuid
+            ',
+                ],
+
+                'data_path' => null,
+
+                'mapping' => [
+                    [
+                        'table' => 'departments',
+                        'path' => '',
+                        'many' => true,
+                        'unique_by' => 'external_id',
+
+                        'fields' => [
+                            ['from' => 'uuid', 'to' => 'external_id'],
+                            ['from' => 'code', 'to' => 'code'],
+                            ['from' => 'name', 'to' => 'name'],
+                        ],
+                    ],
+                ],
+
+                'active' => true,
+            ]
+        );
+        ApiConfig::updateOrCreate(
+            ['name' => 'External Locations'],
+            [
+                'source_type' => 'database',
+
+                'source_config' => [
+                    'connection' => 'external_hr',
+                    'query' => '
+                SELECT *
+                FROM HrmLocations
+                ORDER BY uuid
+            ',
+                ],
+
+                'data_path' => null,
+
+                'mapping' => [
+                    [
+                        'table' => 'locations',
+                        'path' => '',
+                        'many' => true,
+                        'unique_by' => 'external_id',
+
+                        'fields' => [
+                            ['from' => 'uuid', 'to' => 'external_id'],
+                            ['from' => 'name', 'to' => 'name'],
+                            ['from' => 'region', 'to' => 'region'],
+                        ],
+                    ],
+                ],
+
+                'active' => true,
+            ]
+        );
+        ApiConfig::updateOrCreate(
+            ['name' => 'External Job Titles'],
+            [
+                'source_type' => 'database',
+
+                'source_config' => [
+                    'connection' => 'external_hr',
+                    'query' => '
+                SELECT *
+                FROM HrmJobTitles
+                ORDER BY uuid
+            ',
+                ],
+
+                'data_path' => null,
+
+                'mapping' => [
+                    [
+                        'table' => 'job_titles',
+                        'path' => '',
+                        'many' => true,
+                        'unique_by' => 'external_id',
+
+                        'fields' => [
+                            ['from' => 'uuid', 'to' => 'external_id'],
+                            ['from' => 'title', 'to' => 'title'],
+                            ['from' => 'grade', 'to' => 'grade'],
                         ],
                     ],
                 ],

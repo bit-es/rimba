@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('source_type');
             $table->json('source_config');
             $table->string('data_path')->nullable();
+            $table->json('depends_on')->nullable();
             $table->json('mapping');
             $table->boolean('active')->default(true)->index();
             $table->timestamps();
@@ -57,7 +58,6 @@ return new class extends Migration
             $table->text('error')->nullable();
             $table->timestamps();
         });
-
     }
 
     public function down(): void

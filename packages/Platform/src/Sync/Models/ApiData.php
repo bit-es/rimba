@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bites\Platform\Sync\Entities;
+namespace Bites\Platform\Sync\Models;
 
 use Bites\Platform\Sync\Observers\ApiDataObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;

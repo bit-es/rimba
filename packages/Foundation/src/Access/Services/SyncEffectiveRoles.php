@@ -26,7 +26,7 @@ class SyncEffectiveRoles
             }
         }
 
-        dd($roles);
+        // dd($roles);
         $user->syncRoles($roles->unique()->values());
     }
 }
