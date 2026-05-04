@@ -6,7 +6,7 @@
 
 namespace Database\Seeders;
 
-use Bites\Platform\Sync\Models\ApiConfig;
+use Bites\Platform\Sync\Entities\ApiConfig;
 use Illuminate\Database\Seeder;
 
 class ApiConfigSeeder extends Seeder
@@ -241,12 +241,17 @@ class ApiConfigSeeder extends Seeder
                         'table' => 'job_titles',
                         'path' => '',
                         'many' => true,
-                        'unique_by' => 'external_id',
+                        'unique_by' => 'uuid',
 
                         'fields' => [
-                            ['from' => 'uuid', 'to' => 'external_id'],
-                            ['from' => 'title', 'to' => 'title'],
-                            ['from' => 'grade', 'to' => 'grade'],
+                            ['from' => 'uuid', 'to' => 'uuid'],
+                            ['from' => 'jobtitlename', 'to' => 'title', 'regex' => '/^.*-/'],
+                            ['from' => 'jobtitlename', 'to' => 'jobgrade', 'regex' => '/^[^-]+-(.*)-[^-]+$/'],
+                            ['from' => 'jobtitlemark', 'to' => 'description'],
+                        ],
+                        'skip_if' => [
+                            'field' => 'title',
+                            'min_length' => 3,
                         ],
                     ],
                 ],

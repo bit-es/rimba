@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bites\Platform\Utility;
 
-use Bites\Platform\Sync\Models\ApiConfig;
+use Bites\Platform\Sync\Entities\ApiConfig;
 use Bites\Platform\Sync\Services\FetchService;
 use Illuminate\Console\Command;
 

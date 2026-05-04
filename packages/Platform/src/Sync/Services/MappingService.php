@@ -4,20 +4,21 @@ declare(strict_types=1);
 
 namespace Bites\Platform\Sync\Services;
 
-use Bites\Platform\Sync\Models\ApiData;
+use Bites\Platform\Sync\Entities\ApiData;
 
 class MappingService
 {
     public function run(ApiData $data): void
     {
-        foreach ($data->config->mapping as $entity) {
+        foreach ($data->api_config->mapping as $entity) {
             $this->processEntity($entity, $data->payload);
         }
     }
 
     protected function processEntity(array $entity, array $payload, $parent = null)
     {
-        $items = data_get($payload, $entity['path']);
+        $path = $entity['path'] ?? '';
+        $items = $path === '' ? $payload : data_get($payload, $path);
 
         if (! $items) {
             return;
@@ -33,11 +34,25 @@ class MappingService
             foreach ($entity['fields'] as $field) {
                 $value = data_get($item, $field['from']);
 
-                if (isset($field['regex'])) {
-                    $value = preg_replace($field['regex'], '', $value);
+                if (isset($field['regex']) && is_string($value)) {
+                    $replaced = preg_replace($field['regex'], '$1', $value);
+                    $value = $replaced ?? $value;
                 }
 
                 $row[$field['to']] = $value;
+            }
+
+            // ✅ Skip invalid rows
+            if (isset($entity['skip_if'])) {
+                $rule = $entity['skip_if'];
+
+                if (
+                    isset($rule['field'], $rule['min_length']) &&
+                    isset($row[$rule['field']]) &&
+                    mb_strlen(trim((string) $row[$rule['field']])) < $rule['min_length']
+                ) {
+                    continue;
+                }
             }
 
             if ($parent && isset($entity['foreign_key'])) {

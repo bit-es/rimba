@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Bites\Platform\Sync\Jobs;
 
-use Bites\Platform\Sync\Models\ApiData;
+use Bites\Platform\Sync\Entities\ApiData;
 use Bites\Platform\Sync\Services\ProcessingService;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
 
 class ProcessApiDataJob implements ShouldQueue
 {
-    use \Illuminate\Foundation\Queue\Queueable;
+    use Queueable;
 
     public ApiData $data;
 

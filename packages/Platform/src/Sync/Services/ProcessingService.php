@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bites\Platform\Sync\Services;
 
-use Bites\Platform\Sync\Models\ApiData;
+use Bites\Platform\Sync\Entities\ApiData;
 
 class ProcessingService
 {

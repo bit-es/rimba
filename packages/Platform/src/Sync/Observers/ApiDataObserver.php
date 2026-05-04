@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Bites\Platform\Sync\Observers;
 
-use Bites\Platform\Sync\Models\ApiData;
+use Bites\Platform\Sync\Entities\ApiData;
 use Bites\Platform\Sync\Jobs\ProcessApiDataJob;
 use Bites\Platform\Sync\Services\ProcessingService;
 

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'sync' => ['queue' => true],
+    'sync' => ['queue' => false],
     'ui' => [
         'packages' => [
             'platform\src\Auth' => 'Bites\Platform\Auth',

@@ -6,8 +6,8 @@ namespace Bites\Platform\Sync\Services;
 
 use Bites\Platform\Sync\Actions\DatabaseDataFetcher;
 use Bites\Platform\Sync\Actions\RestDataFetcher;
-use Bites\Platform\Sync\Models\ApiConfig;
-use Bites\Platform\Sync\Models\ApiData;
+use Bites\Platform\Sync\Entities\ApiConfig;
+use Bites\Platform\Sync\Entities\ApiData;
 use Bites\Platform\Utility\FingerPrint;
 
 class FetchService
@@ -24,15 +24,15 @@ class FetchService
         $items = data_get($data, $config->data_path ?? 'data', $data);
 
         // foreach ($items as $item) {
-            ApiData::firstOrCreate(
-                [
-                    'api_config_id' => $config->id,
-                    'fingerprint' => FingerPrint::make((array) $items),
-                ],
-                [
-                    'payload' => (array) $items,
-                ]
-            );
+        ApiData::firstOrCreate(
+            [
+                'api_config_id' => $config->id,
+                'fingerprint' => FingerPrint::make((array) $items),
+            ],
+            [
+                'payload' => (array) $items,
+            ]
+        );
         // }
     }
 }

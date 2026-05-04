@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bites\Platform\Sync\Models;
+namespace Bites\Platform\Sync\Entities;
 
 use Bites\Platform\Sync\Observers\ApiDataObserver;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
 ])]
 class ApiData extends Model
 {
-    public function config()
+    public function api_config()
     {
         return $this->belongsTo(ApiConfig::class);
     }
