@@ -1,6 +1,6 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "bites/starter",
+    "name": "bit-es/rimba",
     "type": "project",
     "description": "The skeleton application for the Laravel framework 13, Filament 5 Spatie Laravel Permission 7 and Laravel Modules.",
     "keywords": [
