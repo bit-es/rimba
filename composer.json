@@ -66,6 +66,13 @@
         }
     },
     "scripts": {
+        "sync:code": [
+            "git fetch origin",
+            "git reset --hard origin/main",
+            "chown -R nginx:rootnginx .",
+            "find . -type d -exec chmod 755 {} \\;",
+            "find . -type f -exec chmod 644 {} \\;"
+        ],
         "setup": [
             "composer install",
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
