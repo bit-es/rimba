@@ -42,10 +42,10 @@ Defines the core structure of the organization and how processes flow.
   Models are Organization, OrgUnit, OrgTeam. These models carry organizational attributes, not people. All would have polymorphic many to many to Attributes model storing the additional organization attributes.
 
 - **Person**  
-    Models are User, Staff, Employee. These models carry person attributes, not work definition. All would have polymorphic many to many to Attributes model storing the additional person attributes.
+  Models are User, Staff, Employee. These models carry person attributes, not work definition. All would have polymorphic many to many to Attributes model storing the additional person attributes.
 
 - **Job**  
-    Models are JobPosition, JobRole, JobContract. These models carry job / work attributes, time‑bound and contract‑aware. All would have polymorphic many to many to Attributes model storing the additional job attributes.
+  Models are JobPosition, JobRole, JobContract. These models carry job / work attributes, time‑bound and contract‑aware. All would have polymorphic many to many to Attributes model storing the additional job attributes.
 
 - **Workflow**  
   Generic workflow and lifecycle engine for approvals, state transitions, and escalations.
