@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('staff', function (Blueprint $table): void {
             $table->id();
             $table->string('full_name');
-            $table->string('staff_type'); // FTE, FTC, TPC, INTERN
-            $table->foreignId('user_id')->constrained('users')->nullable();
+            $table->string('staff_type')->nullable(); // FTE, FTC, TPC, INTERN
+            $table->foreignId('user_id')->nullable()->constrained('users');
             $table->timestamps();
         });
 

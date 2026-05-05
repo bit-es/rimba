@@ -136,18 +136,62 @@ class ApiConfigSeeder extends Seeder
 
                 'mapping' => [
                     [
-                        'table' => 'employees',
+                        'table' => 'staff',
+                        'model' => \Bites\Foundation\Job\Entities\JobContract::class,
                         'path' => '',
                         'many' => true,
-                        'unique_by' => 'external_id',
-
+                        'unique_by' => 'uuid',
+                        'add_extra' => true,
                         'fields' => [
-                            ['from' => 'emp_id', 'to' => 'external_id'],
-                            ['from' => 'full_name', 'to' => 'name'],
-                            ['from' => 'department_code', 'to' => 'department_code'],
+                            ['from' => 'uuid', 'to' => 'uuid'],
+                            ['from' => 'workstartdate', 'to' => 'start_date'],
+                            ['from' => 'workenddate', 'to' => 'end_date'],
+                            ['from' => 'workcode', 'to' => 'employee_no'],
+                            ['value' => 'FTE', 'to' => 'staff_type'],
+                            ['from' => 'department_uuid', 'to' => 'department_uuid'],
+                            ['from' => 'job_title_uuid', 'to' => 'job_title_uuid'],
+                            ['from' => 'location_uuid', 'to' => 'location_uuid'],
+                            ['from' => 'manager_uuid', 'to' => 'manager_uuid'],
                         ],
+                        'children' => [
+
+                            // ==========================================================
+                            // STAFF
+                            // ==========================================================
+                            [
+                                'model' => \Bites\Foundation\Person\Entities\Staff::class,
+                                'unique_by' => 'full_name',
+
+                                'fields' => [
+                                    ['from' => 'lastname',   'to' => 'full_name'],
+                                ],
+
+                                // 👈 inject Staff ID into JobContract.staff_id
+                                'foreign_key' => 'staff_id',
+                            ],
+
+                            // ==========================================================
+                            // JOB POSITION
+                            // ==========================================================
+                            [
+                                'model' => \Bites\Foundation\Job\Entities\JobPosition::class,
+
+                                // Stable external identity for a position/title
+                                'unique_by' => 'title',
+
+                                'fields' => [
+                                    ['from' => 'job_title_uuid', 'to' => 'title'],
+                                ],
+
+                                // 👈 inject JobPosition ID into JobContract.job_position_id
+                                'foreign_key' => 'job_position_id',
+                            ],
+                        ],
+
                     ],
+
                 ],
+
 
                 'active' => true,
             ]
@@ -170,15 +214,15 @@ class ApiConfigSeeder extends Seeder
 
                 'mapping' => [
                     [
-                        'table' => 'departments',
+                        'table' => 'org_units',
+                        'model' => \Bites\Foundation\Org\Entities\OrgUnit::class,
                         'path' => '',
                         'many' => true,
-                        'unique_by' => 'external_id',
+                        'unique_by' => 'uuid',
 
                         'fields' => [
-                            ['from' => 'uuid', 'to' => 'external_id'],
-                            ['from' => 'code', 'to' => 'code'],
-                            ['from' => 'name', 'to' => 'name'],
+                            ['from' => 'uuid', 'to' => 'uuid'],
+                            ['from' => 'departmentname', 'to' => 'name'],
                         ],
                     ],
                 ],
@@ -205,14 +249,15 @@ class ApiConfigSeeder extends Seeder
                 'mapping' => [
                     [
                         'table' => 'locations',
+                        'model' => \Bites\Foundation\Org\Entities\Organization::class,
                         'path' => '',
                         'many' => true,
-                        'unique_by' => 'external_id',
+                        'unique_by' => 'uuid',
 
                         'fields' => [
-                            ['from' => 'uuid', 'to' => 'external_id'],
-                            ['from' => 'name', 'to' => 'name'],
-                            ['from' => 'region', 'to' => 'region'],
+                            ['from' => 'uuid', 'to' => 'uuid'],
+                            ['from' => 'locationname', 'to' => 'name'],
+                            ['from' => 'locationdesc', 'to' => 'description'],
                         ],
                     ],
                 ],
@@ -239,6 +284,7 @@ class ApiConfigSeeder extends Seeder
                 'mapping' => [
                     [
                         'table' => 'job_titles',
+                        'model' => \Bites\Support\Shared\Entities\JobTitle::class,
                         'path' => '',
                         'many' => true,
                         'unique_by' => 'uuid',

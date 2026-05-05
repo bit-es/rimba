@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Bites\Foundation\Job\Entities;
 
 use Bites\Foundation\Org\Entities\OrgUnit;
-use Bites\Support\Shared\Entities\Attribute;
+use Bites\Support\Shared\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,11 +15,14 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 #[Fillable([
     'org_unit_id',
+    'title',
     'effective_from',
     'effective_to',
 ])]
 class JobPosition extends Model
 {
+    use HasAttributes;
+    
     public function unit(): BelongsTo
     {
         return $this->belongsTo(OrgUnit::class, 'org_unit_id');
@@ -33,10 +36,5 @@ class JobPosition extends Model
     public function contracts(): HasMany
     {
         return $this->hasMany(JobContract::class);
-    }
-
-    public function attributes(): MorphToMany
-    {
-        return $this->morphToMany(Attribute::class, 'attributable');
     }
 }

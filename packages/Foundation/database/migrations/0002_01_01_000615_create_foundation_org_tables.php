@@ -19,6 +19,8 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table): void {
             $table->id();
             $table->string('name');
+            $table->string('uuid')->unique(); // Unique identifier for cross-system mapping
+            $table->string('description')->nullable();
             $table->string('type')->nullable(); // company, plant, gov
             $table->date('effective_from')->nullable();
             $table->date('effective_to')->nullable();
@@ -27,9 +29,11 @@ return new class extends Migration
 
         Schema::create('org_units', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('organization_id')->constrained('organizations');
+            $table->string('uuid')->unique(); // Unique identifier for cross-system mapping
+            $table->foreignId('organization_id')->nullable()->constrained('organizations');
+            $table->string('code')->nullable();
             $table->string('name');
-            $table->foreignId('owner_job_position_id')->constrained('job_positions')->nullable();
+            $table->foreignId('owner_job_position_id')->nullable()->constrained('job_positions');
             $table->timestamps();
         });
 
@@ -37,7 +41,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('organization_id')->constrained('organizations');
             $table->string('name');
-            $table->foreignId('owner_staff_id')->constrained('staff')->nullable();
+            $table->foreignId('owner_staff_id')->nullable()->constrained('staff');
             $table->timestamps();
         });
 
@@ -49,7 +53,6 @@ return new class extends Migration
 
             $table->unique(['org_team_id', 'staff_id']);
         });
-
     }
 
     public function down(): void

@@ -31,6 +31,7 @@ class ApiData extends Model
             'status' => 'processed',
             'processed_at' => now(),
             'error' => null,
+            'payload' => 'committed',
         ]);
     }
 

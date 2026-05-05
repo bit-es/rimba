@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Bites\Foundation\Org\Entities;
 
 use Bites\Foundation\Person\Entities\Staff;
-use Bites\Support\Shared\Entities\Attribute;
+use Bites\Support\Shared\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 ])]
 class OrgTeam extends Model
 {
+    use HasAttributes;
+    
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
@@ -32,10 +34,5 @@ class OrgTeam extends Model
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(Staff::class, 'org_team_members')->withTimestamps();
-    }
-
-    public function attributes(): MorphToMany
-    {
-        return $this->morphToMany(Attribute::class, 'attributable');
     }
 }

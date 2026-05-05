@@ -31,6 +31,7 @@ class FetchService
             ],
             [
                 'payload' => (array) $items,
+                'status' => 'pending',
             ]
         );
         // }

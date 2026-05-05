@@ -15,12 +15,12 @@ class MappingService
         }
     }
 
-    protected function processEntity(array $entity, array $payload, $parent = null)
+    protected function processEntity(array $entity, array $payload, $parent = null): void
     {
-        $path = $entity['path'] ?? '';
+        $path  = $entity['path'] ?? '';
         $items = $path === '' ? $payload : data_get($payload, $path);
 
-        if (! $items) {
+        if (! is_array($items)) {
             return;
         }
 
@@ -29,20 +29,37 @@ class MappingService
         }
 
         foreach ($items as $item) {
-            $row = [];
+            if (! is_array($item)) {
+                continue;
+            }
+
+            $row        = [];
+            $usedKeys   = [];
 
             foreach ($entity['fields'] as $field) {
-                $value = data_get($item, $field['from']);
 
+                // Determine value
+                if (array_key_exists('value', $field)) {
+                    // ✅ Static value
+                    $value = $field['value'];
+                } else {
+                    // ✅ Value from payload
+                    $value = data_get($item, $field['from'] ?? null);
+
+                    // Track used payload keys ONLY
+                    if (isset($field['from']) && is_string($field['from'])) {
+                        $usedKeys[] = $field['from'];
+                    }
+                }
+
+                // Optional regex
                 if (isset($field['regex']) && is_string($value)) {
-                    $replaced = preg_replace($field['regex'], '$1', $value);
-                    $value = $replaced ?? $value;
+                    $value = preg_replace($field['regex'], '$1', $value) ?? $value;
                 }
 
                 $row[$field['to']] = $value;
             }
 
-            // ✅ Skip invalid rows
             if (isset($entity['skip_if'])) {
                 $rule = $entity['skip_if'];
 
@@ -59,8 +76,17 @@ class MappingService
                 $row[$entity['foreign_key']] = $parent->id;
             }
 
-            $model = app(TableSyncService::class)
-                ->sync($entity['table'], $entity['unique_by'] ?? null, $row);
+            $remaining = array_diff_key(
+                $item,
+                array_flip($usedKeys)
+            );
+
+            $model = app(ModelSyncService::class)->sync(
+                modelClass: $entity['model'],
+                uniqueBy: $entity['unique_by'] ?? null,
+                addExtra: $entity['add_extra'] ?? false,
+                row: $row
+            );
 
             foreach ($entity['children'] ?? [] as $child) {
                 $this->processEntity($child, $item, $model);

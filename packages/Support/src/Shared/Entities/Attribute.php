@@ -18,11 +18,6 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 ])]
 class Attribute extends Model
 {
-    public function organizations(): MorphToMany
-    {
-        return $this->morphedByMany(Organization::class, 'attributable');
-    }
-
     public function people(): MorphToMany
     {
         return $this->morphedByMany(Staff::class, 'attributable');

@@ -20,7 +20,8 @@ return new class extends Migration
 
         Schema::create('job_positions', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('org_unit_id')->constrained('org_units');
+            $table->string('title'); // Job title
+            $table->foreignId('org_unit_id')->nullable()->constrained('org_units');
             $table->date('effective_from')->nullable();
             $table->date('effective_to')->nullable();
             $table->timestamps();
@@ -40,17 +41,24 @@ return new class extends Migration
 
         Schema::create('job_contracts', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('job_position_id')->constrained('job_positions');
-            $table->foreignId('staff_id')->constrained('staff');
+            $table->string('uuid')->unique(); // Unique identifier for cross-system mapping
+            $table->foreignId('job_position_id')->nullable()->constrained('job_positions');
+            $table->foreignId('staff_id')->nullable()->constrained('staff');
 
-            $table->string('staff_type');      // FTE, FTC, TPC, INTERN
-            $table->string('legal_employer');  // company or agency
-            $table->string('headcount_type');  // internal / external
-            $table->string('agreement_type');  // COS, MSA, Internship
-
+            // Contract Basics
+            $table->enum('contract_type', ['FTE', 'FTC', 'TPC', 'INTERN'])->nullable(); // Full-Time Employee, Fixed-Term Contract, Third-Party Contractor, Intern
             $table->date('start_date');
             $table->date('end_date')->nullable();
 
+            $table->foreignId('compensation_id')->nullable()->constrained('job_compensations'); // Compensation
+            
+            $table->timestamps();
+        });
+         Schema::create('job_compensations', function (Blueprint $table): void {
+            $table->id();
+            $table->decimal('base_salary', 12, 2)->nullable();
+            $table->string('currency', 3)->default('MYR');
+            $table->enum('payment_frequency', ['monthly', 'bi_weekly', 'weekly']);
             $table->timestamps();
         });
 
