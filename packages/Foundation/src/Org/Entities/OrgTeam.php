@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 #[Fillable([
     'organization_id',
@@ -20,7 +19,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class OrgTeam extends Model
 {
     use HasAttributes;
-    
+
     public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);

@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 #[Fillable([
     'org_unit_id',
@@ -22,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class JobPosition extends Model
 {
     use HasAttributes;
-    
+
     public function unit(): BelongsTo
     {
         return $this->belongsTo(OrgUnit::class, 'org_unit_id');

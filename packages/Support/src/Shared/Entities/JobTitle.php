@@ -6,18 +6,20 @@ namespace Bites\Support\Shared\Entities;
 
 use Illuminate\Database\Eloquent\Model;
 
+#[\Illuminate\Database\Eloquent\Attributes\Fillable([
+    'title',
+    'jobgrade',
+    'uuid',
+    'description',
+    'attributes',
+    'masco_code',
+])]
 class JobTitle extends Model
 {
-    protected $fillable = [
-        'title',
-        'jobgrade',
-        'uuid',
-        'description',
-        'attributes',
-        'masco_code',
-    ];
-
-    protected $casts = [
-        'attributes' => 'array',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'attributes' => 'array',
+        ];
+    }
 }

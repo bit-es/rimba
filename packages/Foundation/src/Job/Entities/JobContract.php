@@ -9,12 +9,11 @@ use Bites\Support\Shared\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 #[Fillable([
     'job_position_id',
     'staff_id',
-    'uuid',       
+    'uuid',
     'staff_type',
     'legal_employer',
     'headcount_type',   // internal / external
@@ -25,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class JobContract extends Model
 {
     use HasAttributes;
-    
+
     public function position(): BelongsTo
     {
         return $this->belongsTo(JobPosition::class);

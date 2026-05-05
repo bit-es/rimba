@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Bites\Support\Shared\Entities;
 
 use Bites\Foundation\Job\Entities\JobPosition;
-use Bites\Foundation\Org\Entities\Organization;
 use Bites\Foundation\Person\Entities\Staff;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;

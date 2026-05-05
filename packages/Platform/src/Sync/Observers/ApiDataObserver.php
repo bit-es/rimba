@@ -28,6 +28,7 @@ class ApiDataObserver
 
             return;
         }
+
         // ✅ Sync processing fallback
         app(ProcessingService::class)->process($data);
     }

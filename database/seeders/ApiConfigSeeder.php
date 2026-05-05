@@ -6,7 +6,13 @@
 
 namespace Database\Seeders;
 
+use Bites\Foundation\Job\Entities\JobContract;
+use Bites\Foundation\Job\Entities\JobPosition;
+use Bites\Foundation\Org\Entities\Organization;
+use Bites\Foundation\Org\Entities\OrgUnit;
+use Bites\Foundation\Person\Entities\Staff;
 use Bites\Platform\Sync\Entities\ApiConfig;
+use Bites\Support\Shared\Entities\JobTitle;
 use Illuminate\Database\Seeder;
 
 class ApiConfigSeeder extends Seeder
@@ -137,7 +143,7 @@ class ApiConfigSeeder extends Seeder
                 'mapping' => [
                     [
                         'table' => 'staff',
-                        'model' => \Bites\Foundation\Job\Entities\JobContract::class,
+                        'model' => JobContract::class,
                         'path' => '',
                         'many' => true,
                         'unique_by' => 'uuid',
@@ -159,7 +165,7 @@ class ApiConfigSeeder extends Seeder
                             // STAFF
                             // ==========================================================
                             [
-                                'model' => \Bites\Foundation\Person\Entities\Staff::class,
+                                'model' => Staff::class,
                                 'unique_by' => 'full_name',
 
                                 'fields' => [
@@ -174,7 +180,7 @@ class ApiConfigSeeder extends Seeder
                             // JOB POSITION
                             // ==========================================================
                             [
-                                'model' => \Bites\Foundation\Job\Entities\JobPosition::class,
+                                'model' => JobPosition::class,
 
                                 // Stable external identity for a position/title
                                 'unique_by' => 'title',
@@ -191,7 +197,6 @@ class ApiConfigSeeder extends Seeder
                     ],
 
                 ],
-
 
                 'active' => true,
             ]
@@ -215,7 +220,7 @@ class ApiConfigSeeder extends Seeder
                 'mapping' => [
                     [
                         'table' => 'org_units',
-                        'model' => \Bites\Foundation\Org\Entities\OrgUnit::class,
+                        'model' => OrgUnit::class,
                         'path' => '',
                         'many' => true,
                         'unique_by' => 'uuid',
@@ -249,7 +254,7 @@ class ApiConfigSeeder extends Seeder
                 'mapping' => [
                     [
                         'table' => 'locations',
-                        'model' => \Bites\Foundation\Org\Entities\Organization::class,
+                        'model' => Organization::class,
                         'path' => '',
                         'many' => true,
                         'unique_by' => 'uuid',
@@ -284,7 +289,7 @@ class ApiConfigSeeder extends Seeder
                 'mapping' => [
                     [
                         'table' => 'job_titles',
-                        'model' => \Bites\Support\Shared\Entities\JobTitle::class,
+                        'model' => JobTitle::class,
                         'path' => '',
                         'many' => true,
                         'unique_by' => 'uuid',

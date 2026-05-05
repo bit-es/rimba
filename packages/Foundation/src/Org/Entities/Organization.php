@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-
 #[Connection('sqlite')]
 #[Table('organizations')]
 #[Fillable(['name', 'uuid', 'description', 'type', 'effective_from', 'effective_to'])]

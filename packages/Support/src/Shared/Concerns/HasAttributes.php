@@ -36,30 +36,29 @@ trait HasAttributes
     /**
      * Set (create or update) extra value
      */
-public function setExtra(
-    string $code,
-    mixed $value,
-    ?string $valueType = null
-): Attribute {
-    $valueType ??= $this->detectValueType($value);
-    $serializedValue = $this->serializeValue($value, $valueType);
+    public function setExtra(
+        string $code,
+        mixed $value,
+        ?string $valueType = null
+    ): Attribute {
+        $valueType ??= $this->detectValueType($value);
+        $serializedValue = $this->serializeValue($value, $valueType);
 
-    // Search for both code AND value to decide if we update or create
-    $attribute = Attribute::query()->updateOrCreate(
-        [
-            'code'  => $code,
-            'value' => $serializedValue,
-        ],
-        [
-            'value_type' => $valueType,
-        ]
-    );
+        // Search for both code AND value to decide if we update or create
+        $attribute = Attribute::query()->updateOrCreate(
+            [
+                'code' => $code,
+                'value' => $serializedValue,
+            ],
+            [
+                'value_type' => $valueType,
+            ]
+        );
 
-    $this->extras()->syncWithoutDetaching([$attribute->id]);
+        $this->extras()->syncWithoutDetaching([$attribute->id]);
 
-    return $attribute;
-}
-
+        return $attribute;
+    }
 
     /**
      * Check if extra exists
@@ -87,10 +86,10 @@ public function setExtra(
     protected function castExtraValue(Attribute $attribute): mixed
     {
         return match ($attribute->value_type) {
-            'number'  => +$attribute->value,
+            'number' => +$attribute->value,
             'boolean' => filter_var($attribute->value, FILTER_VALIDATE_BOOLEAN),
-            'json'    => json_decode((string) $attribute->value, true),
-            default   => $attribute->value,
+            'json' => json_decode((string) $attribute->value, true),
+            default => $attribute->value,
         };
     }
 
@@ -100,9 +99,9 @@ public function setExtra(
     protected function serializeValue(mixed $value, string $type): string
     {
         return match ($type) {
-            'json'    => json_encode($value, JSON_UNESCAPED_UNICODE),
+            'json' => json_encode($value, JSON_UNESCAPED_UNICODE),
             'boolean' => $value ? '1' : '0',
-            default   => (string) $value,
+            default => (string) $value,
         };
     }
 
@@ -112,11 +111,11 @@ public function setExtra(
     protected function detectValueType(mixed $value): string
     {
         return match (true) {
-            is_bool($value)  => 'boolean',
+            is_bool($value) => 'boolean',
             is_int($value),
             is_float($value) => 'number',
             is_array($value) => 'json',
-            default          => 'string',
+            default => 'string',
         };
     }
 }

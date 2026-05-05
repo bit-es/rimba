@@ -21,7 +21,7 @@ class ModelSyncService
 
         // Split row
         $fillableRow = array_intersect_key($row, $fillable);
-        $remaining   = array_diff_key($row, $fillable);
+        $remaining = array_diff_key($row, $fillable);
 
         // ✅ Upsert / create
         if ($uniqueBy && isset($fillableRow[$uniqueBy])) {
@@ -34,7 +34,7 @@ class ModelSyncService
         }
 
         // ✅ Extras
-        if ($addExtra && ! empty($remaining) && method_exists($model, 'setExtra')) {
+        if ($addExtra && $remaining !== [] && method_exists($model, 'setExtra')) {
             foreach ($remaining as $key => $value) {
                 if ($value === null || $value === '') {
                     continue;

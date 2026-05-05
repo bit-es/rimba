@@ -51,10 +51,10 @@ return new class extends Migration
             $table->date('end_date')->nullable();
 
             $table->foreignId('compensation_id')->nullable()->constrained('job_compensations'); // Compensation
-            
+
             $table->timestamps();
         });
-         Schema::create('job_compensations', function (Blueprint $table): void {
+        Schema::create('job_compensations', function (Blueprint $table): void {
             $table->id();
             $table->decimal('base_salary', 12, 2)->nullable();
             $table->string('currency', 3)->default('MYR');

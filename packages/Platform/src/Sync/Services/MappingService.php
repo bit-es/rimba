@@ -17,7 +17,7 @@ class MappingService
 
     protected function processEntity(array $entity, array $payload, $parent = null): void
     {
-        $path  = $entity['path'] ?? '';
+        $path = $entity['path'] ?? '';
         $items = $path === '' ? $payload : data_get($payload, $path);
 
         if (! is_array($items)) {
@@ -33,8 +33,8 @@ class MappingService
                 continue;
             }
 
-            $row        = [];
-            $usedKeys   = [];
+            $row = [];
+            $usedKeys = [];
 
             foreach ($entity['fields'] as $field) {
 
