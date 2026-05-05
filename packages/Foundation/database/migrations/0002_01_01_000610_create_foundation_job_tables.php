@@ -78,6 +78,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('org_team_job_roles');
+        Schema::dropIfExists('job_compensations');
         Schema::dropIfExists('job_contracts');
         Schema::dropIfExists('job_position_roles');
         Schema::dropIfExists('job_positions');
