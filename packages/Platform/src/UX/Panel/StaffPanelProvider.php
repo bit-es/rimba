@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bites\Platform\UI\Panel;
+namespace Bites\Platform\UX\Panel;
 
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -27,12 +27,12 @@ class StaffPanelProvider extends PanelProvider
     {
         $panel
             ->default()
-            ->login()
+            ->login(\Bites\Platform\Branding\Pages\Login::class)
             ->id(config('bites.panels.staff.0', 'staff'))
             ->path(config('bites.panels.staff.1', 'staff'))
             ->colors(['primary' => config('bites.panels.staff.2', Color::Blue)])
             ->brandName(config('bites.panels.staff.3', 'ATM Staff Intranet'))
-            ->homeUrl(fn (): string => route(config('bites.panels.staff.4', '/')));
+            ->homeUrl(fn(): string => route(config('bites.panels.staff.4', '/')));
 
         $packages = config('bites.packages', []);
 
@@ -40,15 +40,15 @@ class StaffPanelProvider extends PanelProvider
             $panel
                 ->discoverResources(
                     in: base_path(sprintf('vendor/bit-es/%s/Http/UI/Staff/Resources', $package)),
-                    for: $namespace.'\Http\UI\Staff\Resources',
+                    for: $namespace . '\Http\UI\Staff\Resources',
                 )
                 ->discoverPages(
                     in: base_path(sprintf('vendor/bit-es/%s/Http/UI/Staff/Pages', $package)),
-                    for: $namespace.'\Http\UI\Staff\Pages',
+                    for: $namespace . '\Http\UI\Staff\Pages',
                 )
                 ->discoverWidgets(
                     in: base_path(sprintf('vendor/bit-es/%s/Http/UI/Staff/Widgets', $package)),
-                    for: $namespace.'\Http\UI\Staff\Widgets',
+                    for: $namespace . '\Http\UI\Staff\Widgets',
                 );
         }
 

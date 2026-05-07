@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bites\Platform\UI\Panel;
+namespace Bites\Platform\UX\Panel;
 
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
         // dd(config('bites.queue'));
         $panel
             ->default()
-            ->login()
+            ->login(\Bites\Platform\Branding\Pages\Login::class)
             ->id(config('bites.ui.panels.admin.0', 'admin'))
             ->path(config('bites.ui.panels.admin.1', 'admin'))
             ->colors(['primary' => config('bites.ui.panels.admin.2', Color::Amber)])

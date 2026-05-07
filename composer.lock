@@ -63,9 +63,10 @@
             "dist": {
                 "type": "path",
                 "url": "packages/Platform",
-                "reference": "9b2bfb6dd39205996be7ac8375e194586ebb739a"
+                "reference": "4dacad8861bdbc383d71ccdb52e380fe62fd80a7"
             },
             "require": {
+                "directorytree/ldaprecord-laravel": "^3.4",
                 "php": "^8.3"
             },
             "type": "library",
@@ -73,8 +74,8 @@
                 "laravel": {
                     "providers": [
                         "Bites\\Platform\\PlatformServiceProvider",
-                        "Bites\\Platform\\UI\\Panel\\AdminPanelProvider",
-                        "Bites\\Platform\\UI\\Panel\\StaffPanelProvider"
+                        "Bites\\Platform\\UX\\Panel\\AdminPanelProvider",
+                        "Bites\\Platform\\UX\\Panel\\StaffPanelProvider"
                     ]
                 }
             },
@@ -778,6 +779,149 @@
                 "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.3"
             },
             "time": "2024-07-08T12:26:09+00:00"
+        },
+        {
+            "name": "directorytree/ldaprecord",
+            "version": "v3.8.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DirectoryTree/LdapRecord.git",
+                "reference": "a1cab9f078eb4756fc6fad58caea1e3d11cad0ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord/zipball/a1cab9f078eb4756fc6fad58caea1e3d11cad0ec",
+                "reference": "a1cab9f078eb4756fc6fad58caea1e3d11cad0ec",
+                "shasum": ""
+            },
+            "require": {
+                "ext-iconv": "*",
+                "ext-json": "*",
+                "ext-ldap": "*",
+                "illuminate/collections": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "nesbot/carbon": "*",
+                "php": ">=8.1",
+                "psr/log": "*",
+                "psr/simple-cache": "^1.0|^2.0|^3.0"
+            },
+            "require-dev": {
+                "fakerphp/faker": "^1.21",
+                "laravel/pint": "^1.6",
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^9.0",
+                "spatie/ray": "^1.24"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "LdapRecord\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Steve Bauman",
+                    "email": "steven_bauman@outlook.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A fully-featured LDAP ORM.",
+            "homepage": "https://www.ldaprecord.com",
+            "keywords": [
+                "active directory",
+                "ad",
+                "adLDAP",
+                "adldap2",
+                "directory",
+                "ldap",
+                "ldaprecord",
+                "orm",
+                "windows"
+            ],
+            "support": {
+                "docs": "https://ldaprecord.com",
+                "email": "steven_bauman@outlook.com",
+                "issues": "https://github.com/DirectoryTree/LdapRecord/issues",
+                "source": "https://github.com/DirectoryTree/LdapRecord"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/stevebauman",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-03-19T20:55:30+00:00"
+        },
+        {
+            "name": "directorytree/ldaprecord-laravel",
+            "version": "v3.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DirectoryTree/LdapRecord-Laravel.git",
+                "reference": "86925b558655e1595aabccbb8c530eb747e87ef5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord-Laravel/zipball/86925b558655e1595aabccbb8c530eb747e87ef5",
+                "reference": "86925b558655e1595aabccbb8c530eb747e87ef5",
+                "shasum": ""
+            },
+            "require": {
+                "directorytree/ldaprecord": "^v3.3",
+                "ext-json": "*",
+                "ext-ldap": "*",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+                "php": ">=8.1",
+                "ramsey/uuid": "*"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.9",
+                "laravel/sanctum": "*",
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
+                "phpunit/phpunit": "^8.0|^9.0|^10.0|^11.0",
+                "spatie/ray": "^1.28"
+            },
+            "type": "project",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LdapRecord\\Laravel\\LdapServiceProvider",
+                        "LdapRecord\\Laravel\\LdapAuthServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LdapRecord\\Laravel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "LDAP Authentication & Management for Laravel.",
+            "keywords": [
+                "adldap2",
+                "laravel",
+                "ldap",
+                "ldaprecord"
+            ],
+            "support": {
+                "issues": "https://github.com/DirectoryTree/LdapRecord-Laravel/issues",
+                "source": "https://github.com/DirectoryTree/LdapRecord-Laravel/tree/v3.4.3"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/stevebauman",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-03-19T21:11:17+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -2173,16 +2317,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v13.7.0",
+            "version": "v13.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f13b85b2cce7ef5e8f3bcdf2b6c6364bbdedae0b"
+                "reference": "e7db333a025a1e93ebca7744953069d7719f4bcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f13b85b2cce7ef5e8f3bcdf2b6c6364bbdedae0b",
-                "reference": "f13b85b2cce7ef5e8f3bcdf2b6c6364bbdedae0b",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/e7db333a025a1e93ebca7744953069d7719f4bcf",
+                "reference": "e7db333a025a1e93ebca7744953069d7719f4bcf",
                 "shasum": ""
             },
             "require": {
@@ -2223,8 +2367,8 @@
                 "symfony/http-kernel": "^7.4.0 || ^8.0.0",
                 "symfony/mailer": "^7.4.0 || ^8.0.0",
                 "symfony/mime": "^7.4.0 || ^8.0.0",
-                "symfony/polyfill-php84": "^1.33",
-                "symfony/polyfill-php85": "^1.33",
+                "symfony/polyfill-php84": "^1.36",
+                "symfony/polyfill-php85": "^1.36",
                 "symfony/polyfill-php86": "^1.36",
                 "symfony/process": "^7.4.5 || ^8.0.5",
                 "symfony/routing": "^7.4.0 || ^8.0.0",
@@ -2393,7 +2537,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-04-28T17:18:25+00:00"
+            "time": "2026-05-05T21:01:14+00:00"
         },
         {
             "name": "laravel/prompts",

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bites\Platform\UI\Http\UI\Staff\Pages;
+namespace Bites\Platform\UX\Http\UI\Staff\Pages;
 
 use BackedEnum;
 use Bites\Service\Concerns\HasHelp;

@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "php": "^8.3"
+        "php": "^8.3",
+        "directorytree/ldaprecord-laravel": "^3.4"
     },
     "autoload": {
         "psr-4": {
@@ -22,8 +23,8 @@
         "laravel": {
             "providers": [
                 "Bites\\Platform\\PlatformServiceProvider",
-                "Bites\\Platform\\UI\\Panel\\AdminPanelProvider",
-                "Bites\\Platform\\UI\\Panel\\StaffPanelProvider"
+                "Bites\\Platform\\UX\\Panel\\AdminPanelProvider",
+                "Bites\\Platform\\UX\\Panel\\StaffPanelProvider"
             ]
         }
     },

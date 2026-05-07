@@ -9,7 +9,7 @@ return [
             'platform\src\Auth' => 'Bites\Platform\Auth',
             'platform\src\Branding' => 'Bites\Platform\Branding',
             'platform\src\Sync' => 'Bites\Platform\Sync',
-            'platform\src\UI' => 'Bites\Platform\UI',
+            'platform\src\UX' => 'Bites\Platform\UX',
         ],
         'panels' => [
             // panel_id, path, color, brandName, homeUrl
