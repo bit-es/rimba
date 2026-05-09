@@ -18,7 +18,7 @@
           async init() {
               try {
                   // Replace 'your-file.md' with your actual file path
-                  let response = await fetch('your-file.md');
+                  let response = await fetch('/docs/SharedInfra.md');
                   let text = await response.text();
                   this.content = marked.parse(text);
               } catch (e) {
