@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bites\Platform\Branding\Entities;
+namespace Bites\Foundation\Branding\Entities;
 
 use Illuminate\Database\Eloquent\Attributes\Connection;
 use Illuminate\Database\Eloquent\Attributes\Table;

@@ -7,9 +7,10 @@ return [
     'ui' => [
         'packages' => [
             'platform\src\Auth' => 'Bites\Platform\Auth',
-            'platform\src\Branding' => 'Bites\Platform\Branding',
             'platform\src\Sync' => 'Bites\Platform\Sync',
+            'platform\src\Task' => 'Bites\Platform\Task',
             'platform\src\UX' => 'Bites\Platform\UX',
+            'platform\src\Workflow' => 'Bites\Platform\Workflow',
         ],
         'panels' => [
             // panel_id, path, color, brandName, homeUrl

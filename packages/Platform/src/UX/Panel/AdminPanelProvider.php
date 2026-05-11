@@ -28,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
         // dd(config('bites.queue'));
         $panel
             ->default()
-            ->login(\Bites\Platform\Branding\Pages\Login::class)
+            ->login(\Bites\Foundation\Branding\Pages\Login::class)
             ->id(config('bites.ui.panels.admin.0', 'admin'))
             ->path(config('bites.ui.panels.admin.1', 'admin'))
             ->colors(['primary' => config('bites.ui.panels.admin.2', Color::Amber)])

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Bites\Platform\Branding\Entities;
+namespace Bites\Business\Tos\Entities;
 
 use Illuminate\Database\Eloquent\Attributes\Connection;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
 
 #[Connection('sqlite')]
-#[Table('sync_connections')]
-class SyncConnection extends Model
+#[Table('service_requests')]
+class ServiceRequest extends Model
 {
     //
 }

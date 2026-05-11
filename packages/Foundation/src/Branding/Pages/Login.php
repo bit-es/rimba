@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bites\Platform\Branding\Pages;
+namespace Bites\Foundation\Branding\Pages;
 
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse;

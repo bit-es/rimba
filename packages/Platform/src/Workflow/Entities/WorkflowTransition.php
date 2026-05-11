@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bites\Foundation\Workflow\Entities;
+namespace Bites\Platform\Workflow\Entities;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;

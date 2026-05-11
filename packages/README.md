@@ -1,7 +1,8 @@
 # Enterprise Manufacturing Platform
 
+Resource Integration for Manufacturing & Business Alignment
 A modular, package-based platform for manufacturing organizations, designed to support core business lifecycles such as employees, assets, services, and documents.  
-Built with **Laravel** and **Filament**, emphasizing clean separation of concerns, reusability, and scalability.
+Built with **laravel/framework v13**, **filament/filament v5** and **spatie/laravel-permission v7**, emphasizing clean separation of concerns, reusability, and scalability.
 
 ---
 
@@ -9,9 +10,9 @@ Built with **Laravel** and **Filament**, emphasizing clean separation of concern
 
 The platform is organized into four layers:
 
-- **PLATFORM** – Technical and UI capabilities
-- **FOUNDATION** – Core organizational and process models
 - **BUSINESS** – Business domain functionality
+- **FOUNDATION** – Core organizational and process models
+- **PLATFORM** – Technical and UI capabilities
 - **SUPPORT** – Cross-cutting operational services
 
 ---
@@ -24,7 +25,7 @@ Implements organization's business domains, to be more precise the business requ
 - **DMS (Document Management System)**  
   Manages SOPs, policies, drawings, contracts, and controlled documents.
 
-- **TOS (Team Offering Service)**  
+- **TOS (Team Offering System)**  
   Handles internal service requests such as maintenance, IT, and facilities, including SLA tracking.
 
 - **LMS (Learning Management System)**  

@@ -27,7 +27,7 @@ class StaffPanelProvider extends PanelProvider
     {
         $panel
             ->default()
-            ->login(\Bites\Platform\Branding\Pages\Login::class)
+            ->login(\Bites\Foundation\Branding\Pages\Login::class)
             ->id(config('bites.panels.staff.0', 'staff'))
             ->path(config('bites.panels.staff.1', 'staff'))
             ->colors(['primary' => config('bites.panels.staff.2', Color::Blue)])

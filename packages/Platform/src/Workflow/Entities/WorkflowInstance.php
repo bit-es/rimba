@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Bites\Business\Sor\Entities;
+namespace Bites\Platform\Workflow\Entities;
 
 use Illuminate\Database\Eloquent\Attributes\Connection;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Model;
 
 #[Connection('sqlite')]
-#[Table('service_requests')]
-class ServiceRequest extends Model
+#[Table('workflow_instances')]
+class WorkflowInstance extends Model
 {
     //
 }
