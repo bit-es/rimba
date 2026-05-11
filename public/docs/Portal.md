@@ -141,7 +141,7 @@ Each team operates using defined **functional roles**:
 - Owns intake (requests, assignments)  
 - Provides final sign-off  
 
-✅ Replaces traditional “Approver”  
+✅ Assures request fulfilment  
 
 ---
 
@@ -175,7 +175,6 @@ Each team operates using defined **functional roles**:
 
 ### <img src="pics/team_captain.png" width="48" height="48"> Captain (Quality & Ownership)
 
-- Reviews work before final approval  
 - Oversees daily operations  
 - Ensures quality standards  
 
