@@ -18,25 +18,28 @@ The platform is organized into four layers:
 
 ## Packages
 
-### PLATFORM
-Provides shared technical capabilities used by all business modules.
+### BUSINESS
+Implements organization's business domains, to be more precise the business requirement specs.
 
-- **UI (Filament)**  
-  Standardized admin UI for resources, forms, tables, and dashboards.
+- **DMS (Document Management System)**  
+  Manages SOPs, policies, drawings, contracts, and controlled documents.
 
-- **Branding**  
-  Manages corporate identity such as themes, logos, and layout configuration.
+- **TOS (Team Offering Service)**  
+  Handles internal service requests such as maintenance, IT, and facilities, including SLA tracking.
 
-- **Auth**  
-  Handles authentication, SSO, and identity federation (e.g. LDAP, AD, Keycloak).
+- **LMS (Learning Management System)**  
+  Manages training, certifications, and employee competency records.
 
-- **Sync**  
-  Manages data synchronization with external systems.
+- **EAM (Enterprise Asset Management)**  
+  Full asset lifecycle management including registration, utilization, maintenance, and disposal.
 
 ---
 
 ### FOUNDATION
-Defines the core structure of the organization and how processes flow.
+Defines the core structure of the organization. Applying the organization context to the platform.
+
+- **Branding**  
+  Manages corporate identity such as themes, logos, and layout configuration.
 
 - **Org**  
   Models are Organization, OrgUnit, OrgTeam. These models carry organizational attributes, not people. All would have polymorphic many to many to Attributes model storing the additional organization attributes.
@@ -47,28 +50,28 @@ Defines the core structure of the organization and how processes flow.
 - **Job**  
   Models are JobPosition, JobRole, JobContract. These models carry job / work attributes, time‑bound and contract‑aware. All would have polymorphic many to many to Attributes model storing the additional job attributes.
 
-- **Workflow**  
-  Generic workflow and lifecycle engine for approvals, state transitions, and escalations.
-
 - **Access**  
-  Authorization, roles, permissions, and segregation of duties enforcement. Roles are create thru ABAC from Attributes or can be manually added.
+  Auth in Platform handles Authentication, therefore Access handles the next step, Authorization. Authorization, roles, permissions, and segregation of duties enforcement. Roles are create thru ABAC from Attributes or can be manually added.
 
 ---
 
-### BUSINESS
-Implements manufacturing-related business domains.
+### PLATFORM
+Provides base technical capabilities used by all packages.
 
-- **DMS (Document Management System)**  
-  Manages SOPs, policies, drawings, contracts, and controlled documents.
+- **UX (Filament)**  
+  Define the Filament setup and panels that exist; mainly Staff Panel and Admin Panel
 
-- **SOR (Service Offering Request)**  
-  Handles internal service requests such as maintenance, IT, and facilities, including SLA tracking.
+- **Auth**  
+  Handles authentication, SSO, and identity federation (e.g. LDAP, AD, Keycloak).
 
-- **LMS (Learning Management System)**  
-  Manages training, certifications, and employee competency records.
+- **Sync**  
+  Manages data synchronization with external systems.
 
-- **EAM (Enterprise Asset Management)**  
-  Full asset lifecycle management including registration, utilization, maintenance, and disposal.
+- **Task**  
+  Generic task and task_template for to do actions for any role and/or specific assignee.
+
+- **Workflow**  
+  Generic workflow and lifecycle engine for approvals, state transitions, and escalations.
 
 ---
 
