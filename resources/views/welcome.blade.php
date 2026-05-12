@@ -161,30 +161,33 @@
                 <!-- Self Service Portal -->
                 <div class="col-span-1 md:col-span-12">
                     <a href="#moreinfo" @click="$dispatch('load-doc', 'All')">
-                  
-                    <div class="relative flex flex-col overflow-hidden rounded-xl bg-zinc-100 p-12 dark:bg-zinc-900">
 
-                        <!-- Decorative Blobs -->
-                        <div aria-hidden="true"
-                            class="absolute -top-20 -left-20 size-48 rounded-full bg-green-400 blur-2xl"></div>
-                        <div aria-hidden="true"
-                            class="absolute -bottom-10 -right-10 size-72 rounded-full bg-emerald-300 blur-3xl"></div>
-                        <div aria-hidden="true"
-                            class="absolute inset-0 bg-green-100/50 backdrop-blur-md dark:bg-green-900/60"></div>
+                        <div
+                            class="relative flex flex-col overflow-hidden rounded-xl bg-zinc-100 p-12 dark:bg-zinc-900">
 
-                        <!-- Content -->
-                        <div class="relative text-center max-w-3xl mx-auto">
-                            <h2 class="text-3xl font-medium text-black dark:text-white">
-                                🧰 Staff Self‑Service Portal
-                            </h2>
+                            <!-- Decorative Blobs -->
+                            <div aria-hidden="true"
+                                class="absolute -top-20 -left-20 size-48 rounded-full bg-green-400 blur-2xl"></div>
+                            <div aria-hidden="true"
+                                class="absolute -bottom-10 -right-10 size-72 rounded-full bg-emerald-300 blur-3xl">
+                            </div>
+                            <div aria-hidden="true"
+                                class="absolute inset-0 bg-green-100/50 backdrop-blur-md dark:bg-green-900/60"></div>
 
-                            <p class="mt-4 text-zinc-800 leading-relaxed dark:text-zinc-200">
-                                The RIMBA Self-Service Portal is your <strong>personal toolbox of services</strong> —
-                                empowering every employee to find, select, and use what they need independently,
-                                anytime.
-                            </p>
+                            <!-- Content -->
+                            <div class="relative text-center max-w-3xl mx-auto">
+                                <h2 class="text-3xl font-medium text-black dark:text-white">
+                                    🧰 Staff Self‑Service Portal
+                                </h2>
+
+                                <p class="mt-4 text-zinc-800 leading-relaxed dark:text-zinc-200">
+                                    The RIMBA Self-Service Portal is your <strong>personal toolbox of services</strong>
+                                    —
+                                    empowering every employee to find, select, and use what they need independently,
+                                    anytime.
+                                </p>
+                            </div>
                         </div>
-                    </div>
                     </a>
                 </div>
                 <!-- END Self Service Portal -->
@@ -268,12 +271,19 @@
                             'desc' =>
                                 'Eagle\'s sharp eye from above, Location provides clear visibility and awareness across the operational landscape.',
                         ],
+                        // [
+                        //     'icon' => 'svg/req-parrot.svg',
+                        //     'title' => 'Request',
+                        //     'pic' => 'svg/req-request.svg',
+                        //     'desc' =>
+                        //         'A parrot that listens and repeats exactly as heard, Requests capture instructions clearly and relay them without distortion.',
+                        // ],
                         [
-                            'icon' => 'svg/req-parrot.svg',
-                            'title' => 'Request',
-                            'pic' => 'svg/req-request.svg',
+                            'icon' => 'svg/ver-cricket.svg',
+                            'title' => 'Versioning',
+                            'pic' => 'svg/ver-major.svg',
                             'desc' =>
-                                'A parrot that listens and repeats exactly as heard, Requests capture instructions clearly and relay them without distortion.',
+                                'Just as a cricket grows through distinct iterative stages (instars), Versioning tracks every update, patch, and release in a controlled evolution.',
                         ],
                     ];
                 @endphp
