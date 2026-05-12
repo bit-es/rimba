@@ -113,7 +113,7 @@ class ApiConfigSeeder extends Seeder
          * ------------------------------------------------
          */
         ApiConfig::updateOrCreate(
-            ['name' => 'External Employees'],
+            ['name' => 'HRDB(Weaver) Employees'],
             [
                 'source_type' => 'database',
 
@@ -139,7 +139,6 @@ class ApiConfigSeeder extends Seeder
                 ],
                 // DB returns rows directly
                 'data_path' => null,
-
                 'mapping' => [
                     [
                         'table' => 'staff',
@@ -150,14 +149,23 @@ class ApiConfigSeeder extends Seeder
                         'add_extra' => true,
                         'fields' => [
                             ['from' => 'uuid', 'to' => 'uuid'],
-                            ['from' => 'workstartdate', 'to' => 'start_date'],
+                            ['from' => 'companystartdate', 'to' => 'start_date'],
                             ['from' => 'workenddate', 'to' => 'end_date'],
                             ['from' => 'workcode', 'to' => 'employee_no'],
-                            ['value' => 'FTE', 'to' => 'staff_type'],
-                            ['from' => 'department_uuid', 'to' => 'department_uuid'],
-                            ['from' => 'job_title_uuid', 'to' => 'job_title_uuid'],
-                            ['from' => 'location_uuid', 'to' => 'location_uuid'],
+                            ['value' => 'FTE', 'to' => 'contract_type'],
+                            // ['from' => 'department_uuid', 'to' => 'department_uuid'],
+                            // ['from' => 'job_title_uuid', 'to' => 'job_title_uuid'],
+                            // ['from' => 'location_uuid', 'to' => 'location_uuid'],
                             ['from' => 'manager_uuid', 'to' => 'manager_uuid'],
+                            [
+                                'from' => 'location_uuid',
+                                'to' => 'issuing_organization_id',
+                                'do' => [
+                                    'query' => 'SELECT id FROM organizations WHERE uuid = ?',
+                                    'bindings' => ['$value'],
+                                    'column' => 'id'
+                                ],
+                            ],
                         ],
                         'children' => [
 
@@ -167,13 +175,25 @@ class ApiConfigSeeder extends Seeder
                             [
                                 'model' => Staff::class,
                                 'unique_by' => 'full_name',
-
+                                'add_extra' => true,
                                 'fields' => [
                                     ['from' => 'lastname',   'to' => 'full_name'],
+                                    ['from' => 'workcode',   'to' => 'staff_number'],
+                                    ['value' => 'FTE',       'to' => 'staff_type'],
+                                    ['from' => 'field8',    'to' => 'shift_code'],
+                                    [
+                                        'from' => 'location_uuid',
+                                        'to' => 'organization_id',
+                                        'do' => [
+                                            'query' => 'SELECT id FROM organizations WHERE uuid = ?',
+                                            'bindings' => ['$value'],
+                                            'column' => 'id'
+                                        ],
+                                    ],
                                 ],
 
                                 // 👈 inject Staff ID into JobContract.staff_id
-                                'foreign_key' => 'staff_id',
+                                'parent_key' => 'staff_id',
                             ],
 
                             // ==========================================================
@@ -184,13 +204,31 @@ class ApiConfigSeeder extends Seeder
 
                                 // Stable external identity for a position/title
                                 'unique_by' => 'title',
-
+                                'add_extra' => true,
                                 'fields' => [
                                     ['from' => 'job_title_uuid', 'to' => 'title'],
+                                    [
+                                        'from' => 'job_title_uuid',
+                                        'to' => 'job_title_id',
+                                        'do' => [
+                                            'query' => 'SELECT id FROM job_titles WHERE uuid = ?',
+                                            'bindings' => ['$value'],
+                                            'column' => 'id'
+                                        ],
+                                    ],
+                                    [
+                                        'from' => 'department_uuid',
+                                        'to' => 'org_unit_id',
+                                        'do' => [
+                                            'query' => 'SELECT id FROM org_units WHERE uuid = ?',
+                                            'bindings' => ['$value'],
+                                            'column' => 'id'
+                                        ],
+                                    ],
                                 ],
 
                                 // 👈 inject JobPosition ID into JobContract.job_position_id
-                                'foreign_key' => 'job_position_id',
+                                'parent_key' => 'job_position_id',
                             ],
                         ],
 
@@ -202,7 +240,7 @@ class ApiConfigSeeder extends Seeder
             ]
         );
         ApiConfig::updateOrCreate(
-            ['name' => 'External Departments'],
+            ['name' => 'HRDB(Weaver) Departments'],
             [
                 'source_type' => 'database',
 
@@ -211,8 +249,7 @@ class ApiConfigSeeder extends Seeder
                     'query' => '
                 SELECT *
                 FROM HrmDepartment
-                ORDER BY uuid
-            ',
+                ORDER BY uuid',
                 ],
 
                 'data_path' => null,
@@ -224,10 +261,17 @@ class ApiConfigSeeder extends Seeder
                         'path' => '',
                         'many' => true,
                         'unique_by' => 'uuid',
-
                         'fields' => [
                             ['from' => 'uuid', 'to' => 'uuid'],
                             ['from' => 'departmentname', 'to' => 'name'],
+                            [
+                                'do' => [
+                                    'artisan' => 'permission:create-role $value',
+                                    'transform' => '@"d." . strtolower($from)',
+                                ],
+                                // 'from' => 'departmentname',
+                                'from' => 'uuid',
+                            ],
                         ],
                     ],
                 ],
@@ -236,7 +280,7 @@ class ApiConfigSeeder extends Seeder
             ]
         );
         ApiConfig::updateOrCreate(
-            ['name' => 'External Locations'],
+            ['name' => 'HRDB(Weaver) Organizations'],
             [
                 'source_type' => 'database',
 
@@ -245,8 +289,7 @@ class ApiConfigSeeder extends Seeder
                     'query' => '
                 SELECT *
                 FROM HrmLocations
-                ORDER BY uuid
-            ',
+                ORDER BY uuid',
                 ],
 
                 'data_path' => null,
@@ -263,6 +306,15 @@ class ApiConfigSeeder extends Seeder
                             ['from' => 'uuid', 'to' => 'uuid'],
                             ['from' => 'locationname', 'to' => 'name'],
                             ['from' => 'locationdesc', 'to' => 'description'],
+                            ['from' => 'uuid', 'to' => 'uuid'],
+                            [
+                                'do' => [
+                                    'artisan' => 'permission:create-role $value',
+                                    'transform' => '@"o." . strtolower($from)',
+                                ],
+                                // 'from' => 'locationname',
+                                'from' => 'uuid',
+                            ],
                         ],
                     ],
                 ],
@@ -271,7 +323,7 @@ class ApiConfigSeeder extends Seeder
             ]
         );
         ApiConfig::updateOrCreate(
-            ['name' => 'External Job Titles'],
+            ['name' => 'HRDB(Weaver) Job Titles'],
             [
                 'source_type' => 'database',
 
@@ -280,8 +332,7 @@ class ApiConfigSeeder extends Seeder
                     'query' => '
                 SELECT *
                 FROM HrmJobTitles
-                ORDER BY uuid
-            ',
+                ORDER BY uuid',
                 ],
 
                 'data_path' => null,

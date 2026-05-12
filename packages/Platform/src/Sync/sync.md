@@ -1,870 +1,148 @@
-```bash
+# Sync module overview
 
-packages/faros/api-pipeline/
+## Purpose
 
-```
+The `packages/Platform/src/Sync` package provides a config-driven data ingestion and model synchronization pipeline.
+It loads source data from an API or database, stores it as `ApiData`, then maps and syncs it into application models.
 
+## Key entities
 
+### `ApiConfig`
+- Defines a sync configuration.
+- Fields:
+  - `name`
+  - `source_type` (`rest` or `database`)
+  - `source_config`
+  - `data_path`
+  - `mapping`
+  - `active`
+- Casts `source_config` and `mapping` to arrays.
 
-# =========================================
+### `ApiData`
+- Stores fetched payloads and sync status.
+- Fields include `api_config_id`, `payload`, `fingerprint`, `status`, `processed_at`, and `error`.
+- Observed by `ApiDataObserver`.
 
+## Fetch flow
 
+`FetchService::fetch(ApiConfig $config)` does the following:
+1. Chooses a fetcher by `source_type`:
+   - `rest` → `RestDataFetcher`
+   - `database` → `DatabaseDataFetcher`
+2. Fetches raw data from the configured source.
+3. Extracts items using `data_path` (default: `data`).
+4. Creates or reuses an `ApiData` record by `api_config_id` and payload fingerprint.
+5. Saves `payload` and sets `status` to `pending`.
 
-# composer.json
+> Duplicate data is avoided via fingerprint deduplication.
 
+## Processing flow
 
+### `ApiDataObserver`
+- On `created`, immediately processes the record.
+- On `updated`, if status is not `processed` or `failed`:
+  - dispatches `ProcessApiDataJob` when `bites.sync.queue` is enabled
+  - otherwise processes immediately.
 
-# =========================================
+### `ProcessApiDataJob`
+- Queued job that calls `ProcessingService::process($data)`.
+- Uses recommended defaults like `$tries = 3` and `$timeout = 120`.
 
+### `ProcessingService::process(ApiData $data)`
+- Runs the mapping pipeline.
+- Marks the record as `processed` on success.
+- Marks it as `failed` and stores the error on exception.
 
+## Mapping rules
 
-```json
+`MappingService::run(ApiData $data)`
+- Iterates through each mapping entity from the config.
+- Processes entities recursively, allowing parent/child relationships.
 
-{
- "name": "faros/api-pipeline",
- "description": "Config-driven API ingestion & nested mapping pipeline",
- "type": "library",
- "autoload": {
-   "psr-4": {
-     "Faros\\ApiPipeline\\": "src/"
-   }
- },
- "extra": {
-   "laravel": {
-     "providers": [
-       "Faros\\ApiPipeline\\ApiPipelineServiceProvider"
-     ]
-   }
- }
+### `processEntity()`
+- Loads payload data by `entity['path']` or uses the root payload.
+- Supports collection or single item via `entity['many']`.
+- Builds each row from `entity['fields']`:
+  - static values via `value`
+  - payload extractions via `from`
+  - runtime transformations via `do` (query array or artisan command string)
+  - optional regex transformations via `regex` or PHP expression when prefixed with `@`
+  - if `to` is omitted, the mapped value is not written to the model row
+- Skips rows when `skip_if` rules apply.
+- Attaches parent foreign keys for child entities via `foreign_key`.
+- Optionally writes child IDs back to the parent record using `parent_key`.
+- Calls `ModelSyncService::sync(...)` to persist the row.
+- Recurses into `entity['children']`.
 
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# Service Provider
-
-
-
-# =========================================
-
-
-
+#### Example field mapping
 ```php
-
-<?php
-
-
-
-namespace Faros\ApiPipeline;
-
-
-
-use Illuminate\Support\ServiceProvider;
-
-use Faros\ApiPipeline\Models\ApiData;
-
-use Faros\ApiPipeline\Observers\ApiDataObserver;
-
-
-
-class ApiPipelineServiceProvider extends ServiceProvider
-
-{
-   public function register()
-   {
-       $this->mergeConfigFrom(__DIR__.'/config/api-pipeline.php', 'api-pipeline');
-   }
-
-
-   public function boot()
-   {
-       $this->publishes([
-           __DIR__.'/config/api-pipeline.php' => config_path('api-pipeline.php'),
-       ], 'config');
-
-
-       $this->publishes([
-           __DIR__.'/../database/migrations/' => database_path('migrations'),
-       ], 'migrations');
-
-
-       ApiData::observe(ApiDataObserver::class);
-   }
-
-}
-
+'fields' => [
+    ['from' => 'uuid', 'to' => 'uuid'],
+    ['from' => 'workstartdate', 'to' => 'start_date'],
+    ['value' => 'FTE', 'to' => 'contract_type'],
+    ['from' => 'job_title_uuid', 'to' => 'job_title_uuid'],
+    [
+        'do' => [
+            'query' => 'SELECT id FROM job_titles WHERE uuid = ?',
+            'bindings' => ['$value'],
+            'column' => 'id',
+        ],
+        'from' => 'job_title_uuid',
+        'to' => 'job_title_id',
+    ],
+]
 ```
 
-
-
-# =========================================
-
-
-
-# config/api-pipeline.php
-
-
-
-# =========================================
-
-
-
+#### Artisan command example
 ```php
-
-<?php
-
-
-
-return [
-   'queue' => true,
-
-];
-
+'fields' => [
+    ['from' => 'uuid', 'to' => 'uuid'],
+    ['value' => 'FTE', 'to' => 'contract_type'],
+    [
+        'do' => "artisan:permission:create-role $value",
+        'from' => 'role_name',
+        'to' => 'role_command_output',
+    ],
+]
 ```
 
-
-
-# =========================================
-
-
-
-# MIGRATIONS
-
-
-
-# =========================================
-
-
-
-## create_api_configs_table.php
-
-
-
+#### Artisan command with transform example
 ```php
-
-Schema::create('api_configs', function (Blueprint $table) {
-   $table->id();
-   $table->string('name');
-
-
-   $table->string('source_type'); // rest | database
-   $table->json('source_config');
-
-
-   $table->string('data_path')->nullable();
-   $table->json('mapping');
-
-
-   $table->boolean('active')->default(true);
-   $table->timestamps();
-
-});
-
+'fields' => [
+    [
+        'do' => [
+            'artisan' => 'permission:create-role $value',
+            'transform' => '@"o." . strtolower($from)',
+        ],
+        'from' => 'permission_code',
+        'to' => 'role_command_output',
+    ],
+]
 ```
 
-
-
-## create_api_data_table.php
-
-
-
-```php
-
-Schema::create('api_data', function (Blueprint $table) {
-   $table->id();
-
-
-   $table->foreignId('api_config_id')->constrained();
-
-
-   $table->string('fingerprint')->nullable()->index();
-   $table->json('payload');
-
-
-   $table->string('status')->default('pending');
-   $table->timestamp('processed_at')->nullable();
-   $table->text('error')->nullable();
-
-
-   $table->timestamps();
-
-});
-
-```
-
-
-
-# =========================================
-
-
-
-# MODELS
-
-
-
-# =========================================
-
-
-
-## ApiConfig.php
-
-
-
-```php
-
-<?php
-
-
-
-namespace Faros\ApiPipeline\Models;
-
-
-
-use Illuminate\Database\Eloquent\Model;
-
-
-
-class ApiConfig extends Model
-
-{
-   protected $fillable = [
-       'name','source_type','source_config',
-       'data_path','mapping','active'
-   ];
-
-
-   protected $casts = [
-       'source_config' => 'array',
-       'mapping' => 'array',
-       'active' => 'boolean'
-   ];
-
-
-   public function data()
-   {
-       return $this->hasMany(ApiData::class);
-   }
-
-}
-
-```
-
-
-
-## ApiData.php
-
-
-
-```php
-
-<?php
-
-
-
-namespace Faros\ApiPipeline\Models;
-
-
-
-use Illuminate\Database\Eloquent\Model;
-
-
-
-class ApiData extends Model
-
-{
-   protected $fillable = [
-       'api_config_id','payload','fingerprint',
-       'status','processed_at','error'
-   ];
-
-
-   protected $casts = [
-       'payload' => 'array',
-       'processed_at' => 'datetime'
-   ];
-
-
-   public function config()
-   {
-       return $this->belongsTo(ApiConfig::class);
-   }
-
-
-   public function markProcessed()
-   {
-       $this->update([
-           'status' => 'processed',
-           'processed_at' => now(),
-           'error' => null
-       ]);
-   }
-
-
-   public function markFailed($e)
-   {
-       $this->update([
-           'status' => 'failed',
-           'error' => $e
-       ]);
-   }
-
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# SUPPORT
-
-
-
-# =========================================
-
-
-
-## Fingerprint.php
-
-
-
-```php
-
-class Fingerprint {
-   public static function make(array $payload): string {
-       return sha1(json_encode($payload));
-   }
-
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# FETCHERS
-
-
-
-# =========================================
-
-
-
-## Fetcher.php
-
-
-
-```php
-
-interface Fetcher {
-   public function fetch(array $config): array;
-
-}
-
-```
-
-
-
-## RestFetcher.php
-
-
-
-```php
-
-use Illuminate\Support\Facades\Http;
-
-
-
-class RestFetcher implements Fetcher {
-   public function fetch(array $config): array {
-       return Http::withHeaders($config['headers'] ?? [])
-           ->get($config['url'], $config['query'] ?? [])
-           ->json();
-   }
-
-}
-
-```
-
-
-
-## DatabaseFetcher.php
-
-
-
-```php
-
-use Illuminate\Support\Facades\DB;
-
-
-
-class DatabaseFetcher implements Fetcher {
-   public function fetch(array $config): array {
-       return DB::connection($config['connection'])
-           ->select($config['query'], $config['bindings'] ?? []);
-   }
-
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# INGESTION
-
-
-
-# =========================================
-
-
-
-## IngestionService.php
-
-
-
-```php
-
-use Faros\ApiPipeline\Models\ApiConfig;
-
-use Faros\ApiPipeline\Models\ApiData;
-
-
-
-class IngestionService
-
-{
-   public function ingest(ApiConfig $config)
-   {
-       $fetcher = match ($config->source_type) {
-           'rest' => new RestFetcher(),
-           'database' => new DatabaseFetcher(),
-       };
-
-
-       $data = $fetcher->fetch($config->source_config);
-
-
-       $items = data_get($data, $config->data_path ?? 'data', $data);
-
-
-       foreach ($items as $item) {
-           $fp = Fingerprint::make((array)$item);
-
-
-           ApiData::firstOrCreate(
-               [
-                   'api_config_id' => $config->id,
-                   'fingerprint' => $fp
-               ],
-               [
-                   'payload' => (array)$item
-               ]
-           );
-       }
-   }
-
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# OBSERVER + JOB
-
-
-
-# =========================================
-
-
-
-## ApiDataObserver.php
-
-
-
-```php
-
-class ApiDataObserver
-
-{
-   public function created(ApiData $data)
-   {
-       ProcessApiDataJob::dispatch($data);
-   }
-
-}
-
-```
-
-
-
-## ProcessApiDataJob.php
-
-
-
-```php
-
-use Illuminate\Contracts\Queue\ShouldQueue;
-
-
-
-class ProcessApiDataJob implements ShouldQueue
-
-{
-   public function __construct(public ApiData $data) {}
-
-
-   public function handle()
-   {
-       app(ProcessingEngine::class)->process($this->data);
-   }
-
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# PROCESSING
-
-
-
-# =========================================
-
-
-
-## ProcessingEngine.php
-
-
-
-```php
-
-class ProcessingEngine
-
-{
-   public function process(ApiData $data)
-   {
-       try {
-           app(MappingEngine::class)->run($data);
-           $data->markProcessed();
-       } catch (\Throwable $e) {
-           $data->markFailed($e->getMessage());
-           throw $e;
-       }
-   }
-
-}
-
-```
-
-
-
----
-
-
-
-## MappingEngine.php (🔥 NESTED SUPPORT)
-
-
-
-```php
-
-class MappingEngine
-
-{
-   public function run(ApiData $data)
-   {
-       $payload = $data->payload;
-       $mapping = $data->config->mapping;
-
-
-       foreach ($mapping as $entity) {
-           $this->processEntity($entity, $payload, null);
-       }
-   }
-
-
-   protected function processEntity(array $entity, array $payload, $parentModel = null)
-   {
-       $items = data_get($payload, $entity['path']);
-
-
-       if (!$items) return;
-
-
-       if (!($entity['many'] ?? false)) {
-           $items = [$items];
-       }
-
-
-       foreach ($items as $item) {
-
-
-           $row = [];
-
-
-           foreach ($entity['fields'] as $field) {
-               $value = data_get($item, $field['from']);
-
-
-               if (isset($field['regex'])) {
-                   $value = preg_replace($field['regex'], '', $value);
-               }
-
-
-               $row[$field['to']] = $value;
-           }
-
-
-           if ($parentModel && isset($entity['foreign_key'])) {
-               $row[$entity['foreign_key']] = $parentModel->id;
-           }
-
-
-           $model = app(ModelSyncService::class)
-               ->syncAndReturn($entity['table'], $entity['unique_by'] ?? null, $row);
-
-
-           if (!empty($entity['children'])) {
-               foreach ($entity['children'] as $child) {
-                   $this->processEntity($child, $item, $model);
-               }
-           }
-       }
-   }
-
-}
-
-```
-
-
-
----
-
-
-
-## ModelSyncService.php
-
-
-
-```php
-
-use Illuminate\Support\Facades\DB;
-
-
-
-class ModelSyncService
-
-{
-   public function syncAndReturn($table, $uniqueBy, $data)
-   {
-       if ($uniqueBy && isset($data[$uniqueBy])) {
-           DB::table($table)->updateOrInsert(
-               [$uniqueBy => $data[$uniqueBy]],
-               $data
-           );
-
-
-           return DB::table($table)
-               ->where($uniqueBy, $data[$uniqueBy])
-               ->first();
-       }
-
-
-       $id = DB::table($table)->insertGetId($data);
-       return DB::table($table)->find($id);
-   }
-
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# ARTISAN COMMAND
-
-
-
-# =========================================
-
-
-
-```php
-
-use Illuminate\Console\Command;
-
-use Faros\ApiPipeline\Models\ApiConfig;
-
-
-
-class ApiIngestCommand extends Command
-
-{
-   protected $signature = 'api:ingest {config_id?}';
-
-
-   public function handle()
-   {
-       $configs = $this->argument('config_id')
-           ? ApiConfig::whereId($this->argument('config_id'))->get()
-           : ApiConfig::where('active', true)->get();
-
-
-       foreach ($configs as $config) {
-           app(IngestionService::class)->ingest($config);
-       }
-
-
-       $this->info('Done');
-   }
-
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# SAMPLE CONFIG JSON (REST)
-
-
-
-# =========================================
-
-
-
-```json
-
-{
- "source_type": "rest",
- "source_config": {
-   "url": "https://api.example.com/orders"
- },
- "data_path": "data",
- "mapping": [
-   {
-     "table": "orders",
-     "path": "",
-     "many": false,
-     "unique_by": "external_id",
-     "fields": [
-       { "from": "id", "to": "external_id" },
-       { "from": "customer_name", "to": "customer_name" }
-     ],
-     "children": [
-       {
-         "table": "order_items",
-         "path": "items",
-         "many": true,
-         "foreign_key": "order_id",
-         "fields": [
-           { "from": "sku", "to": "sku" },
-           { "from": "qty", "to": "quantity" }
-         ]
-       }
-     ]
-   }
- ]
-
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# SAMPLE PAYLOAD
-
-
-
-# =========================================
-
-
-
-```json
-
-{
- "data": [
-   {
-     "id": "ORD-1",
-     "customer_name": "Ali",
-     "items": [
-       { "sku": "A1", "qty": 2 },
-       { "sku": "B1", "qty": 1 }
-     ]
-   }
- ]
-
-}
-
-```
-
-
-
-# =========================================
-
-
-
-# INSTALL
-
-
-
-# =========================================
-
-
-
-```bash
-
-composer require faros/api-pipeline
-
-
-
-php artisan vendor:publish --tag=migrations
-
-php artisan migrate
-
-
-
-php artisan queue:work
-
-php artisan api:ingest
-
-```
-
-
-
-```
-
-```
+> In PHP expressions, `$from` and `$value` both reference the value extracted from `from`.
+
+## Model sync behavior
+
+`ModelSyncService::sync(string $modelClass, ?string $uniqueBy, bool $addExtra, array $row)`
+- Prepares the row against the model's fillable fields.
+- If `uniqueBy` is provided and present in the row:
+  - performs `updateOrCreate([$uniqueBy => ...], $fillableRow)`.
+- Otherwise, creates a new model record.
+- If `addExtra` is true and the model supports `setExtra()`:
+  - stores remaining non-fillable values as extra metadata.
+
+## Overall flow
+
+1. `ApiConfig` defines what data to fetch and how to map it.
+2. `FetchService` pulls data and writes `ApiData` as pending.
+3. `ApiDataObserver` triggers async or sync processing.
+4. `ProcessingService` runs the mapping pipeline.
+5. `MappingService` transforms payload data into model records.
+6. `ModelSyncService` creates or updates the target models.
+
+## Notes
+
+- The pipeline is intentionally simple and config-driven.
+- `ApiData` status tracking allows retries and error inspection.
+- The current fetch implementation only persists a single payload per fetch call, not multiple items.

@@ -28,7 +28,8 @@ class PlatformServiceProvider extends ServiceProvider
     {
         // Load migrations
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/staff', 'staff');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/admin', 'admin');
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ApiFetchCommand::class,

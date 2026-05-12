@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Bites\Support\Notification\Entities;
+namespace Bites\Support\Shared\Entities;
 
 use Illuminate\Database\Eloquent\Attributes\Connection;
 use Illuminate\Database\Eloquent\Attributes\Table;

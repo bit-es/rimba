@@ -8,17 +8,6 @@ return new class extends Migration
 {
     public function up(): void
     {
-        /* ============================================================
-         | PERSON DOMAIN
-         |============================================================ */
-        Schema::create('staff', function (Blueprint $table): void {
-            $table->id();
-            $table->string('full_name');
-            $table->string('staff_type')->nullable(); // FTE, FTC, TPC, INTERN
-            $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->timestamps();
-        });
-
         Schema::create('employees', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('staff_id')->constrained('staff')->unique();
@@ -30,6 +19,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('employees');
-        Schema::dropIfExists('staff');
     }
 };

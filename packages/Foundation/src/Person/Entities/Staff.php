@@ -14,7 +14,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'full_name',
+    'organization_id',
     'staff_type', // FTE, FTC, TPC, INTERN
+    'staff_number',
+    'user_id',
 ])]
 class Staff extends Model
 {

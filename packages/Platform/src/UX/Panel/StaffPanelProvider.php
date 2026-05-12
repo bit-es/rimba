@@ -32,23 +32,23 @@ class StaffPanelProvider extends PanelProvider
             ->path(config('bites.panels.staff.1', 'staff'))
             ->colors(['primary' => config('bites.panels.staff.2', Color::Blue)])
             ->brandName(config('bites.panels.staff.3', 'ATM Staff Intranet'))
-            ->homeUrl(fn(): string => route(config('bites.panels.staff.4', '/')));
+            ->homeUrl(fn(): string => route(config('bites.panels.staff.4', 'filament.staff.pages.dashboard')));
 
-        $packages = config('bites.packages', []);
-
+        $packages = config('bites.ui.packages', []);
         foreach ($packages as $package => $namespace) {
+            // dump(base_path(sprintf('vendor/bit-es/%s/Http/UI/Staff/Resources', $package)), $namespace.'\Http\UI\Staff\Widgets');
             $panel
                 ->discoverResources(
                     in: base_path(sprintf('vendor/bit-es/%s/Http/UI/Staff/Resources', $package)),
-                    for: $namespace . '\Http\UI\Staff\Resources',
+                    for: $namespace.'\Http\UI\Staff\Resources',
                 )
                 ->discoverPages(
                     in: base_path(sprintf('vendor/bit-es/%s/Http/UI/Staff/Pages', $package)),
-                    for: $namespace . '\Http\UI\Staff\Pages',
+                    for: $namespace.'\Http\UI\Staff\Pages',
                 )
                 ->discoverWidgets(
                     in: base_path(sprintf('vendor/bit-es/%s/Http/UI/Staff/Widgets', $package)),
-                    for: $namespace . '\Http\UI\Staff\Widgets',
+                    for: $namespace.'\Http\UI\Staff\Widgets',
                 );
         }
 
@@ -62,7 +62,7 @@ class StaffPanelProvider extends PanelProvider
                 'Emergency',
             ])
             ->pages([
-                // Dashboard::class,
+                Dashboard::class,
             ])
             ->widgets([
                 // AccountWidget::class,

@@ -14,8 +14,8 @@ class Artifact extends Page
 {
     // use HasHelp;
 
-    protected static string|BackedEnum|null $navigationIcon = 'myicon-asset-own';
-
+    // protected static string|BackedEnum|null $navigationIcon = 'myicon-asset-own';
+    protected string $view = 'staff::pages.base';
     protected static ?int $navigationSort = 22;
 
     public function getTitle(): string|Htmlable
@@ -37,8 +37,6 @@ class Artifact extends Page
     {
         return __('Asset/Equipment/Items issued to you or your support group.');
     }
-
-    protected string $view = 'filament.staff.pages.artifact';
 
     protected function getHeaderWidgets(): array
     {

@@ -21,6 +21,7 @@ return new class extends Migration
         Schema::create('job_positions', function (Blueprint $table): void {
             $table->id();
             $table->string('title'); // Job title
+            $table->foreignId('job_title_id')->nullable()->constrained('job_titles'); // Link to standardized job title
             $table->foreignId('org_unit_id')->nullable()->constrained('org_units');
             $table->date('effective_from')->nullable();
             $table->date('effective_to')->nullable();
@@ -44,10 +45,10 @@ return new class extends Migration
             $table->string('uuid')->unique(); // Unique identifier for cross-system mapping
             $table->foreignId('job_position_id')->nullable()->constrained('job_positions');
             $table->foreignId('staff_id')->nullable()->constrained('staff');
-
+            $table->foreignId('issuing_organization_id')->constrained('organizations');
             // Contract Basics
             $table->enum('contract_type', ['FTE', 'FTC', 'TPC', 'INTERN'])->nullable(); // Full-Time Employee, Fixed-Term Contract, Third-Party Contractor, Intern
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
 
             $table->foreignId('compensation_id')->nullable()->constrained('job_compensations'); // Compensation

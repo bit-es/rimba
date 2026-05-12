@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable([
     'org_unit_id',
+    'job_title_id',
     'title',
     'effective_from',
     'effective_to',

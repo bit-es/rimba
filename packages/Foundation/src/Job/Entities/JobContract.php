@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
     'legal_employer',
     'headcount_type',   // internal / external
     'agreement_type',   // COS, MSA, Internship
+    'contract_type',
     'start_date',
     'end_date',
 ])]
