@@ -1,0 +1,973 @@
+models:
+  # ------------------------------------------------------------------
+  # Organization
+  # ------------------------------------------------------------------
+  OrgCorp:
+    name: string
+    type: enum:company,government,vendor,institution nullable
+    attributes: json nullable
+    timestamps: true
+
+  OrgUnit:
+    org_corp_id: id foreign:org_corps
+    name: string
+    parent_id: id nullable foreign:org_units
+    attributes: json nullable
+    timestamps: true
+
+  OrgTeam:
+    org_unit_id: id foreign:org_units
+    name: string
+    attributes: json nullable
+    timestamps: true
+
+  JobContract:
+    name: string
+    org_unit_id: id nullable foreign:org_units
+    org_team_id: id nullable foreign:org_teams
+
+    type: enum:permanent,contract,temporary,outsource nullable
+    status: enum:draft,active,on_hold,closed default:active
+
+    position_limit: integer nullable
+
+    start_date: date nullable
+    end_date: date nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  JobPosition:
+    job_contract_id: id foreign:job_contracts
+
+    title: string
+    description: text nullable
+
+    level: enum:junior,mid,senior,lead,manager nullable
+    status: enum:open,filled,closed default:open
+
+    attributes: json nullable
+    timestamps: true
+
+  JobRole:
+    name: string
+    description: text nullable
+
+    # optional: classify behavior
+    type: enum:approval,operation,admin,reporting nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  JobPositionRole:
+    job_position_id: id foreign:job_positions
+    job_role_id: id foreign:job_roles
+    timestamps: true
+
+  Staff:
+    user_id: id nullable foreign:users
+
+    org_unit_id: id nullable foreign:org_units
+    job_contract_id: id nullable foreign:job_contracts
+
+    name: string nullable
+    staff_no: string nullable
+
+    type: enum:internal,external,contractor default:internal
+    status: enum:active,inactive,suspended default:active
+
+    attributes: json nullable
+    timestamps: true
+
+  Employee:
+    staff_id: id foreign:staff
+    org_corp_id: id foreign:org_corps
+
+    employee_no: string nullable
+
+    status: enum:active,resigned,terminated,retired default:active
+
+    hire_date: date nullable
+    termination_date: date nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  StaffPosition:
+    staff_id: id foreign:staff
+    job_position_id: id foreign:job_positions
+
+    assignment_type: enum:primary,secondary,acting default:primary
+
+    start_date: date
+    end_date: date nullable
+
+    status: enum:active,ended,pending default:active
+
+    attributes: json nullable
+    timestamps: true
+
+  Movement:
+    movable_id: id
+    movable_type: string
+
+    type: enum:transfer,promotion,demotion,assignment,end_of_assignment
+
+    effective_date: date
+
+    from: json nullable
+    to: json nullable
+
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # Authorization
+  # ------------------------------------------------------------------
+  # SPATIE RBAC CORE (FOUNDATION)
+  # ------------------------------------------------------------------
+
+  Role:
+    # Represents a "key" assigned to a user/staff
+    # Example:
+    # - d.maintenance.member
+    # - t.electrical.player
+    # - p.technician
+    # Role determines WHAT permissions (gates) can be opened
+
+    name: string
+    guard_name: string default:web
+    timestamps: true
+
+  Permission:
+    # Represents a system "gate"
+    # Defines WHAT action can be performed on a resource
+    # Example:
+    # - task.view
+    # - task.create
+    # - task.update
+    # - task.delete
+
+    name: string
+    guard_name: string default:web
+    timestamps: true
+
+  RoleHasPermission:
+    # Pivot: defines which roles can access which permissions (gates)
+    permission_id: id foreign:permissions
+    role_id: id foreign:roles
+    timestamps: false
+
+  ModelHasRole:
+    # Pivot: assigns roles to models (typically User)
+    # In this system, roles are derived from StaffRole and synced here
+    role_id: id foreign:roles
+    model_type: string
+    model_id: id
+    timestamps: false
+
+  ModelHasPermission:
+    # Pivot: assigns permissions directly to models (rare use)
+    # Prefer Role-based permissions for consistency
+    permission_id: id foreign:permissions
+    model_type: string
+    model_id: id
+    timestamps: false
+
+  # ------------------------------------------------------------------
+  # DOMAIN LAYER (ABAC → ROLE DERIVATION)
+  # ------------------------------------------------------------------
+
+  StaffRole:
+    # CORE BUSINESS TABLE
+    # Represents roles assigned to Staff based on attributes (ABAC) or manual assignment
+    #
+    # This bridges:
+    # Attributes (Org, Job, etc.) → Roles (Spatie) → Permissions
+    #
+    # Roles here are later synced to Spatie (model_has_roles)
+
+    staff_id: id foreign:staff
+    role_id: id foreign:roles
+
+    # Context (ABAC source of this role)
+    org_corp_id: id nullable foreign:org_corps
+    org_unit_id: id nullable foreign:org_units
+    org_team_id: id nullable foreign:org_teams
+
+    job_position_id: id nullable foreign:job_positions
+    job_role_id: id nullable foreign:job_roles
+    job_contract_id: id nullable foreign:job_contracts
+
+    # How the role was assigned
+    source: enum:auto,manual default:auto
+
+    # Lifecycle (important for sync + revocation)
+    start_date: date nullable
+    end_date: date nullable
+
+    status: enum:active,inactive default:active
+
+    attributes: json nullable
+    timestamps: true
+
+  RoleAssignment:
+    # Represents manual or owner-driven role assignment
+    # Example:
+    # - OrgUnit owner assigns "member" role
+    # - OrgTeam owner assigns "player", "coach"
+    #
+    # This is separate from StaffRole to distinguish:
+    # - manual assignment (this table)
+    # - resolved effective role (StaffRole)
+
+    role_id: id foreign:roles
+    staff_id: id foreign:staff
+
+    assigned_by: id nullable foreign:staff_id
+
+    # Optional context (who assigned in which scope)
+    org_unit_id: id nullable foreign:org_units
+    org_team_id: id nullable foreign:org_teams
+
+    start_date: date nullable
+    end_date: date nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # OPTIONAL POLICY LAYER (FUTURE-READY, MINIMAL)
+  # ------------------------------------------------------------------
+
+  Policy:
+    # Represents mapping between Role and Permission (conceptual layer)
+    # Can be used to define domain-level policies if needed
+    #
+    # Note:
+    # Spatie role_has_permissions already handles this technically,
+    # so this is OPTIONAL for business clarity or extensions
+
+    name: string
+
+    role_id: id nullable foreign:roles
+    permission_id: id nullable foreign:permissions
+
+    attributes: json nullable
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # Audit Trail
+  # ------------------------------------------------------------------
+  AuditLog:
+    # Centralized audit table for ALL modules (Authorization, Version, Workflow, etc.)
+    # This should be the ONLY audit table in the system
+    # Stores who did what, to which model, and the outcome
+
+    user_id: id nullable foreign:users
+    staff_id: id nullable foreign:staff
+
+    actor: string
+    # Stores who the person is "staff.staff_no[staff.name|job position.title]"
+    # this is for easy reference in logs without needing to join staff table
+
+    action: string
+    # Example:
+    # - version.approved
+    # - document.created
+    # - task.deleted
+
+    model_type: string nullable
+    model_id: id nullable
+
+    result: enum:allowed,denied
+
+    reason: string nullable
+
+    metadata: json nullable
+
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # Versioning
+  # ------------------------------------------------------------------
+
+  Versionable:
+    # Represents the identity of an entity that supports versioning
+    # Example:
+    # - Document
+    # - Workflow configuration
+    # - Service catalog item
+    #
+    # Stores ONLY identity and metadata (no actual content)
+    # Content is stored in Version table
+
+    name: string
+
+    # Classification of versionable entity
+    type: enum:document,workflow,template,service,config,other
+
+    # Optional polymorphic reference to actual domain model
+    ref_type: string nullable
+    ref_id: id nullable
+
+    # Points to the currently published version
+    current_version_id: id nullable foreign:versions
+
+    attributes: json nullable
+    timestamps: true
+
+  Version:
+    # Represents a snapshot/state of a Versionable entity
+    # Each version is immutable once approved or published
+    # Supports semantic versioning and controlled lifecycle
+
+    versionable_id: id foreign:versionables
+
+    # Semantic versioning components
+    major: integer default:1
+    minor: integer default:0
+    patch: integer default:0
+
+    # Optional combined version string (e.g. "1.2.0")
+    version: string
+
+    # Lifecycle status
+    status: enum:draft,approved,published,archived,rejected default:draft
+
+    # Content reference (flexible: file path, URL, JSON content, etc.)
+    content_path: string nullable
+    content_type: enum:file,url,inline,json nullable
+
+    # Change tracking
+    change_summary: string nullable
+    change_notes: text nullable
+
+    # Menu visibility (contextual use, e.g. Service Catalog)
+    # Only meaningful when status = published
+    is_menu: boolean default:false
+
+    # Ownership and traceability
+    created_by: id nullable foreign:staff
+    approved_by: id nullable foreign:staff
+    published_by: id nullable foreign:staff
+
+    # Lifecycle timestamps
+    approved_at: timestamp nullable
+    published_at: timestamp nullable
+
+    # Optional scheduling (future use)
+    effective_from: timestamp nullable
+    effective_to: timestamp nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  VersionApproval:
+    # Tracks approval actions for versions
+    # Supports single or multi-step approval workflows
+    # Each action SHOULD also be recorded in AuditLog
+
+    version_id: id foreign:versions
+    user_id: id foreign:staff
+
+    action: enum:approved,rejected,requested_changes
+
+    comment: text nullable
+    acted_at: timestamp
+
+    attributes: json nullable
+    timestamps: true
+
+  VersionRelation:
+    # Defines relationships between versions
+    # Useful for:
+    # - linking previous/next versions
+    # - tracking derived versions
+    # - supporting rollback references
+
+    version_id: id foreign:versions
+    related_version_id: id foreign:versions
+
+    type: enum:previous,next,derived_from,supersedes
+
+    timestamps: true
+
+  VersionLock:
+    # Prevents concurrent modification of a version
+    # Useful when:
+    # - version is being edited
+    # - under review
+    # - awaiting approval
+    #
+    # Helps maintain data consistency
+
+    version_id: id foreign:versions
+
+    locked_by: id foreign:staff
+    locked_at: timestamp
+
+    reason: string nullable
+
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # Task Management
+  # ------------------------------------------------------------------
+  Task:
+    # Represents a single unit of work to be completed
+    # Can be standalone OR part of a TaskList
+    # Supports assignment to both Role (who should do it) and Staff (who is doing it)
+
+    title: string
+    description: text nullable
+
+    # Assignment (WHO SHOULD DO IT - role responsibility)
+    role_id: id nullable foreign:roles
+
+    # Assignee (WHO IS DOING IT - actual staff)
+    staff_id: id nullable foreign:staff
+
+    # Optional grouping
+    task_list_id: id nullable foreign:task_lists
+
+    # Status lifecycle
+    status: enum:open,in_progress,completed,cancelled default:open
+
+    # Priority and due tracking
+    priority: enum:low,medium,high,urgent nullable
+    due_date: timestamp nullable
+
+    # Progress timestamps
+    started_at: timestamp nullable
+    completed_at: timestamp nullable
+
+    # Optional linkage for integration (workflow, asset, document, etc.)
+    ref_type: string nullable
+    ref_id: id nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  TaskList:
+    # Represents a group of related tasks
+    # Used for multi-step processes or operational packages
+    # Example: Maintenance checklist, onboarding flow
+
+    name: string
+    description: text nullable
+
+    # Optional linkage to origin (workflow, asset, etc.)
+    ref_type: string nullable
+    ref_id: id nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  TaskTemplate:
+    # Represents a reusable task definition (single step)
+    # Used to standardize repeatable work
+    # Example: "Inspect machine", "Approve document"
+
+    name: string
+    description: text nullable
+
+    # Default role responsible
+    role_id: id nullable foreign:roles
+
+    # Default values for generated tasks
+    default_priority: enum:low,medium,high,urgent nullable
+    default_due_days: integer nullable # e.g. +2 days after creation
+
+    attributes: json nullable
+    timestamps: true
+
+  TaskListTemplate:
+    # Represents a reusable TaskList (multi-step process)
+    # Defines structure and sequence of tasks
+    # Example: Monthly maintenance checklist
+
+    name: string
+    description: text nullable
+
+    # Defines execution rule:
+    # sequential = Finish-to-Start (FS)
+    # parallel = no strict order
+    execution_type: enum:sequential,parallel default:parallel
+
+    attributes: json nullable
+    timestamps: true
+
+  TaskListTemplateItem:
+    # Defines tasks inside a TaskListTemplate
+    # Links TaskTemplate into a structured list
+
+    task_list_template_id: id foreign:task_list_templates
+    task_template_id: id foreign:task_templates
+
+    # Order matters if sequential
+    sequence: integer nullable
+
+    # Dependency (for future workflow extension)
+    depends_on_id: id nullable foreign:task_list_template_items
+
+    attributes: json nullable
+    timestamps: true
+
+  TaskAssignment:
+    # Tracks assignment history and transitions
+    # Helps manage role-based assignment vs actual assignee resolution
+    # Useful when tasks move between staff or roles
+
+    task_id: id foreign:tasks
+
+    role_id: id nullable foreign:roles
+    staff_id: id nullable foreign:staff
+
+    assigned_by: id nullable foreign:staff
+
+    start_date: timestamp nullable
+    end_date: timestamp nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # Event Calendar
+  # ------------------------------------------------------------------
+
+  Event:
+    # Represents any calendar-based occurrence
+    # Combines:
+    # - Holidays (non-working days)
+    # - Company events
+    # - Operational events (shutdown, training, etc.)
+    #
+    # Behavior is controlled via "type"
+
+    name: string
+    description: text nullable
+
+    type: enum:holiday,company,operational,training,maintenance,other
+
+    start_at: timestamp
+    end_at: timestamp nullable
+
+    # Scope (optional)
+    org_corp_id: id nullable foreign:org_corps
+    org_unit_id: id nullable foreign:org_units
+    org_team_id: id nullable foreign:org_teams
+
+    # If true → blocks work (holiday / shutdown)
+    is_blocking: boolean default:false
+
+    attributes: json nullable
+    timestamps: true
+
+  Shift:
+    # Represents BOTH:
+    # - Shift pattern (time definition)
+    # - Shift group (who follows it)
+    #
+    # This simplifies the model into one powerful table
+
+    name: string
+    description: text nullable
+
+    # Shift type
+    type: enum:fixed,rotational nullable
+
+    # Working hours
+    start_time: time
+    end_time: time
+
+    # Assignment scope
+    org_unit_id: id nullable foreign:org_units
+    org_team_id: id nullable foreign:org_teams
+
+    # Optional direct staff assignment (for flexibility)
+    staff_id: id nullable foreign:staff
+
+    # Effective period (supports rotation/change over time)
+    start_date: date nullable
+    end_date: date nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # Workflow
+  # ------------------------------------------------------------------
+  Workflow:
+    # Represents a complete business process
+    # MUST be owned by exactly one OrgTeam
+    # Defines control logic only (NOT execution, NOT data state)
+
+    name: string
+    description: text nullable
+
+    # Ownership (CRITICAL RULE)
+    # Every workflow must belong to exactly ONE OrgTeam
+    # This team is accountable for the entire process
+    org_team_id: id foreign:org_teams
+
+    # Entry definition
+    # First step when a WorkflowInstance starts
+    start_step_id: id nullable foreign:workflow_steps
+
+    is_active: boolean default:true
+
+    # IMPORTANT:
+    # Use attributes to define step-level or workflow-level actions
+    # Example:
+    # {
+    #   "actions": [
+    #     { "type": "create_version", "is_menu": true }
+    #   ]
+    # }
+    #
+    # Workflow MAY trigger Version creation, BUT:
+    # ❗ Workflow DOES NOT manage Version lifecycle
+    # ❗ Workflow DOES NOT determine menu visibility rules
+    #
+    # Responsibilities:
+    # - Workflow → WHEN something happens
+    # - Version → WHAT state means (draft/published/is_menu)
+    attributes: json nullable
+
+    timestamps: true
+
+  WorkflowStep:
+    # Represents a state/checkpoint in a workflow
+    # Example:
+    # - Submitted
+    # - Review
+    # - Approved
+    # - Completed
+
+    workflow_id: id foreign:workflows
+
+    name: string
+    description: text nullable
+
+    # Step type classification
+    type: enum:start,process,decision,end default:process
+
+    # Behavior flags
+    requires_tasks: boolean default:false
+    requires_decision: boolean default:false
+
+    # If true → system auto-moves to next step (no manual action)
+    is_automatic: boolean default:false
+
+    # IMPORTANT:
+    # This is where step-level actions should be defined
+    #
+    # Example:
+    # {
+    #   "actions": [
+    #     {
+    #       "type": "create_version",
+    #       "version_type": "service",
+    #       "is_menu": true
+    #     }
+    #   ]
+    # }
+    #
+    # These actions are interpreted by application services
+    # NOT enforced by database schema
+    attributes: json nullable
+
+    timestamps: true
+
+  WorkflowTransition:
+    # Defines allowed movement between steps
+    # This enforces process control (what is allowed next)
+
+    workflow_id: id foreign:workflows
+
+    from_step_id: id foreign:workflow_steps
+    to_step_id: id foreign:workflow_steps
+
+    name: string nullable # e.g. "approve", "reject"
+
+    # Optional rule conditions (future: rule engine / ABAC / state checks)
+    conditions: json nullable
+
+    # If true → requires a decision (e.g. approval/rejection)
+    requires_approval: boolean default:false
+
+    attributes: json nullable
+    timestamps: true
+
+  WorkflowStepTask:
+    # Binds tasks or task lists to a workflow step
+    # Tasks are created when entering the step (NOT on transition)
+
+    workflow_step_id: id foreign:workflow_steps
+
+    # Either single task OR task list
+    task_template_id: id nullable foreign:task_templates
+    task_list_template_id: id nullable foreign:task_list_templates
+
+    # If true → workflow cannot proceed until tasks are completed
+    is_required: boolean default:true
+
+    attributes: json nullable
+    timestamps: true
+
+  WorkflowInstance:
+    # Represents a running instance of a workflow
+    # Created when a Request (or other entity) starts the process
+
+    workflow_id: id foreign:workflows
+
+    # Polymorphic reference to business entity
+    # Example: Request, Document, Versionable
+    ref_type: string nullable
+    ref_id: id nullable
+
+    # Current active step
+    current_step_id: id nullable foreign:workflow_steps
+
+    status: enum:active,completed,cancelled default:active
+
+    started_at: timestamp nullable
+    completed_at: timestamp nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  WorkflowInstanceStep:
+    # Tracks actual step progression (history)
+    # Provides full traceability of the workflow path
+
+    workflow_instance_id: id foreign:workflow_instances
+    workflow_step_id: id foreign:workflow_steps
+
+    status: enum:pending,active,completed,skipped default:pending
+
+    started_at: timestamp nullable
+    completed_at: timestamp nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  WorkflowDecision:
+    # Records decisions made at decision steps
+    # Example: approve, reject, request changes
+
+    workflow_instance_id: id foreign:workflow_instances
+    workflow_step_id: id foreign:workflow_steps
+
+    user_id: id foreign
+
+    # Decision outcome
+    decision: enum:approve,reject,request_changes
+
+    comment: text nullable
+
+    decided_at: timestamp
+
+    # IMPORTANT:
+    # This captures WHO decided and WHAT was decided
+    #
+    # AuditLog should ALSO record:
+    # - action: workflow.decision
+    # - metadata: decision, step, workflow
+    attributes: json nullable
+
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # Location
+  # ------------------------------------------------------------------
+  Location:
+    # Represents any physical place in the real world
+    # Example:
+    # - Site (Factory)
+    # - Building
+    # - Area (Production Floor)
+    # - Section (Line 1)
+    #
+    # Supports full hierarchy using parent_id
+    # This is the ONLY core table needed for location structure
+
+    name: string
+
+    # Classification of location level/type
+    type: enum:site,building,area,section,room,zone,other nullable
+
+    # Hierarchy (self-referencing)
+    parent_id: id nullable foreign:locations
+
+    # Optional ownership / association
+    org_corp_id: id nullable foreign:org_corps
+
+    attributes: json nullable
+    timestamps: true
+
+  LocationAssignment:
+    # Links locations to other entities
+    # Enables flexible association WITHOUT hardcoding relationships
+    #
+    # Examples:
+    # - Staff assigned to a location
+    # - Asset located at a place
+    # - JobPosition tied to a work area
+    # - OrgUnit operating in a facility
+    #
+    # This is a polymorphic assignment table
+
+    location_id: id foreign:locations
+
+    # Polymorphic target (what is assigned to this location)
+    assignable_type: string
+    assignable_id: id
+
+    # Optional purpose of assignment
+    type: enum:primary,secondary,temporary nullable
+
+    # Time-based assignment (supports movement/history)
+    start_date: date nullable
+    end_date: date nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # Service Catalog (Menu)
+  # ------------------------------------------------------------------
+
+  Service:
+    # Represents the identity of a service offered internally
+    # Example:
+    # - Repair Machine
+    # - Request Laptop
+    # - IT Support
+    #
+    # IMPORTANT:
+    # - Service is stable (rarely changes)
+    # - All definitions, forms, SLA, and menu visibility are handled in Version
+    # - This model should remain lightweight
+
+    name: string
+    description: text nullable
+
+    # Owning OrgTeam (accountable for service delivery)
+    org_team_id: id foreign:org_teams
+
+    attributes: json nullable
+    timestamps: true
+
+  ServiceCategory:
+    # Represents grouping of services for menu navigation
+    # Example:
+    # - IT Services
+    # - Maintenance Services
+    # - HR Services
+
+    name: string
+    description: text nullable
+
+    # Optional hierarchy (nested categories)
+    parent_id: id nullable foreign:service_categories
+
+    attributes: json nullable
+    timestamps: true
+
+  ServiceCategoryAssignment:
+    # Links Service to categories
+    # NOTE:
+    # Categories organize SERVICES (identity),
+    # but the menu is rendered using VERSIONS
+    #
+    # The system will:
+    # Service → Versions → filter (published + is_menu=true)
+    # → group by category
+
+    service_id: id foreign:services
+    service_category_id: id foreign:service_categories
+
+    attributes: json nullable
+    timestamps: true
+    
+  # ------------------------------------------------------------------
+  # Request Management
+  # ------------------------------------------------------------------
+
+  Request:
+    # Represents a business demand submitted by a user
+    # This is the ENTRY POINT of most processes
+    #
+    # IMPORTANT:
+    # - Stores request data (form inputs)
+    # - Represents business intent
+    # - Independent from workflow execution
+    #
+    # WorkflowInstance processes this Request,
+    # but does NOT replace it
+
+    name: string nullable
+    description: text nullable
+
+    # Who submitted the request
+    requester_id: id foreign:users
+
+    # Source service (via version)
+    version_id: id foreign:versions
+
+    # Optional classification
+    request_type: string nullable
+
+    # Status (high-level business status)
+    # NOTE:
+    # This is NOT the workflow engine state,
+    # but a simplified business-facing status
+    status: enum:submitted,in_review,approved,rejected,in_progress,completed,closed default:submitted
+
+    # Link to workflow execution
+    workflow_instance_id: id nullable foreign:workflow_instances
+
+    # Optional contextual references
+    ref_type: string nullable
+    ref_id: id nullable
+
+    attributes: json nullable
+    timestamps: true
+
+  RequestType:
+    # Defines category of request
+    # Maps to workflow + business rules
+    #
+    # Example:
+    # - Maintenance Request
+    # - IT Support
+    # - HR Request
+
+    name: string
+
+    # Default workflow to trigger
+    workflow_id: id nullable foreign:workflows
+
+    attributes: json nullable
+    timestamps: true
+
+  # ------------------------------------------------------------------
+  # System Panels
+  # ------------------------------------------------------------------
+
+  # ------------------------------------------------------------------
+  # Learning
+  # ------------------------------------------------------------------
+
+  # ------------------------------------------------------------------
+  # Certificate Management
+  # ------------------------------------------------------------------
+
+  # ------------------------------------------------------------------
+  # Document Management System
+  # ------------------------------------------------------------------
+
+  # ------------------------------------------------------------------
+  #  Asset Management
+  # ------------------------------------------------------------------
