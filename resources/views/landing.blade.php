@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
 
 <head>
     <meta charset="utf-8" />
@@ -11,7 +11,7 @@
     <meta name="author" content="Rimba" />
 
     <!-- Icons -->
-    <link rel="icon" href="/docs/tapir.png" />
+    <link rel="icon" href="/pics/tapir.png" />
 
     <!-- Inter web font from bunny.net (GDPR compliant) -->
     <link rel="preconnect" href="https://fonts.bunny.net" />
@@ -42,6 +42,13 @@
             display: none !important;
         }
     </style>
+    <!-- GitHub Markdown CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css">
+
+    <!-- Markdown-it -->
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+<!-- ADD THIS -->
+<script src="https://cdn.jsdelivr.net/npm/markdown-it-anchor/dist/markdownItAnchor.umd.js"></script>
 </head>
 
 <body class="antialiased">
@@ -107,13 +114,13 @@
                     <!-- Nav -->
                     <nav class="flex items-center gap-6">
                         <a href="#features"
-                            class="text-sm font-medium decoration-green-600 decoration-2 underline-offset-8 hover:text-black hover:underline dark:decoration-purple-400 dark:hover:text-white">
+                            class="text-sm font-medium decoration-purple-600 decoration-2 underline-offset-8 hover:text-black hover:underline dark:decoration-purple-400 dark:hover:text-white">
                             Features
                         </a>
-                        <a href="#contact"
-                            class="text-sm font-medium decoration-green-600 decoration-2 underline-offset-8 hover:text-black hover:underline dark:decoration-purple-400 dark:hover:text-white">
+                        {{-- <a href="#contact"
+                            class="text-sm font-medium decoration-purple-600 decoration-2 underline-offset-8 hover:text-black hover:underline dark:decoration-purple-400 dark:hover:text-white">
                             Hire me
-                        </a>
+                        </a> --}}
                     </nav>
                     <!-- END Nav -->
                 </div>
@@ -124,7 +131,8 @@
             <div class="grid grid-cols-1 gap-6 md:grid-cols-12">
                 <!-- Photo -->
                 <div class="col-span-1 md:col-span-5">
-                    <img src="assets/photo.jpg" alt="Photo" class="rounded-xl object-cover w-full aspect-square" />
+                    <img src="/pics/tapir_pic_dark.jpg" alt="Photo"
+                        class="rounded-xl object-cover w-full aspect-square" />
                 </div>
                 <!-- END Photo -->
 
@@ -154,291 +162,239 @@
                 <!-- END Intro -->
                 <!-- Self Service Portal -->
                 <div class="col-span-1 md:col-span-12">
-                    <div class="relative flex flex-col overflow-hidden rounded-xl bg-zinc-100 p-12 dark:bg-zinc-900">
+                    <a href="#moreinfo" @click="$dispatch('load-doc', 'All')">
 
-                        <!-- Decorative Blobs -->
-                        <div aria-hidden="true"
-                            class="absolute -top-20 -left-20 size-48 rounded-full bg-green-400 blur-2xl"></div>
-                        <div aria-hidden="true"
-                            class="absolute -bottom-10 -right-10 size-72 rounded-full bg-emerald-300 blur-3xl"></div>
-                        <div aria-hidden="true"
-                            class="absolute inset-0 bg-green-100/50 backdrop-blur-md dark:bg-green-900/60"></div>
+                        <div
+                            class="relative flex flex-col overflow-hidden rounded-xl bg-zinc-100 p-12 dark:bg-zinc-900">
 
-                        <!-- Content -->
-                        <div class="relative text-center max-w-3xl mx-auto">
-                            <h2 class="text-3xl font-medium text-black dark:text-white">
-                                🧰 Staff Self‑Service Portal
-                            </h2>
+                            <!-- Decorative Blobs -->
+                            <div aria-hidden="true"
+                                class="absolute -top-20 -left-20 size-48 rounded-full bg-green-400 blur-2xl"></div>
+                            <div aria-hidden="true"
+                                class="absolute -bottom-10 -right-10 size-72 rounded-full bg-emerald-300 blur-3xl">
+                            </div>
+                            <div aria-hidden="true"
+                                class="absolute inset-0 bg-green-100/50 backdrop-blur-md dark:bg-green-900/60"></div>
 
-                            <p class="mt-4 text-zinc-800 leading-relaxed dark:text-zinc-200">
-                                The RIMBA Self-Service Portal is your <strong>personal toolbox of services</strong> —
-                                empowering every employee to find, select, and use what they need independently,
-                                anytime.
-                            </p>
+                            <!-- Content -->
+                            <div class="relative text-center max-w-3xl mx-auto">
+                                <h2 class="text-3xl font-medium text-black dark:text-white">
+                                    🧰 Staff Self‑Service Portal
+                                </h2>
+
+                                <p class="mt-4 text-zinc-800 leading-relaxed dark:text-zinc-200">
+                                    The RIMBA Self-Service Portal is your <strong>personal toolbox of services</strong>
+                                    —
+                                    empowering every employee to find, select, and use what they need independently,
+                                    anytime.
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <!-- END Self Service Portal -->
                 <!-- Features -->
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/org-elephant.svg')) !!}
+                @php
+                    $features = [
+                        [
+                            'icon' => 'svg/org-elephant.svg',
+                            'title' => 'Organization',
+                            'pic' => 'svg/org-orgunit.svg',
+                            'desc' =>
+                                'Social structure of the elephant herd, Organization connects people within an intelligent and coordinated hierarchy.',
+                        ],
+                        [
+                            'icon' => 'svg/ldi-owl.svg',
+                            'title' => 'Learn',
+                            'pic' => 'svg/ldi-learn.svg',
+                            'desc' =>
+                                'Owls are universally associated with wisdom and knowledge. Learning is about gaining insight — having the wisdom to act correctly in real-world scenarios.',
+                        ],
+                        [
+                            'icon' => 'svg/doc-honeybee.svg',
+                            'title' => 'Document',
+                            'pic' => 'svg/doc-document.svg',
+                            'desc' =>
+                                'Honeybees that tirelessly gather and store nectar, the Document system organizes and preserves knowledge for easy retrieval.',
+                        ],
+                        [
+                            'icon' => 'svg/eam-horse.svg',
+                            'title' => 'Asset',
+                            'pic' => 'svg/eam-asset.svg',
+                            'desc' =>
+                                'Horses are known for their strength and value. Assets are the backbone of operations — reliable, long-lasting, and essential for carrying business forward.',
+                        ],
+                        [
+                            'icon' => 'svg/job-buffalo.svg',
+                            'title' => 'Task',
+                            'pic' => 'svg/job-task.svg',
+                            'desc' =>
+                                'Like a buffalo that continues to move and perseveres through challenges, Tasks drive disciplined execution and continuous progress.',
+                        ],
+                        [
+                            'icon' => 'svg/ldi-butterfly.svg',
+                            'title' => 'Certificate',
+                            'pic' => 'svg/ldi-certificate.svg',
+                            'desc' =>
+                                'A butterfly emerging through transformation, Certificates represent achievement, growth, and capability.',
+                        ],
+                        [
+                            'icon' => 'svg/cal-bird.svg',
+                            'title' => 'Calendar',
+                            'pic' => 'svg/cal-calendar.svg',
+                            'desc' =>
+                                'Just like a bird kicks off the morning, the Calendar keeps everyone informed with work hours, events, and holidays.',
+                        ],
+                        [
+                            'icon' => 'svg/sec-leopard.svg',
+                            'title' => 'Authorization',
+                            'pic' => 'svg/sec-security.svg',
+                            'desc' =>
+                                'Like a leopard that guards its territory, Security protects access and enforces control across the system.',
+                        ],
+                        [
+                            'icon' => 'svg/svc-orangutan.svg',
+                            'title' => 'Catalog',
+                            'pic' => 'svg/svc-menu.svg',
+                            'desc' =>
+                                'An orangutan that skillfully uses tools, the Service Menu enables flexible and intelligent use of available services.',
+                        ],
+                        [
+                            'icon' => 'svg/pwf-turtle.svg',
+                            'title' => 'Workflow',
+                            'pic' => 'svg/pwf-workflow.svg',
+                            'desc' =>
+                                'Turtle diagrams that define inputs, processes, and outputs, Workflows structure operations into clear, controlled, and repeatable steps.',
+                        ],
+                        [
+                            'icon' => 'svg/loc-eagle.svg',
+                            'title' => 'Location',
+                            'pic' => 'svg/loc-location.svg',
+                            'desc' =>
+                                'Eagle\'s sharp eye from above, Location provides clear visibility and awareness across the operational landscape.',
+                        ],
+                        // [
+                        //     'icon' => 'svg/req-parrot.svg',
+                        //     'title' => 'Request',
+                        //     'pic' => 'svg/req-request.svg',
+                        //     'desc' =>
+                        //         'A parrot that listens and repeats exactly as heard, Requests capture instructions clearly and relay them without distortion.',
+                        // ],
+                        [
+                            'icon' => 'svg/ver-cricket.svg',
+                            'title' => 'Versioning',
+                            'pic' => 'svg/ver-major.svg',
+                            'desc' =>
+                                'Just as a cricket grows through distinct iterative stages (instars), Versioning tracks every update, patch, and release in a controlled evolution.',
+                        ],
+                    ];
+                @endphp
+                @foreach ($features as $feature)
+                    <a href="#moreinfo" @click="$dispatch('load-doc', '{{ $feature['title'] }}')"
+                        class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-3 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
+                        <!-- Hover Icon -->
+                        <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
+                            aria-hidden="true">
+                            <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
+                                {!! file_get_contents(resource_path($feature['icon'])) !!}
+                            </div>
                         </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Organization</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">Social structure of the elephant herd,
-                        Organization connects people within an intelligent and coordinated hierarchy.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/org-orgunit.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/ldi-owl.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Learn</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">Owls are universally associated with wisdom
-                        and knowledge. Learning is about gaining insight — having the wisdom to act correctly in
-                        real-world scenarios.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/ldi-learn.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/doc-honeybee.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Document</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">Honeybees that tirelessly gather and store
-                        nectar, the Document system organizes and preserves knowledge for easy retrieval.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/doc-document.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/eam-horse.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Asset</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">Horses are known for their strength and value.
-                        Assets are the backbone of operations — reliable, long-lasting, and essential for carrying
-                        business forward.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/eam-asset.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/job-buffalo.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Task</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">Like a buffalo that continues to move and
-                        perseveres through challenges, Tasks drive disciplined execution and continuous progress.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/job-task.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/ldi-butterfly.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Certificate</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">A butterfly emerging through transformation,
-                        Certificates represent achievement, growth, and capability.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/ldi-certificate.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/cal-bird.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">
-                        Calendar
-                    </h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">Just like a bird kicks off the morning, the
-                        Calendar keeps everyone informed with work hours, events, and holidays.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/cal-calendar.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/sec-leopard.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Authorization</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">Like a leopard that guards its territory,
-                        Security protects access and enforces control across the system.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/sec-security.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/svc-orangutan.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Service Catalog</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">An orangutan that skillfully uses tools, the
-                        Service Menu enables flexible and intelligent use of available services.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/svc-menu.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/pwf-turtle.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Process Workflow</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">Turtle diagrams that define inputs, processes,
-                        and outputs, Workflows structure operations into clear, controlled, and repeatable steps.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/pwf-workflow.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/loc-eagle.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Location</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">Eagle's sharp eye from above, Location
-                        provides clear visibility and awareness across the operational landscape.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/loc-location.svg')) !!}
-                        </div>
-                    </div>
-                </a>
-                <a id="features" href="javascript:void(0)"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-4 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path('svg/req-parrot.svg')) !!}
-                        </div>
-                    </div>
-                    <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">Request</h3>
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">A parrot that listens and repeats exactly as
-                        heard, Requests capture instructions clearly and relay them without distortion.</h4>
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path('svg/req-request.svg')) !!}
-                        </div>
-                    </div>
-                </a>
 
+                        <!-- Title -->
+                        <h3 class="text-lg font-medium text-zinc-950 dark:text-zinc-50">
+                            {{ $feature['title'] }}
+                        </h3>
+
+                        <!-- Description -->
+                        <h4 class="text-sm text-zinc-600 dark:text-zinc-400">
+                            {{ $feature['desc'] }}
+                        </h4>
+
+                        <!-- Main Image -->
+                        <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
+                            <div class="rounded-xl object-contain w-full aspect-square">
+                                {!! file_get_contents(resource_path($feature['pic'])) !!}
+                            </div>
+                        </div>
+
+                    </a>
+                @endforeach
                 <!-- END Features -->
 
-                <!-- Contact -->
-                <div id="contact"
-                    class="relative col-span-1 flex flex-col overflow-hidden rounded-xl bg-zinc-100 px-12 py-20 md:col-span-12 dark:bg-zinc-900">
-                    <div aria-hidden="true"
-                        class="absolute -top-20 -left-20 size-48 rounded-full bg-pink-300 blur-2xl"></div>
-                    <div aria-hidden="true"
-                        class="absolute -right-48 -bottom-48 size-96 rounded-full bg-indigo-200 blur-2xl dark:bg-indigo-400/50">
-                    </div>
-                    <div aria-hidden="true"
-                        class="absolute -top-48 -right-48 size-96 rounded-full bg-purple-200 blur-3xl dark:bg-purple-400/50">
-                    </div>
-                    <div aria-hidden="true"
-                        class="absolute inset-0 bg-purple-100/50 backdrop-blur-md dark:bg-purple-900/75"></div>
-                    <div class="relative mx-auto mt-auto max-w-md">
-                        <h2 class="text-4xl font-medium text-black dark:text-white">
-                            Get in touch
-                        </h2>
-                        <h3 class="mt-3 leading-relaxed text-zinc-900 dark:text-zinc-200">
-                            Looking for a creative partner for your next project? I'm
-                            currently available for freelance work and would love to hear
-                            about your ideas. Whether you need branding, web design, or
-                            print materials, let's collaborate to bring your vision to life.
-                        </h3>
-                        <form onsubmit="return false;" class="mt-10 w-full space-y-6">
-                            <div class="space-y-2">
-                                <label for="name" class="inline-block text-sm font-medium">Name</label>
-                                <input type="text" id="name" name="name"
-                                    class="block w-full rounded-lg bg-white border border-white px-5 py-3 leading-6 placeholder-zinc-500 focus:outline-hidden focus:border-purple-500 focus:ring-3 focus:ring-purple-500/50 focus:outline-hidden dark:border-purple-950 dark:bg-purple-950 dark:placeholder-zinc-400 dark:focus:border-purple-500" />
-                            </div>
-                            <div class="space-y-2">
-                                <label for="email" class="inline-block text-sm font-medium">Email</label>
-                                <input type="email" id="email" name="email"
-                                    class="block w-full rounded-lg bg-white border border-white px-5 py-3 leading-6 placeholder-zinc-500 focus:outline-hidden focus:border-purple-500 focus:ring-3 focus:ring-purple-500/50 focus:outline-hidden dark:border-purple-950 dark:bg-purple-950 dark:placeholder-zinc-400 dark:focus:border-purple-500" />
-                            </div>
-                            <div class="space-y-2">
-                                <label for="message" class="inline-block text-sm font-medium">Message</label>
-                                <textarea id="message" name="message" rows="6"
-                                    class="block w-full rounded-lg bg-white border border-white px-5 py-3 leading-6 placeholder-zinc-500 focus:outline-hidden focus:border-purple-500 focus:ring-3 focus:ring-purple-500/50 focus:outline-hidden dark:border-purple-950 dark:bg-purple-950 dark:placeholder-zinc-400 dark:focus:border-purple-500"></textarea>
-                            </div>
-                            <button type="submit"
-                                class="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-purple-700 bg-purple-700 px-5 py-3 text-sm leading-6 font-semibold text-white hover:border-purple-600 hover:bg-purple-600 hover:text-white focus:ring-3 focus:ring-purple-400/50 active:border-purple-700 active:bg-purple-700 lg:w-auto dark:focus:ring-purple-400/90">
-                                <span>Send Message</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <!-- END Contact -->
+                <!-- Documentation Slide-over -->
+<!-- Documentation Slide-over -->
+<div x-data="{
+    open: false,
+    content: 'Select a feature to view documentation…',
 
+    async load(anchor) {
+
+        try {
+
+            // Always load ONE markdown file
+            const res = await fetch('/docs/All.md');
+
+            if (!res.ok) {
+                throw new Error('Not found');
+            }
+
+            const text = await res.text();
+
+            // Markdown renderer
+            const md = window.markdownit({
+                html: true,
+                linkify: true,
+                typographer: true
+            }).use(window.markdownItAnchor, {
+                permalink: false
+            });
+
+            // Render markdown
+            this.content = md.render(text);
+
+            // Open panel
+            this.open = true;
+
+            // Wait until HTML rendered
+            this.$nextTick(() => {
+
+                if (!anchor) return;
+
+                // Convert heading -> anchor id
+                // Example:
+                // "Self Service Portal"
+                // -> "self-service-portal"
+                const id = anchor
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, '-');
+
+                // Find heading
+                const el = document.getElementById(id);
+
+                // Scroll to heading
+                if (el) {
+                    el.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+
+            });
+
+        } catch (e) {
+
+            this.content = `
+                <p>
+                    <strong>Documentation failed to load.</strong>
+                </p>
+            `;
+
+            this.open = true;
+        }
+    }
+}" @load-doc.window="load($event.detail)">
+<!-- End Documentation Slide-over -->
                 <!-- Footer -->
                 <footer
                     class="flex flex-col gap-6 py-7 text-center text-sm md:col-span-12 md:flex-row-reverse md:justify-between md:gap-0 md:text-left">
