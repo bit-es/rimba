@@ -72,30 +72,32 @@
                 <!--  -->
                 <div class="w-full flex gap-2 items-center justify-between">
                     <div class="ld:w-1/3 flex flex-col">
-                        <h2 class="text-4xl capitalize font-semibold dark:text-white">Let's Explore the world with Us
+                        <h2 class="text-4xl capitalize font-semibold dark:text-white">The Industrial Nervous System for Factory
                         </h2>
-                        <p class="mt-2 dark:text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                            do eiusmod tempor incididunt incididuntadipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore</p>
-                        <button class="w-fit px-4 py-2 rounded mt-4 font-semibold bg-green-600 text-white">Learn
-                            More</button>
+                        <p class="mt-2 dark:text-gray-400">
+                            Designed for modern manufacturing and enterprise teams, RIMBA brings everything 
+                            organization needs into one unified platform — enabling clarity, efficiency, and smarter
+                            decisions at every level.
+                        </p>
+                        {{-- <button class="w-fit px-4 py-2 rounded mt-4 font-semibold bg-green-600 text-white">Learn
+                            More</button> --}}
                     </div>
                     <!--  -->
                     <!-- Admin Panel: Sage Green Button -->
                     <a href="{{ route('filament.staff.pages.dashboard') }}"
-                        class="lg:inline-flex hidden items-center justify-center w-[16rem] h-[3.5rem] font-medium text-white bg-[#556B2F] hover:bg-[#415324] rounded-lg transition-colors shadow-sm">
+                        class="lg:inline-flex hidden items-center justify-center w-[16rem] h-14 font-medium text-white bg-[#556B2F] hover:bg-[#415324] rounded-lg transition-colors shadow-sm">
                         Staff Panel
                     </a>
 
                     <!-- Staff Panel: Warm Terracotta/Clay Button -->
                     <a href="{{ route('filament.admin.pages.dashboard') }}"
-                        class="xl:inline-flex hidden items-center justify-center w-[16rem] h-[3.5rem] font-medium text-white bg-[#C25A3F] hover:bg-[#A3462F] rounded-lg transition-colors shadow-sm">
+                        class="xl:inline-flex hidden items-center justify-center w-[16rem] h-14 font-medium text-white bg-[#C25A3F] hover:bg-[#A3462F] rounded-lg transition-colors shadow-sm">
                         Admin Panel
                     </a>
 
                     <!-- General App: Deep Ochre/Mud Button -->
                     <a href="{{ route('about') }}"
-                        class="sm:inline-flex hidden items-center justify-center w-[16rem] h-[3.5rem] font-medium text-white bg-[#8B5A2B] hover:bg-[#6E441F] rounded-lg transition-colors shadow-sm">
+                        class="sm:inline-flex hidden items-center justify-center w-[16rem] h-14 font-medium text-white bg-[#8B5A2B] hover:bg-[#6E441F] rounded-lg transition-colors shadow-sm">
                         About Rimba
                     </a>
                 </div>

@@ -76,7 +76,7 @@
                 <div class="flex items-center gap-2">
 
                     <!-- Logo -->
-                    <a href="javascript:void(0)"
+                    <a href="{{ route('welcome') }}"
                         class="font-logo text-2xl tracking-widest hover:text-lime-600 active:opacity-75 dark:hover:text-lime-400">
                         RIMBA
                     </a>
@@ -149,12 +149,12 @@
                             Resource Integration for Manufacturing & Business Alignment
                         </h1>
                         <h2 class="mt-3 leading-relaxed text-zinc-900 dark:text-zinc-200">
-                            The Industrial Nervous System for Your Factory
-                            RIMBA is not just software — it’s a living environment where People, Assets, and Data speak
+                            <br><br>RIMBA is not just software — it’s a living environment where People, Assets, and Data speak
                             the same language.
-                            Designed for modern manufacturing and enterprise teams, RIMBA brings everything your
+                            <br><br>Designed for modern manufacturing and enterprise teams, RIMBA brings everything your
                             organization needs into one unified platform — enabling clarity, efficiency, and smarter
                             decisions at every level.
+                            <br><br>The Industrial Nervous System for Your Factory
                         </h2>
                     </div>
                 </div>
