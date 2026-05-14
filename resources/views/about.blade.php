@@ -29,7 +29,7 @@
         @theme {
             /* 1. Global site font variable for Tailwind v4 */
             --font-sans: "Asap", sans-serif;
-            
+
             /* 2. Custom logo font class definition */
             --font-logo: "Chelsea Market", cursive;
         }
@@ -69,7 +69,8 @@
         }
     }" class="min-h-dvh min-w-80 bg-white text-zinc-800 dark:bg-zinc-950 dark:text-zinc-100">
         <!-- Page Content -->
-        <main id="page-content" class="mx-auto flex max-w-6xl flex-auto flex-col px-4 pb-4 lg:px-8 lg:pb-8">
+        <main id="page-content" class="mx-auto flex max-w-7xl flex-auto flex-col px-4 pb-4 lg:px-8 lg:pb-8">
+            {{-- <main id="page-content" class="mx-auto flex max-w-[calc(100%-8rem)] md:max-w-[calc(100%-8rem)] lg:max-w-[calc(100%-8rem)] flex-auto flex-col px-4 pb-4 lg:px-8 lg:pb-8"> --}}
             <!-- Main Header -->
             <header id="page-header" class="flex flex-none items-center justify-between py-7">
                 <div class="flex items-center gap-2">
@@ -130,8 +131,7 @@
             <div class="grid grid-cols-1 gap-6 md:grid-cols-12">
                 <!-- Photo -->
                 <div class="col-span-1 md:col-span-5">
-                    <img src="/pics/rimba.jpg" alt="Photo"
-                        class="rounded-xl object-cover w-full aspect-square" />
+                    <img src="/pics/rimba.jpg" alt="Photo" class="rounded-xl object-cover w-full aspect-square" />
                 </div>
                 <!-- END Photo -->
 
@@ -194,197 +194,213 @@
                 <!-- END Self Service Portal -->
                 <!-- Features -->
                 @php
-                $features = [
-                [
-                'icon' => 'svg/org-elephant.svg',
-                'title' => 'Organization',
-                'pic' => 'svg/org-orgunit.svg',
-                'desc' =>
-                'Social structure of the elephant herd, Organization connects people within an intelligent and coordinated hierarchy.',
-                ],
-                [
-                'icon' => 'svg/ldi-owl.svg',
-                'title' => 'Learn',
-                'pic' => 'svg/ldi-learn.svg',
-                'desc' =>
-                'Owls are universally associated with wisdom and knowledge. Learning is about gaining insight — having the wisdom to act correctly in real-world scenarios.',
-                ],
-                [
-                'icon' => 'svg/doc-honeybee.svg',
-                'title' => 'Document',
-                'pic' => 'svg/doc-document.svg',
-                'desc' =>
-                'Honeybees that tirelessly gather and store nectar, the Document system organizes and preserves knowledge for easy retrieval.',
-                ],
-                [
-                'icon' => 'svg/eam-horse.svg',
-                'title' => 'Asset',
-                'pic' => 'svg/eam-asset.svg',
-                'desc' =>
-                'Horses are known for their strength and value. Assets are the backbone of operations — reliable, long-lasting, and essential for carrying business forward.',
-                ],
-                [
-                'icon' => 'svg/job-buffalo.svg',
-                'title' => 'Task',
-                'pic' => 'svg/job-task.svg',
-                'desc' =>
-                'Like a buffalo that continues to move and perseveres through challenges, Tasks drive disciplined execution and continuous progress.',
-                ],
-                [
-                'icon' => 'svg/ldi-butterfly.svg',
-                'title' => 'Certificate',
-                'pic' => 'svg/ldi-certificate.svg',
-                'desc' =>
-                'A butterfly emerging through transformation, Certificates represent achievement, growth, and capability.',
-                ],
-                [
-                'icon' => 'svg/cal-bird.svg',
-                'title' => 'Calendar',
-                'pic' => 'svg/cal-calendar.svg',
-                'desc' =>
-                'Just like a bird kicks off the morning, the Calendar keeps everyone informed with work hours, events, and holidays.',
-                ],
-                [
-                'icon' => 'svg/sec-leopard.svg',
-                'title' => 'Authorization',
-                'pic' => 'svg/sec-security.svg',
-                'desc' =>
-                'Like a leopard that guards its territory, Security protects access and enforces control across the system.',
-                ],
-                [
-                'icon' => 'svg/svc-orangutan.svg',
-                'title' => 'Catalog',
-                'pic' => 'svg/svc-menu.svg',
-                'desc' =>
-                'An orangutan that skillfully uses tools, the Service Menu enables flexible and intelligent use of available services.',
-                ],
-                [
-                'icon' => 'svg/pwf-turtle.svg',
-                'title' => 'Workflow',
-                'pic' => 'svg/pwf-workflow.svg',
-                'desc' =>
-                'Turtle diagrams that define inputs, processes, and outputs, Workflows structure operations into clear, controlled, and repeatable steps.',
-                ],
-                [
-                'icon' => 'svg/loc-eagle.svg',
-                'title' => 'Location',
-                'pic' => 'svg/loc-location.svg',
-                'desc' =>
-                'Eagle\'s sharp eye from above, Location provides clear visibility and awareness across the operational landscape.',
-                ],
-                [
-                'icon' => 'svg/req-parrot.svg',
-                'title' => 'Request',
-                'pic' => 'svg/req-request.svg',
-                'desc' =>
-                'A parrot that listens and repeats exactly as heard, Requests capture instructions clearly and relay them without distortion.',
-                ],
-                [
-                'icon' => 'svg/ver-cricket.svg',
-                'title' => 'Version',
-                'pic' => 'svg/ver-major.svg',
-                'desc' =>
-                'Just as a cricket grows through distinct iterative stages (instars), Versioning tracks every update, patch, and release in a controlled evolution.',
-                ],
-                [
-                'icon' => 'svg/aud-spider.svg',
-                'title' => 'Audit Trail',
-                'pic' => 'svg/aud-footprints.svg',
-                'desc' =>
-                'Just as a spider spins an intricate web leaving a precise, traceable map of its movement, the Audit Trail records every systemic action to form a permanent, chronological path of truth.',
-                ]
-                ];
+                    $features = [
+                        [
+                            'icon' => 'svg/org-elephant.svg',
+                            'title' => 'Organization',
+                            'pic' => 'svg/org-orgunit.svg',
+                            'desc' =>
+                                'Social structure of the elephant herd, Organization connects people within an intelligent and coordinated hierarchy.',
+                        ],
+                        [
+                            'icon' => 'svg/ldi-owl.svg',
+                            'title' => 'Learn',
+                            'pic' => 'svg/ldi-learn.svg',
+                            'desc' =>
+                                'Owls are universally associated with wisdom and knowledge. Learning is about gaining insight — having the wisdom to act correctly in real-world scenarios.',
+                        ],
+                        [
+                            'icon' => 'svg/doc-honeybee.svg',
+                            'title' => 'Document',
+                            'pic' => 'svg/doc-document.svg',
+                            'desc' =>
+                                'Honeybees that tirelessly gather and store nectar, the Document system organizes and preserves knowledge for easy retrieval.',
+                        ],
+                        [
+                            'icon' => 'svg/eam-horse.svg',
+                            'title' => 'Asset',
+                            'pic' => 'svg/eam-asset.svg',
+                            'desc' =>
+                                'Horses are known for their strength and value. Assets are the backbone of operations — reliable, long-lasting, and essential for carrying business forward.',
+                        ],
+                        [
+                            'icon' => 'svg/job-buffalo.svg',
+                            'title' => 'Task',
+                            'pic' => 'svg/job-task.svg',
+                            'desc' =>
+                                'Like a buffalo that continues to move and perseveres through challenges, Tasks drive disciplined execution and continuous progress.',
+                        ],
+                        [
+                            'icon' => 'svg/ldi-butterfly.svg',
+                            'title' => 'Certificate',
+                            'pic' => 'svg/ldi-certificate.svg',
+                            'desc' =>
+                                'A butterfly emerging through transformation, Certificates represent achievement, growth, and capability.',
+                        ],
+                        [
+                            'icon' => 'svg/cal-bird.svg',
+                            'title' => 'Calendar',
+                            'pic' => 'svg/cal-calendar.svg',
+                            'desc' =>
+                                'Just like a bird kicks off the morning, the Calendar keeps everyone informed with work hours, events, and holidays.',
+                        ],
+                                                [
+                            'icon' => 'svg/loc-eagle.svg',
+                            'title' => 'Location',
+                            'pic' => 'svg/loc-location.svg',
+                            'desc' =>
+                                'Eagle\'s sharp eye from above, Location provides clear visibility and awareness across the operational landscape.',
+                        ],
+                        [
+                            'icon' => 'svg/sec-leopard.svg',
+                            'title' => 'Authorization',
+                            'pic' => 'svg/sec-security.svg',
+                            'desc' =>
+                                'Like a leopard that guards its territory, Security protects access and enforces control across the system.',
+                        ],
+
+                        [
+                            'icon' => 'svg/pwf-turtle.svg',
+                            'title' => 'Workflow',
+                            'pic' => 'svg/pwf-workflow.svg',
+                            'desc' =>
+                                'Turtle diagrams that define inputs, processes, and outputs, Workflows structure operations into clear, controlled, and repeatable steps.',
+                        ],
+                                                [
+                            'icon' => 'svg/svc-orangutan.svg',
+                            'title' => 'Catalog',
+                            'pic' => 'svg/svc-menu.svg',
+                            'desc' =>
+                                'An orangutan that skillfully uses tools, the Service Menu enables flexible and intelligent use of available services.',
+                        ],
+                        [
+                            'icon' => 'svg/req-parrot.svg',
+                            'title' => 'Request',
+                            'pic' => 'svg/req-request.svg',
+                            'desc' =>
+                                'A parrot that listens and repeats exactly as heard, Requests capture instructions clearly and relay them without distortion.',
+                        ],
+                        [
+                            'icon' => 'svg/ver-cricket.svg',
+                            'title' => 'Version',
+                            'pic' => 'svg/ver-major.svg',
+                            'desc' =>
+                                'Just as a cricket grows through distinct iterative stages (instars), Versioning tracks every update, patch, and release in a controlled evolution.',
+                        ],
+                        [
+                            'icon' => 'svg/aud-spider.svg',
+                            'title' => 'Audit Trail',
+                            'pic' => 'svg/aud-footprints.svg',
+                            'desc' =>
+                                'Like a spider weaving a traceable web, the Audit Trail records every system action to form a permanent path of truth.',
+                        ],
+                        [
+                            'icon' => 'svg/rec-peacock.svg',
+                            'title' => 'Recruitment',
+                            'pic' => 'svg/rec-handshake.svg',
+                            'desc' =>
+                                'Like a peacock spotting vibrant features in a crowd, Recruitment pinpoints the perfect candidates with exceptional merit.',
+                        ],
+                        [
+                            'icon' => 'svg/bid-fish.svg',
+                            'title' => 'Tendering',
+                            'pic' => 'svg/bid-mallet.svg',
+                            'desc' =>
+                                'Like a tropical fish standing out in a complex reef, an Invitation to Bid highlights prime opportunities to attract elite vendors.',
+                        ],
+                    ];
                 @endphp
                 @foreach ($features as $feature)
-                <a href="#moreinfo" title="Click for more info on {{ $feature['title'] }}" @click="$dispatch('load-doc', '{{ $feature['title'] }}')"
-                    class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-3 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800">
-                    <!-- Hover Icon -->
-                    <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
-                        aria-hidden="true">
-                        <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
-                            {!! file_get_contents(resource_path($feature['icon'])) !!}
+                    <a href="#moreinfo" title="Click for more info on {{ $feature['title'] }}"
+                        @click="$dispatch('load-doc', '{{ $feature['title'] }}')"
+                        class="group relative col-span-1 overflow-hidden rounded-xl bg-zinc-100 p-6 hover:bg-zinc-200/75 active:bg-zinc-200 md:col-span-3 dark:bg-zinc-900 dark:hover:bg-zinc-800/75 dark:active:bg-zinc-800 aspect-square">
+                        <!-- Hover Icon -->
+                        <div class="absolute top-6 right-6 scale-0 opacity-0 transition duration-75 ease-out group-hover:scale-100 group-hover:opacity-100"
+                            aria-hidden="true">
+                            <div class="w-6 h-6 [&>svg]:w-full [&>svg]:h-full [&>svg]:fill-current">
+                                {!! file_get_contents(resource_path($feature['icon'])) !!}
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Title -->
-                    <h3 class="font-logo text-lg font-semibold text-zinc-950 dark:text-zinc-50">
-                        {{ $feature['title'] }}
-                    </h3>
+                        <!-- Title (Brought to front) -->
+                        <h3 class="relative z-10 font-logo text-lg font-semibold text-zinc-950 dark:text-zinc-50">
+                            {{ $feature['title'] }}
+                        </h3>
 
-                    <!-- Description -->
-                    <h4 class="text-sm text-zinc-600 dark:text-zinc-400">
-                        {{ $feature['desc'] }}
-                    </h4>
+                        <!-- Description (Brought to front) -->
+                        <h4 class="relative z-10 text-sm text-zinc-600 dark:text-zinc-400">
+                            {{ $feature['desc'] }}
+                        </h4>
 
-                    <!-- Main Image -->
-                    <div class="mt-10 transition duration-150 ease-out group-hover:scale-105">
-                        <div class="rounded-xl object-contain w-full aspect-square">
-                            {!! file_get_contents(resource_path($feature['pic'])) !!}
+                        <!-- Main Image Container -->
+                        <div
+                            class="absolute bottom-6 left-6 right-6 top-36 flex items-center justify-center overflow-hidden transition duration-150 ease-out group-hover:scale-105">
+                            <div
+                                class="w-full h-full flex items-center justify-center rounded-xl [&>svg]:w-auto [&>svg]:h-full [&>svg]:max-h-full [&>svg]:max-w-full [&>svg]:object-contain">
+                                {!! file_get_contents(resource_path($feature['pic'])) !!}
+                            </div>
                         </div>
-                    </div>
 
-                </a>
+
+                    </a>
                 @endforeach
                 <!-- END Features -->
 
                 <!-- Documentation Slide-over -->
                 <!-- Documentation Slide-over -->
                 <div x-data="{
-    open: false,
-    content: 'Select a feature to view documentation…',
-
-    async load(anchor) {
-        try {
-            const res = await fetch('/docs/All.md');
-
-            if (!res.ok) throw new Error('Not found');
-
-            const text = await res.text();
-
-            const md = window.markdownit({
-                html: true,
-                linkify: true,
-                typographer: true
-            }).use(window.markdownItAnchor, {
-                permalink: false
-            });
-
-            this.content = md.render(text);
-            this.open = true;
-
-            this.$nextTick(() => {
-                if (!anchor) return;
-
-                const id = anchor.trim().toLowerCase().replace(/\s+/g, '-');
-                const el = document.getElementById(id);
-
-                if (el) {
-                    el.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-
-        } catch (e) {
-            this.content = `
-                <p><strong>Documentation failed to load.</strong></p>
-            `;
-            this.open = true;
-        }
-    }
-}"
-                    @load-doc.window="load($event.detail)">
+                    open: false,
+                    content: 'Select a feature to view documentation…',
+                
+                    async load(anchor) {
+                        try {
+                            const res = await fetch('/docs/All.md');
+                
+                            if (!res.ok) throw new Error('Not found');
+                
+                            const text = await res.text();
+                
+                            const md = window.markdownit({
+                                html: true,
+                                linkify: true,
+                                typographer: true
+                            }).use(window.markdownItAnchor, {
+                                permalink: false
+                            });
+                
+                            this.content = md.render(text);
+                            this.open = true;
+                
+                            this.$nextTick(() => {
+                                if (!anchor) return;
+                
+                                const id = anchor.trim().toLowerCase().replace(/\s+/g, '-');
+                                const el = document.getElementById(id);
+                
+                                if (el) {
+                                    el.scrollIntoView({
+                                        behavior: 'smooth',
+                                        block: 'start'
+                                    });
+                                }
+                            });
+                
+                        } catch (e) {
+                            this.content = `
+                                                                                                <p><strong>Documentation failed to load.</strong></p>
+                                                                                            `;
+                            this.open = true;
+                        }
+                    }
+                }" @load-doc.window="load($event.detail)">
                     <!-- Overlay -->
-                    <div x-show="open" x-transition class="fixed inset-0 bg-black/50 z-40" @click="open=false"></div>
+                    <div x-show="open" x-transition class="fixed inset-0 bg-black/50 z-40" @click="open=false">
+                    </div>
 
                     <!-- Slide-over Panel -->
-                    <div x-show="open"
-                        x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="translate-x-full"
-                        x-transition:enter-end="translate-x-0"
-                        x-transition:leave="transition ease-in duration-200"
-                        x-transition:leave-start="translate-x-0"
+                    <div x-show="open" x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+                        x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0"
                         x-transition:leave-end="translate-x-full"
                         class="fixed right-0 top-0 h-full w-full md:w-2/3 lg:w-1/2 bg-white dark:bg-zinc-900 shadow-xl z-50 overflow-y-auto">
 
@@ -395,8 +411,7 @@
                         </div>
 
                         <!-- Content -->
-                        <div class="p-6 markdown-body dark:prose-invert"
-                            x-html="content"></div>
+                        <div class="p-6 markdown-body dark:prose-invert" x-html="content"></div>
                     </div>
                 </div>
                 <!-- End Documentation Slide-over -->
@@ -404,8 +419,7 @@
                 <footer
                     class="flex flex-col gap-6 py-7 text-center text-sm md:col-span-12 md:flex-row-reverse md:justify-between md:gap-0 md:text-left">
                     <nav class="flex items-center justify-center gap-4">
-                        <a href="javascript:void(0)"
-                            class="text-zinc-400 hover:text-zinc-800 dark:hover:text-white">
+                        <a href="javascript:void(0)" class="text-zinc-400 hover:text-zinc-800 dark:hover:text-white">
                             <svg class="bi bi-twitter-x inline-block size-5" xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
                                 <path
@@ -428,8 +442,7 @@
                                 </path>
                             </svg>
                         </a>
-                        <a href="javascript:void(0)"
-                            class="text-zinc-400 hover:text-[#333] dark:hover:text-zinc-50">
+                        <a href="javascript:void(0)" class="text-zinc-400 hover:text-[#333] dark:hover:text-zinc-50">
                             <svg class="icon-github inline-block size-5" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24" fill="currentColor">
                                 <path
