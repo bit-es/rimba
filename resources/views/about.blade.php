@@ -149,7 +149,8 @@
                             Resource Integration for Manufacturing & Business Alignment
                         </h1>
                         <h2 class="mt-3 leading-relaxed text-zinc-900 dark:text-zinc-200">
-                            <br><br>RIMBA is not just software — it’s a living environment where People, Assets, and Data speak
+                            <br><br>RIMBA is not just software — it’s a living environment where People, Assets, and
+                            Data speak
                             the same language.
                             <br><br>Designed for modern manufacturing and enterprise teams, RIMBA brings everything your
                             organization needs into one unified platform — enabling clarity, efficiency, and smarter
@@ -203,19 +204,20 @@
                                 'Social structure of the elephant herd, Organization connects people within an intelligent and coordinated hierarchy.',
                         ],
                         [
-                            'icon' => 'svg/ldi-owl.svg',
-                            'title' => 'Learn',
-                            'pic' => 'svg/ldi-learn.svg',
-                            'desc' =>
-                                'Owls are universally associated with wisdom and knowledge. Learning is about gaining insight — having the wisdom to act correctly in real-world scenarios.',
-                        ],
-                        [
                             'icon' => 'svg/doc-honeybee.svg',
                             'title' => 'Document',
                             'pic' => 'svg/doc-document.svg',
                             'desc' =>
                                 'Honeybees that tirelessly gather and store nectar, the Document system organizes and preserves knowledge for easy retrieval.',
                         ],
+                        [
+                            'icon' => 'svg/ldi-owl.svg',
+                            'title' => 'Learn',
+                            'pic' => 'svg/ldi-learn.svg',
+                            'desc' =>
+                                'Owls are universally associated with wisdom and knowledge. Learning is about gaining insight — having the wisdom to act correctly in real-world scenarios.',
+                        ],
+
                         [
                             'icon' => 'svg/eam-horse.svg',
                             'title' => 'Asset',
@@ -224,11 +226,20 @@
                                 'Horses are known for their strength and value. Assets are the backbone of operations — reliable, long-lasting, and essential for carrying business forward.',
                         ],
                         [
-                            'icon' => 'svg/job-buffalo.svg',
+                            'icon' => 'svg/cal-bird.svg',
+                            'title' => 'Calendar',
+                            'pic' => 'svg/cal-calendar.svg',
+                            'desc' =>
+                                'Just like a bird kicks off the morning, the Calendar keeps everyone informed with work hours, events, and holidays.',
+                        ],
+                        [
+                            'icon' => 'svg/job-ant.svg',
+                            // 'icon' => 'svg/job-buffalo.svg',
                             'title' => 'Task',
                             'pic' => 'svg/job-task.svg',
                             'desc' =>
-                                'Like a buffalo that continues to move and perseveres through challenges, Tasks drive disciplined execution and continuous progress.',
+                                'Like an ant that continues to move and perseveres through challenges, Tasks drive disciplined execution and continuous progress.',
+                            // 'Like a buffalo that continues to move and perseveres through challenges, Tasks drive disciplined execution and continuous progress.',
                         ],
                         [
                             'icon' => 'svg/ldi-butterfly.svg',
@@ -238,13 +249,6 @@
                                 'A butterfly emerging through transformation, Certificates represent achievement, growth, and capability.',
                         ],
                         [
-                            'icon' => 'svg/cal-bird.svg',
-                            'title' => 'Calendar',
-                            'pic' => 'svg/cal-calendar.svg',
-                            'desc' =>
-                                'Just like a bird kicks off the morning, the Calendar keeps everyone informed with work hours, events, and holidays.',
-                        ],
-                                                [
                             'icon' => 'svg/loc-eagle.svg',
                             'title' => 'Location',
                             'pic' => 'svg/loc-location.svg',
@@ -266,7 +270,7 @@
                             'desc' =>
                                 'Turtle diagrams that define inputs, processes, and outputs, Workflows structure operations into clear, controlled, and repeatable steps.',
                         ],
-                                                [
+                        [
                             'icon' => 'svg/svc-orangutan.svg',
                             'title' => 'Catalog',
                             'pic' => 'svg/svc-menu.svg',
@@ -387,8 +391,8 @@
                 
                         } catch (e) {
                             this.content = `
-                                                                                                <p><strong>Documentation failed to load.</strong></p>
-                                                                                            `;
+                                                                                                                <p><strong>Documentation failed to load.</strong></p>
+                                                                                                            `;
                             this.open = true;
                         }
                     }
