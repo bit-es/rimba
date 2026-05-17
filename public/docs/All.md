@@ -8,7 +8,6 @@ It ensures that the system clearly understands:
 - What roles exist
 - Who is responsible for what
 
----
 
 ## Why This Matters
 
@@ -21,7 +20,6 @@ In any company, especially manufacturing:
 
 This module ensures all these changes are handled **clearly and consistently**, without breaking the system.
 
----
 
 ## Key Components
 
@@ -35,8 +33,6 @@ This defines how the company is arranged.
 
 ✅ Focus: _Structure only (no people inside yet)_
 
----
-
 
 ### 2. Work & Responsibilities (Job)<a id="job"></a>
 
@@ -47,9 +43,6 @@ This defines what work exists and how it is assigned.
 - **Job Role** → Responsibilities (e.g., Approve Offering, Create Document, Educate People)
 
 ✅ Focus: _What needs to be done, not who does it_
-
----
-
 
 
 ### 3. People (Person)<a id="person"></a>
@@ -63,18 +56,16 @@ This represents individuals in the system.
 ✅ Focus: _Who the person is (name, details, identity)_  
 ❌ Does NOT define their job or role
 
----
 
 ## How It Works Together
 
 Instead of mixing everything, the system links them:
 
-- A **Staff** is assigned to a **Job Position** as (1-1)
+- A **Staff** is assigned to a [**Job Position**](#job) as (1-1)
 - **Job Position** can be assigned to a **Job Contract** (1-N, limit of N defined in **Job Contract**)
-- A **Job Contract** belongs to a **Org Unit / Org Team**
-- A **Job Role** defines the responsibilities
+- A [**Job Contract**](#job) belongs to a **Org Unit / Org Team**
+- A [**Job Role**](#job) defines the responsibilities
 
----
 
 ## Example (Simple Scenario)
 
@@ -90,19 +81,17 @@ Ahmad is:
 - Given a _role_ (e.g., execute tasks)
 - Assigned for a _specific time period_
 
----
 
 ## Flexibility (Important for Business)
 
 This design allows the business to:
 
-- Move people between teams easily (change of Job Contract)
-- Assign multiple roles to one person (As per Job Position)
+- Move people between teams easily (change of [**Job Contract**](#job))
+- Assign multiple roles to one person (As per [**Job Position**](#job))
 - Track history of roles and assignments
 - Support temporary or contract workers
 - Adapt to organizational changes without system redesign
 
----
 
 ## Custom Attributes
 
@@ -115,7 +104,6 @@ Each part (Org, Person, Job) can store additional business-specific information 
 
 ✅ No need to change system structure for new requirements
 
----
 
 ## Access & Permissions
 
@@ -131,7 +119,6 @@ This ensures proper:
 - Segregation of duties
 - Security compliance
 
----
 
 ## Summary
 
@@ -142,7 +129,6 @@ The Organization module ensures:
 - Easy handling of changes over time
 - Strong foundation for business processes
 
----
 
 ## In Simple Terms
 
@@ -153,7 +139,6 @@ Think of it like:
 - **Job** → The responsibilities (what needs to be done)
 
 And the system connects them in a clean, flexible way.
-
 
 # Authorization (Platform Overview)<a id="authorization"></a>
 
@@ -198,28 +183,26 @@ Access(Permission) is not given randomly. **Permissions** are given to **Roles**
 
 Roles derived from:
 
-
 ### 1. ABAC – Attribute-Based Access Control<a id="abac"></a>
 
 Roles based from attributes such as:
 
-- OrgCorp (which company)
-- OrgUnit
-- OrgTeam
-- Job Position
-- Job Role
-- Contract type
+- [Org Corp](#org) (which company)
+- [Org Unit](#org)
+- [Org Team](#org)
+- [Job Position](#job)
+- [Job Role](#job)
+- [Contract type](#job)
 
 ✅ Example:
 
 - A user/staff in **Maintenance Department** is given the department member role
 - A user/staff with Job Role **Supervisor** is given the supervisor role
 
-
 ### 2. RBAC – Role-Based Access Control<a id="rbac"></a>
 
 Roles represent responsibilities.  
-The roles are assigned to the staff by the owner of **Org Team** for team roles and owner of **Org Unit**  
+The roles are assigned to the staff by the owner of [**Org Team**](#org) for team roles and owner of [**Org Unit**](#org)  
 Each **Org Unit** will have at least owner and member role,  
 and **Org Team** will have scout, captain, player, quartermaster, tactician and coach
 | Example |
@@ -278,9 +261,9 @@ Roles are linked to different parts of the system using prefixes:
 1. A sync with staff database occurs
 2. The system identifies the linked **Staff**
 3. Staff is assigned to:
-    - Job Position
-    - Job Role
-    - Org Unit / Team
+    - [Job Position](#job)
+    - [Job Role](#job)
+    - [**Org Unit** / **Org Team**](#org)
 4. Attributes are evaluated
 5. StaffRole created and maintained
 
@@ -360,8 +343,7 @@ Think of it like:
 
 And the system ensures that **everyone can only do what they are supposed to do**.
 
-
-# Audit Trail (Business Overview)<a id="audit-trail"></a>
+# Audit Trail (Overview)<a id="audit-trail"></a>
 
 The **Audit Trail module** provides a centralized and authoritative record of all important actions performed across the system.
 
@@ -375,7 +357,6 @@ It captures:
 
 This module applies to **all system modules** including Version Management, Workflow, Authorization, Documents, Tasks, and more.
 
----
 
 ## Why This Matters
 
@@ -400,7 +381,6 @@ This module ensures the organization always knows:
 ✅ With what outcome  
 ✅ And for what reason
 
----
 
 ## Key Objectives
 
@@ -412,7 +392,6 @@ The Audit Trail module helps to:
 - Enable compliance and governance reporting
 - Preserve an immutable history of actions
 
----
 
 ## Key Components
 
@@ -426,7 +405,6 @@ The **Audit Log** is the single audit table used by the entire system.
 
 Each log entry represents **one system action**.
 
----
 
 ### 2. Actor
 
@@ -440,7 +418,6 @@ An actor may be:
 
 ✅ Supports separation between system identity and business identity
 
----
 
 ### 3. Action
 
@@ -456,7 +433,6 @@ Examples:
 
 ✅ Uses a consistent, readable naming convention
 
----
 
 ### 4. Target Record
 
@@ -473,7 +449,6 @@ Allows auditing across:
 - Workflow items
 - Configuration records
 
----
 
 ### 5. Result
 
@@ -486,7 +461,6 @@ Possible values:
 
 ✅ Both successful and rejected actions are recorded
 
----
 
 ### 6. Reason
 
@@ -500,7 +474,6 @@ Examples:
 
 ✅ Especially important for denied actions
 
----
 
 ### 7. Metadata
 
@@ -515,7 +488,6 @@ Examples:
 
 ✅ Flexible and extensible without schema changes
 
----
 
 ## How It Works Together
 
@@ -529,7 +501,6 @@ The system records an audit entry whenever:
 
 ✅ This behavior is consistent across **all modules**
 
----
 
 ## Example (Simple Scenario)
 
@@ -545,7 +516,6 @@ Audit entry records:
 - Result → allowed
 - Reason → Approval granted
 
----
 
 ### Scenario: Unauthorized Delete
 
@@ -558,7 +528,6 @@ Audit entry records:
 - Result → denied
 - Reason → Insufficient permission
 
----
 
 ## Integration with Other Modules
 
@@ -571,7 +540,6 @@ Audit entry records:
 
 ✅ All modules rely on the same audit mechanism
 
----
 
 ## Compliance & Governance
 
@@ -584,7 +552,6 @@ The Audit Trail module supports:
 
 ✅ Designed for long‑term retention and integrity
 
----
 
 ## Summary
 
@@ -596,7 +563,6 @@ The Audit Trail module ensures that:
 - All modules follow a unified audit standard
 - The system remains transparent and compliant
 
----
 
 ## In Simple Terms
 
@@ -609,7 +575,6 @@ Think of it like:
 - **Reason** → Why it happened
 
 And the system keeps this record **forever**, for **every important action**, across **the entire platform**.
-
 
 # Version (Overview)<a id="version"></a>
 
@@ -714,7 +679,6 @@ is_menu = true / false
 
 ✅ For non-menu use cases, this flag is ignored.
 
----
 
 ### 4. Semantic Versioning
 
@@ -836,8 +800,7 @@ Think of it like:
 
 And the system ensures only the right version is used at the right time, with full traceability.
 
-
-# Task Management (Business Overview)<a id="task"></a>
+# Task Management (Overview)<a id="task"></a>
 
 The **Task module** manages work that needs to be done by people in the organization.
 
@@ -848,7 +811,6 @@ It ensures that:
 - Nothing is missed
 - Progress is visible
 
----
 
 ## Why This Matters
 
@@ -866,7 +828,6 @@ This module ensures the organization always knows:
 ✅ When it must be completed  
 ✅ What is the current status
 
----
 
 ## Key Objectives
 
@@ -878,7 +839,6 @@ The Task module helps to:
 - Support operational workflows
 - Improve efficiency and coordination
 
----
 
 ## Key Components
 
@@ -902,7 +862,6 @@ Examples:
 - Due date
 - Status
 
----
 
 ### 2. Task List
 
@@ -930,7 +889,6 @@ Examples:
 - Speeds up task creation
 - Improves consistency across operations
 
----
 
 ### 3. Task Template
 
@@ -944,7 +902,6 @@ Examples:
 
 ✅ Focus: _Single, reusable task definition_
 
----
 
 ### 4. Assignment & Assignee<a id="task-assign"></a>
 
@@ -953,7 +910,6 @@ and assigned to **role** as Assignment
 
 ✅ Ensures the right person performs the work and right role is ready to pick up the task
 
----
 
 ### 5. Task Status<a id="task-status"></a>
 
@@ -966,7 +922,6 @@ Tracks progress of each task:
 
 ✅ Provides visibility to management and teams
 
----
 
 ### 6. Due Dates & Priority
 
@@ -976,7 +931,6 @@ Each task can have:
 
 ✅ Helps teams focus on important work
 
----
 
 ## How It Works (Simple Flow)
 
@@ -995,7 +949,6 @@ Each task can have:
 4. Work is executed step by step
 5. All tasks are tracked until completion
 
----
 
 ## Example (Simple Scenario)
 
@@ -1004,7 +957,6 @@ Each task can have:
 - Task: Inspect CNC Machine
 - Assigned to: Technician
 
----
 
 ### Example 2: Task List
 
@@ -1020,7 +972,6 @@ Tasks generated:
 ✅ Technician completes each task  
 ✅ Entire package ensures full maintenance is done
 
----
 
 ## Automation & Integration
 
@@ -1037,7 +988,6 @@ Assignee is populated automatically when role contains only 1 staff/user and the
 
 ✅ Reduces manual work and ensures consistency
 
----
 
 ## Accountability & Tracking
 
@@ -1050,7 +1000,6 @@ The system ensures:
 
 ✅ Improves discipline and operational control
 
----
 
 ## Integration with Other Modules
 
@@ -1061,7 +1010,6 @@ The system ensures:
 - **Notification** → Alerts users
 - **Audit** → Tracks all actions
 
----
 
 ## Flexibility for Business
 
@@ -1072,7 +1020,6 @@ The system allows:
 - Role-based or person-based assignments
 - Cross-module task generation
 
----
 
 ## Summary
 
@@ -1083,7 +1030,6 @@ The Task module ensures that:
 - Tasks are tracked and completed on time
 - Operations run smoothly and consistently
 
----
 
 ## In Simple Terms
 
@@ -1097,8 +1043,7 @@ Think of it like:
 
 And the system ensures that **all work—simple or complex—is completed properly without missing any steps**.
 
-
-# Calendar Management (Business Overview)<a id="calendar"></a>
+# Calendar Management (Overview)<a id="calendar"></a>
 
 The **Calendar module** manages all company-related dates, schedules, and events in a single place.
 
@@ -1289,8 +1234,191 @@ Think of it like:
 
 And the system ensures everyone knows **when to work and what is happening** across the company.
 
+# Location Management (Overview)<a id="location"></a>
 
-# Workflow Management (Business Overview)<a id="workflow"></a>
+The **Location module** defines where things exist in the real world.
+
+It provides a structured way to manage:
+
+- Sites
+- Buildings
+- Areas
+- Physical spaces
+
+
+## Why This Matters
+
+In operations, especially manufacturing:
+
+- Work happens at specific locations
+- Assets are placed in physical areas
+- Staff may work across different sites
+- Some processes depend on location
+
+Without proper location management:
+
+- Assets can be misplaced
+- Work assignments become unclear
+- Reporting becomes inaccurate
+
+This module ensures:
+
+✅ Clear visibility of all physical locations  
+✅ Accurate tracking of assets and activities  
+✅ Better planning and coordination
+
+
+## Key Concept
+
+Location answers the question:
+
+> **“Where does this happen?”**
+
+
+## Key Components
+
+### 1. Location
+
+Represents a physical place in the organization.
+
+Examples:
+
+- Factory Site
+- Warehouse
+- Office Building
+- Production Line
+
+✅ Each location includes:
+
+- Name
+- Type (site, building, area, etc.)
+- Parent location (for hierarchy)
+
+
+### 2. Location Hierarchy
+
+Locations can be structured in levels.
+
+Example:
+
+- Site: Main Factory
+    - Building: Block A
+        - Area: Production Floor
+            - Section: Line 1
+
+✅ Enables:
+
+- Clear physical structure
+- Easy navigation and reporting
+
+
+### 3. Location Assignment
+
+Locations can be linked to different entities:
+
+- **Organization** → Where the company operates
+- **OrgUnit / Team** → Where work happens
+- **Staff** → Where a person is based or assigned
+- **JobPosition** → Where the job is performed
+- **Asset** → Where equipment is located
+
+✅ Creates strong real-world context
+
+
+## How It Works (Simple Flow)
+
+1. Locations are defined and structured
+2. Entities (people, jobs, assets) are assigned to locations
+3. Operations are executed based on location
+4. Reports and tracking use location data
+
+
+## Example (Simple Scenario)
+
+- Site: Manufacturing Plant
+- Area: Production Floor
+- Asset: CNC Machine
+- Staff: Technician
+
+Process:
+
+- CNC Machine is assigned to Production Floor
+- Technician is assigned to same area
+- Maintenance task is linked to that location
+
+✅ Everyone knows where the work happens
+
+
+## Location vs Organization (Important)
+
+The system clearly separates:
+
+- **Organization** → Structure (departments, teams)
+- **Location** → Physical place
+
+✅ Example:
+
+- Maintenance Department (Org)
+- Production Floor (Location)
+
+Both are linked but **serve different purposes**
+
+
+## Integration with Other Modules
+
+- **Org** → Links departments to locations
+- **Person** → Assigns staff to locations
+- **Job** → Defines where jobs are performed
+- **Asset** → Tracks physical placement of equipment
+- **Task** → Executes work at specific locations
+- **Workflow** → Supports location-based approvals
+- **Calendar** → May vary by location (e.g., site holidays)
+
+
+## Flexibility for Business
+
+The system allows:
+
+- Multiple sites (multi-plant operations)
+- Flexible location hierarchy
+- Shared or cross-location operations
+- Location-based reporting and control
+
+
+## Custom Attributes
+
+Locations can include additional details such as:
+
+- Address
+- GPS coordinates
+- Capacity
+- Safety classification
+- Operational status
+
+✅ Easily extended for business needs
+
+
+## Summary
+
+The Location module ensures that:
+
+- All physical places are clearly defined
+- Assets, people, and work are tied to real locations
+- Operations are better organized and traceable
+- Multi-site businesses are fully supported
+
+
+## In Simple Terms
+
+Think of it like:
+
+- **Location** → Where something exists
+- **Hierarchy** → How places are organized
+- **Assignment** → Who or what is at that place
+
+And the system ensures that **everything in the organization is connected to a real-world location**.
+
+# Workflow Management (Foundation Overview)<a id="workflow"></a>
 
 The **Workflow module** controls **how work moves through defined steps** in a structured and predictable way.
 
@@ -1305,7 +1433,6 @@ It defines:
 ✅ Actual work is performed using **Tasks**  
 ✅ Every workflow is **owned and managed by an OrgTeam**
 
----
 
 ## Why This Matters
 
@@ -1330,7 +1457,6 @@ This module ensures the organization always knows:
 ✅ Which **team owns the process**  
 ✅ Why a decision was made
 
----
 
 ## Key Concept
 
@@ -1342,7 +1468,6 @@ A **Workflow** answers the question:
 ✅ Tasks define **actual work**  
 ✅ OrgTeams define **ownership and accountability**
 
----
 
 ## Workflow Ownership (Critical Rule)
 
@@ -1361,7 +1486,6 @@ Every workflow **must be owned by exactly one OrgTeam**.
 - No orphaned processes
 - Proper escalation paths
 
----
 
 ## Relationship with Requests (Very Important)
 
@@ -1377,7 +1501,6 @@ In most business processes:
 ✅ Without workflow → request is just data  
 ✅ With workflow → request becomes a controlled, owned process
 
----
 
 ## Relationship with Tasks (Critical Distinction)
 
@@ -1389,7 +1512,6 @@ In most business processes:
 ✅ Transitions move the process forward  
 ✅ Not every step requires tasks
 
----
 
 ## Key Components
 
@@ -1412,7 +1534,6 @@ Examples:
 - Allowed transitions
 - Rules and conditions
 
----
 
 ### 2. Workflow Step
 
@@ -1434,7 +1555,6 @@ Examples:
 
 ✅ Steps operate under the authority of the owning OrgTeam
 
----
 
 ### 3. Transition
 
@@ -1453,7 +1573,6 @@ Examples:
 - May require conditions
 - Are controlled by the owning OrgTeam
 
----
 
 ### 4. Task Binding (Key Design)
 
@@ -1470,7 +1589,6 @@ Tasks are **attached to workflow steps**, not transitions.
 - Transition becomes available
 - Workflow can move forward
 
----
 
 ### 5. Decision & Approval
 
@@ -1489,7 +1607,6 @@ Examples:
 - Are recorded for audit
 - May generate tasks or end the workflow
 
----
 
 ## How It Works (Simple Flow)
 
@@ -1504,7 +1621,6 @@ Examples:
 
 ✅ Entire process is controlled, owned, and traceable
 
----
 
 ## Example (Request + Workflow + Task)
 
@@ -1519,7 +1635,6 @@ Examples:
 
 ➡ Transition: Auto → Review
 
----
 
 #### Step 2: Review
 
@@ -1528,7 +1643,6 @@ Examples:
 
 ✅ Task completed → transition allowed
 
----
 
 #### Step 3: Approved
 
@@ -1540,7 +1654,6 @@ Examples:
 
 ➡ Workflow waits until all tasks complete
 
----
 
 #### Step 4: Completed
 
@@ -1549,7 +1662,6 @@ Examples:
 
 ✅ Facilities Team accountable for outcome
 
----
 
 ## What Workflow Does NOT Do (Important)
 
@@ -1561,18 +1673,16 @@ Workflow does NOT:
 
 ✅ Those belong to the **Task module**
 
----
 
 ## Integration with Other Modules
 
-- **Org / OrgTeam** → Owns and governs workflows
+- [**Org Unit** / **Org Team**](#org) → Owns and governs workflows
 - **Request** → Triggers workflows
 - **Task** → Executes workflow steps
 - **Version** → Controls versioned changes within steps
 - **Notification** → Alerts on step changes
 - **Audit** → Records every transition and decision
 
----
 
 ## Flexibility for Business
 
@@ -1584,7 +1694,6 @@ The system allows:
 - Conditional approvals
 - Parallel or sequential steps
 
----
 
 ## Workflow Initialization & Version Creation (Important)
 
@@ -1626,7 +1735,6 @@ The Workflow module ensures:
 
 ✅ Supports governance, audits, and operational control
 
----
 
 ## Summary
 
@@ -1638,7 +1746,6 @@ The Workflow module ensures that:
 - Work happens at the right time
 - Decisions are controlled and auditable
 
----
 
 ## In Simple Terms
 
@@ -1653,203 +1760,501 @@ Think of it like:
 
 And the system ensures **every request follows a team‑owned, controlled process from start to finish**.
 
-# Location Management (Business Overview)<a id="location"></a>
+# Request Management (Foundation Overview)<a id="request"></a>
 
-The **Location module** defines where things exist in the real world.
+The **Request module** manages how users ask for something to be done within the organization.
 
-It provides a structured way to manage:
+It serves as the **starting point of most business processes**, and is typically **closely linked to workflows** to ensure proper handling, approvals, and execution.
 
-- Sites
-- Buildings
-- Areas
-- Physical spaces
-
----
 
 ## Why This Matters
 
-In operations, especially manufacturing:
+In daily operations:
 
-- Work happens at specific locations
-- Assets are placed in physical areas
-- Staff may work across different sites
-- Some processes depend on location
-
-Without proper location management:
-
-- Assets can be misplaced
-- Work assignments become unclear
-- Reporting becomes inaccurate
+- Requests come from many sources (email, messages, verbal)
+- Information may be incomplete or inconsistent
+- No clear tracking of progress
+- Approvals may be skipped or unclear
 
 This module ensures:
 
-✅ Clear visibility of all physical locations  
-✅ Accurate tracking of assets and activities  
-✅ Better planning and coordination
+✅ All requests are properly captured  
+✅ Requests follow a controlled process  
+✅ Progress is tracked from start to end  
+✅ Responsibilities are clearly defined
 
----
 
 ## Key Concept
 
-Location answers the question:
+A **Request** answers the question:
 
-> **“Where does this happen?”**
+> **“Something is needed — how do we get it done properly?”**
 
----
+
+## Strong Link to Workflow (Important)
+
+In most cases:
+
+👉 A **Request is tightly linked to a Workflow**
+
+- The **Request** captures the need
+- The **Workflow** controls how it is processed
+
+✅ Without workflow → request is just a record  
+✅ With workflow → request becomes a controlled process
+
 
 ## Key Components
 
-### 1. Location
+### 1. Request
 
-Represents a physical place in the organization.
+Represents a demand, need, or submission from a user.
 
 Examples:
 
-- Factory Site
-- Warehouse
-- Office Building
-- Production Line
+- Request for maintenance
+- IT support request
+- Leave request
+- Purchase request
 
-✅ Each location includes:
+✅ Each request includes:
 
-- Name
-- Type (site, building, area, etc.)
-- Parent location (for hierarchy)
+- Request type
+- Description
+- Requester (person)
+- Related data (asset, location, etc.)
+- Status
 
----
 
-### 2. Location Hierarchy
+### 2. Request Type
 
-Locations can be structured in levels.
+Defines the category of the request.
 
-Example:
+Examples:
 
-- Site: Main Factory
-    - Building: Block A
-        - Area: Production Floor
-            - Section: Line 1
+- Maintenance Request
+- IT Support Request
+- HR Request
 
-✅ Enables:
+✅ Determines:
 
-- Clear physical structure
-- Easy navigation and reporting
+- Required information
+- Associated workflow
+- Responsible team
 
----
 
-### 3. Location Assignment
+### 3. Workflow Binding
 
-Locations can be linked to different entities:
-
-- **Organization** → Where the company operates
-- **OrgUnit / Team** → Where work happens
-- **Staff** → Where a person is based or assigned
-- **JobPosition** → Where the job is performed
-- **Asset** → Where equipment is located
-
-✅ Creates strong real-world context
-
----
-
-## How It Works (Simple Flow)
-
-1. Locations are defined and structured
-2. Entities (people, jobs, assets) are assigned to locations
-3. Operations are executed based on location
-4. Reports and tracking use location data
-
----
-
-## Example (Simple Scenario)
-
-- Site: Manufacturing Plant
-- Area: Production Floor
-- Asset: CNC Machine
-- Staff: Technician
-
-Process:
-
-- CNC Machine is assigned to Production Floor
-- Technician is assigned to same area
-- Maintenance task is linked to that location
-
-✅ Everyone knows where the work happens
-
----
-
-## Location vs Organization (Important)
-
-The system clearly separates:
-
-- **Organization** → Structure (departments, teams)
-- **Location** → Physical place
+Each request type is usually linked to a **specific workflow**.
 
 ✅ Example:
 
-- Maintenance Department (Org)
-- Production Floor (Location)
+- Maintenance Request → Maintenance Workflow
+- Purchase Request → Approval Workflow
 
-Both are linked but **serve different purposes**
+This ensures:
 
----
+- Consistent handling
+- Standard approval steps
+- Controlled execution
 
-## Integration with Other Modules
 
-- **Org** → Links departments to locations
-- **Person** → Assigns staff to locations
-- **Job** → Defines where jobs are performed
-- **Asset** → Tracks physical placement of equipment
-- **Task** → Executes work at specific locations
-- **Workflow** → Supports location-based approvals
-- **Calendar** → May vary by location (e.g., site holidays)
+### 4. Status
 
----
+The status reflects the progress of the request:
+
+- Submitted
+- Under Review
+- Approved / Rejected
+- In Progress
+- Completed
+- Closed
+
+✅ Status is typically driven by the workflow
+
+
+### 5. Assignment
+
+Requests are routed to:
+
+- A **team**, or
+- A **role**, or
+- A specific **person**
+
+✅ Based on workflow rules and responsibilities
+
+
+## How It Works (Simple Flow)
+
+1. User **submits a request**
+2. System identifies the **Request Type**
+3. Linked **Workflow is triggered**
+4. Request goes through:
+    - Review
+    - Approval
+    - Execution
+5. Tasks may be generated
+6. Request is **completed and closed**
+
+
+## Example (Simple Scenario)
+
+### Maintenance Request
+
+1. Operator submits request for machine issue
+2. Request triggers Maintenance Workflow
+3. Supervisor reviews request
+4. Approval is given
+5. Task is assigned to technician
+6. Repair is completed
+7. Request is closed
+
+✅ Entire process is tracked and controlled
+
+
+## Relationship with Other Modules
+
+- **Workflow** → Controls the lifecycle of the request (critical link)
+- **Task** → Executes work generated from the request
+- **Service Catalog** → Defines available request types (menu)
+- **Org** → Determines ownership and routing
+- **Person** → Identifies requester and assignee
+- **Asset** → Links request to equipment
+- **Notification** → Updates users on progress
+- **Audit** → Tracks all actions
+
 
 ## Flexibility for Business
 
 The system allows:
 
-- Multiple sites (multi-plant operations)
-- Flexible location hierarchy
-- Shared or cross-location operations
-- Location-based reporting and control
+- Different request types per department
+- Custom workflows per request type
+- Simple or complex approval processes
+- Integration across all business areas
 
----
 
-## Custom Attributes
+## Control & Traceability
 
-Locations can include additional details such as:
+The module ensures:
 
-- Address
-- GPS coordinates
-- Capacity
-- Safety classification
-- Operational status
+- Every request is recorded
+- Progress is visible at all times
+- Actions and decisions are logged
+- No request is lost or ignored
 
-✅ Easily extended for business needs
+✅ Supports operational control and audits
 
----
 
 ## Summary
 
-The Location module ensures that:
+The Request module ensures that:
 
-- All physical places are clearly defined
-- Assets, people, and work are tied to real locations
-- Operations are better organized and traceable
-- Multi-site businesses are fully supported
+- All business needs are formally captured
+- Requests are processed through proper workflows
+- Work is executed in a controlled and consistent way
+- The organization maintains visibility and accountability
 
----
 
 ## In Simple Terms
 
 Think of it like:
 
-- **Location** → Where something exists
-- **Hierarchy** → How places are organized
-- **Assignment** → Who or what is at that place
+- **Request** → Asking for something
+- **Workflow** → The process to handle it
+- **Task** → The work to complete it
 
-And the system ensures that **everything in the organization is connected to a real-world location**.
+👉 A request **starts the process**, and workflow ensures **it is done properly from start to finish**.
 
+# System Panels (Foundation Overview)<a id="portal"></a>
+
+The platform provides a unified user experience through **three complementary panels**, each serving a distinct purpose:
+
+- **Staff Portal (TACKLE)** → Individual daily work
+- **Team Panel** → Team coordination and delivery
+- **Admin Portal** → System configuration and governance
+
+Together, they form a complete operational ecosystem.
+
+
+## Overall Concept
+
+Each panel answers a different question:
+
+- **Staff Portal** → “What do I need to do?”
+- **Team Panel** → “How do we deliver as a team?”
+- **Admin Portal** → “How is the system defined and controlled?”
+
+
+## 1. Staff Service Portal – “TACKLE”
+
+The **Staff Portal** is the **main working interface** for employees.
+
+It acts as the **nerve center of daily activities**, where staff:
+
+- Execute tasks
+- Request services
+- Access knowledge
+- Manage personal work-related items
+
+
+### TACKLE Structure
+
+#### **T – Todo**
+
+**Daily Catch & Priority Tasks**
+
+- View assigned tasks
+- Track pending and urgent work
+- Monitor deadlines
+
+✅ _Focus: What needs to be done now_
+
+
+#### **A – Artifact**
+
+**Personal Work Assets**
+
+- Profile information
+- Assigned assets (equipment, tools)
+- Certificates and qualifications
+
+✅ _Focus: What belongs to me_
+
+
+#### **C – Catalog**
+
+**Service Menu & Quick Access**
+
+- Request services (IT, maintenance, HR)
+- Browse available offerings
+- Access external tools/links
+
+✅ _Focus: What I can request_
+
+
+#### **K – Knowledge**
+
+**Documents & Learning**
+
+- SOPs, policies, manuals
+- Training materials
+- Learning programs
+
+✅ _Focus: What I need to know_
+
+
+#### **L – Location**
+
+**Physical Awareness**
+
+- Floor plans
+- Site navigation
+- Location of assets and teams
+
+✅ _Focus: Where things are_
+
+
+#### **E – Emergency**
+
+**Critical Support**
+
+- Emergency contacts
+- Incident reporting
+- Risk and issue logging
+
+✅ _Focus: What to do in urgent situations_
+
+
+### Staff Portal Summary
+
+👉 A **simple, action-oriented workspace** for employees to perform daily work efficiently.
+
+
+## 2. Team Panel – Team Operations
+
+The **Team Panel** provides a **shared workspace for teams** to manage work collectively.
+
+It focuses on:
+
+- Coordination
+- Accountability
+- Quality control
+- Continuous improvement
+
+
+### Why Team Panel Exists
+
+Work is not done individually — it is delivered by **teams with structured roles**.
+
+✅ Ensures:
+
+- Clear responsibilities
+- Better coordination
+- Higher quality output
+
+
+### Team Roles (Operating Model)
+
+Each team operates using defined **functional roles**:
+
+
+#### <img src="pics/team_scout.png" width="48" height="48"> Scout (Entry & Final Authority)
+
+- Brings work into the team
+- Owns intake (requests, assignments)
+- Provides final sign-off
+
+✅ Assures request fulfilment
+
+
+#### <img src="pics/team_quartermaster.png" width="48" height="48"> Quartermaster (Resources)
+
+- Manages tools, assets, inventory
+- Ensures readiness before work starts
+
+✅ Removes operational delays
+
+
+#### <img src="pics/team_coach.png" width="48" height="48"> Coach (Capability Development)
+
+- Trains team members
+- Links LMS materials and assessments
+- Improves skills over time
+
+✅ Builds team competency
+
+
+#### <img src="pics/team_players.png" width="48" height="48"> Player (Execution)
+
+- Performs actual work
+- Completes assigned tasks
+
+✅ Core workforce
+
+
+#### <img src="pics/team_captain.png" width="48" height="48"> Captain (Quality & Ownership)
+
+- Oversees daily operations
+- Ensures quality standards
+
+✅ Team owner and controller
+
+
+#### <img src="pics/team_tactician.png" width="48" height="48"> Tactician (Knowledge & Process)
+
+- Writes procedures (SOPs)
+- Maintains documentation
+- Standardizes processes
+
+✅ Keeps work consistent and structured
+
+
+### Team Workflow (Simple)
+
+1. **Scout** receives work
+2. Work assigned to **Players**
+3. **Quartermaster** ensures resources
+4. Work is executed
+5. **Captain** reviews quality
+6. **Scout** signs off
+7. **Tactician** updates knowledge
+8. **Coach** improves skills
+
+
+### Team Panel Summary
+
+👉 A **team operating system** that ensures work is delivered **properly, consistently, and with quality**
+
+
+## 3. Admin Portal – System Management
+
+The **Admin Portal** is used to **configure and maintain the platform**.
+
+It is not for daily operations, but for:
+
+- Setup
+- Control
+- Governance
+
+
+### Key Responsibilities
+
+#### Configuration
+
+- Organization structure
+- Locations
+- Job positions and roles
+- Attributes
+
+
+#### Process Setup
+
+- Workflows
+- Task templates & Work Packages
+- Service Catalog
+
+
+#### Access Control
+
+- Roles and permissions
+- ABAC (attribute-based access)
+- User and staff management
+
+
+#### Content Management
+
+- Documents (DMS)
+- Learning materials (LMS)
+
+
+#### Monitoring
+
+- Requests and services
+- Tasks and workflows
+- Reports and dashboards
+
+
+### Admin Portal Summary
+
+👉 A **control center** for configuring how the business operates within the system
+
+
+## Panel Comparison
+
+| Area    | Staff Portal (TACKLE) | Team Panel                  | Admin Portal          |
+| ------- | --------------------- | --------------------------- | --------------------- |
+| Focus   | Individual work       | Team coordination           | System configuration  |
+| Users   | All employees         | Teams                       | Admins / managers     |
+| Purpose | Execute tasks         | Deliver work as a team      | Configure & control   |
+| Nature  | Simple & guided       | Operational & collaborative | Advanced & structured |
+
+
+## Overall System View
+
+The three panels work together:
+
+- **Staff Portal** drives **execution (individual level)**
+- **Team Panel** drives **coordination (team level)**
+- **Admin Portal** drives **control (system level)**
+
+
+### Final Summary
+
+The platform ensures:
+
+✅ Individuals know what to do  
+✅ Teams know how to deliver  
+✅ The system ensures everything is controlled
+
+
+### In Simple Terms
+
+- **Staff Portal** → _“Do my work”_
+- **Team Panel** → _“Work together”_
+- **Admin Portal** → _“Set the rules”_
+
+👉 Together, they create a complete, scalable, and well-governed operational system.
 
 # Service Catalog (Menu) – Business Overview<a id="catalog"></a>
 
@@ -1860,7 +2265,6 @@ It acts as a **menu of services** that employees can request, similar to choosin
 ✅ Services are **version‑controlled**  
 ✅ The catalog menu is driven by **published service versions**
 
----
 
 ## Why This Matters
 
@@ -1878,7 +2282,6 @@ This module ensures:
 ✅ Expectations are consistent  
 ✅ Service delivery is trackable
 
----
 
 ## Key Concept (Important)
 
@@ -1892,7 +2295,6 @@ A **Version** represents:
 
 ✅ The **menu is built from Version**, not directly from Service.
 
----
 
 ## Key Objectives
 
@@ -1904,7 +2306,6 @@ The Service Catalog helps to:
 - Define responsibilities and expectations
 - Improve service efficiency and transparency
 
----
 
 ## Key Components
 
@@ -1929,7 +2330,6 @@ Examples:
 ✅ A Service **does not change frequently**  
 ✅ Changes happen through **Version**
 
----
 
 ### 2. Service Version (Menu Source)
 
@@ -1949,7 +2349,6 @@ Each Service has one or more **Versions**.
 
 appear in the Service Catalog.
 
----
 
 ### 3. Menu Visibility Flag (Critical Rule)
 
@@ -1966,7 +2365,6 @@ The **Version** model contains a boolean flag: **is_menu = true / false**
 - Retiring old services without deleting them
 - Controlling what users can request
 
----
 
 ### 4. Service Category (Menu Structure)
 
@@ -1981,7 +2379,6 @@ Examples:
 
 ✅ Categories organize **menu items (versions)**, not raw services
 
----
 
 ### 5. Request Form (Versioned)
 
@@ -1996,7 +2393,6 @@ Examples:
 ✅ Stored and controlled via **Version**  
 ✅ Changes require new versions
 
----
 
 ### 6. Service Level Agreement (SLA)
 
@@ -2010,7 +2406,6 @@ Examples:
 ✅ SLA definitions are **versioned**
 ✅ Changes are traceable and auditable
 
----
 
 ### 7. Service Owner
 
@@ -2022,7 +2417,6 @@ Defines who is responsible for delivering the service.
 ✅ Ownership is stable at Service level  
 ✅ Execution is handled through Workflow and Task
 
----
 
 ## How It Works (Simple Flow)
 
@@ -2037,7 +2431,6 @@ Defines who is responsible for delivering the service.
 7. Tasks are generated and executed
 8. Request is completed
 
----
 
 ## Example (Simple Scenario)
 
@@ -2062,7 +2455,6 @@ Process:
 - It stays hidden until published
 - Menu is unaffected
 
----
 
 ## Integration with Other Modules
 
@@ -2070,12 +2462,11 @@ Process:
 - **Request** → Created from selected service version
 - **Workflow** → Manages approval and execution flow
 - **Task** → Executes the service work
-- **Org / OrgTeam** → Owns the service
+- [**Org Unit** / **Org Team**](#org) → Owns the service
 - **Asset** → Links service to equipment
 - **Notification** → Updates users on progress
 - **Audit** → Tracks all actions
 
----
 
 ## Flexibility for Business
 
@@ -2087,7 +2478,6 @@ The system allows:
 - Controlled rollout of new service definitions
 - Clear audit trail of service changes
 
----
 
 ## Control & Traceability
 
@@ -2100,7 +2490,6 @@ The Service Catalog ensures that:
 
 ✅ Supports governance and audits
 
----
 
 ## Summary
 
@@ -2111,7 +2500,6 @@ The Service Catalog ensures that:
 - Requests are consistent and complete
 - Work is executed through controlled workflows
 
----
 
 ## In Simple Terms
 
@@ -2126,550 +2514,12 @@ Think of it like:
 
 And the system ensures **only approved, versioned services appear in the menu and are delivered properly**.
 
-
-# Request Management (Business Overview)<a id="request"></a>
-
-The **Request module** manages how users ask for something to be done within the organization.
-
-It serves as the **starting point of most business processes**, and is typically **closely linked to workflows** to ensure proper handling, approvals, and execution.
-
----
-
-## Why This Matters
-
-In daily operations:
-
-- Requests come from many sources (email, messages, verbal)
-- Information may be incomplete or inconsistent
-- No clear tracking of progress
-- Approvals may be skipped or unclear
-
-This module ensures:
-
-✅ All requests are properly captured  
-✅ Requests follow a controlled process  
-✅ Progress is tracked from start to end  
-✅ Responsibilities are clearly defined
-
----
-
-## Key Concept
-
-A **Request** answers the question:
-
-> **“Something is needed — how do we get it done properly?”**
-
----
-
-## Strong Link to Workflow (Important)
-
-In most cases:
-
-👉 A **Request is tightly linked to a Workflow**
-
-- The **Request** captures the need
-- The **Workflow** controls how it is processed
-
-✅ Without workflow → request is just a record  
-✅ With workflow → request becomes a controlled process
-
----
-
-## Key Components
-
-### 1. Request
-
-Represents a demand, need, or submission from a user.
-
-Examples:
-
-- Request for maintenance
-- IT support request
-- Leave request
-- Purchase request
-
-✅ Each request includes:
-
-- Request type
-- Description
-- Requester (person)
-- Related data (asset, location, etc.)
-- Status
-
----
-
-### 2. Request Type
-
-Defines the category of the request.
-
-Examples:
-
-- Maintenance Request
-- IT Support Request
-- HR Request
-
-✅ Determines:
-
-- Required information
-- Associated workflow
-- Responsible team
-
----
-
-### 3. Workflow Binding
-
-Each request type is usually linked to a **specific workflow**.
-
-✅ Example:
-
-- Maintenance Request → Maintenance Workflow
-- Purchase Request → Approval Workflow
-
-This ensures:
-
-- Consistent handling
-- Standard approval steps
-- Controlled execution
-
----
-
-### 4. Status
-
-The status reflects the progress of the request:
-
-- Submitted
-- Under Review
-- Approved / Rejected
-- In Progress
-- Completed
-- Closed
-
-✅ Status is typically driven by the workflow
-
----
-
-### 5. Assignment
-
-Requests are routed to:
-
-- A **team**, or
-- A **role**, or
-- A specific **person**
-
-✅ Based on workflow rules and responsibilities
-
----
-
-## How It Works (Simple Flow)
-
-1. User **submits a request**
-2. System identifies the **Request Type**
-3. Linked **Workflow is triggered**
-4. Request goes through:
-    - Review
-    - Approval
-    - Execution
-5. Tasks may be generated
-6. Request is **completed and closed**
-
----
-
-## Example (Simple Scenario)
-
-### Maintenance Request
-
-1. Operator submits request for machine issue
-2. Request triggers Maintenance Workflow
-3. Supervisor reviews request
-4. Approval is given
-5. Task is assigned to technician
-6. Repair is completed
-7. Request is closed
-
-✅ Entire process is tracked and controlled
-
----
-
-## Relationship with Other Modules
-
-- **Workflow** → Controls the lifecycle of the request (critical link)
-- **Task** → Executes work generated from the request
-- **Service Catalog** → Defines available request types (menu)
-- **Org** → Determines ownership and routing
-- **Person** → Identifies requester and assignee
-- **Asset** → Links request to equipment
-- **Notification** → Updates users on progress
-- **Audit** → Tracks all actions
-
----
-
-## Flexibility for Business
-
-The system allows:
-
-- Different request types per department
-- Custom workflows per request type
-- Simple or complex approval processes
-- Integration across all business areas
-
----
-
-## Control & Traceability
-
-The module ensures:
-
-- Every request is recorded
-- Progress is visible at all times
-- Actions and decisions are logged
-- No request is lost or ignored
-
-✅ Supports operational control and audits
-
----
-
-## Summary
-
-The Request module ensures that:
-
-- All business needs are formally captured
-- Requests are processed through proper workflows
-- Work is executed in a controlled and consistent way
-- The organization maintains visibility and accountability
-
----
-
-## In Simple Terms
-
-Think of it like:
-
-- **Request** → Asking for something
-- **Workflow** → The process to handle it
-- **Task** → The work to complete it
-
-👉 A request **starts the process**, and workflow ensures **it is done properly from start to finish**.
-
-
-# System Panels (Foundation Overview)<a id="portal"></a>
-
-
-The platform provides a unified user experience through **three complementary panels**, each serving a distinct purpose:
-
-- **Staff Portal (TACKLE)** → Individual daily work
-- **Team Panel** → Team coordination and delivery
-- **Admin Portal** → System configuration and governance
-
-Together, they form a complete operational ecosystem.
-
----
-
-## Overall Concept
-
-Each panel answers a different question:
-
-- **Staff Portal** → “What do I need to do?”
-- **Team Panel** → “How do we deliver as a team?”
-- **Admin Portal** → “How is the system defined and controlled?”
-
----
-
-## 1. Staff Service Portal – “TACKLE”
-
-The **Staff Portal** is the **main working interface** for employees.
-
-It acts as the **nerve center of daily activities**, where staff:
-- Execute tasks
-- Request services
-- Access knowledge
-- Manage personal work-related items
-
----
-
-### TACKLE Structure
-
-#### **T – Todo**
-**Daily Catch & Priority Tasks**
-
-- View assigned tasks  
-- Track pending and urgent work  
-- Monitor deadlines  
-
-✅ *Focus: What needs to be done now*
-
----
-
-#### **A – Artifact**
-**Personal Work Assets**
-
-- Profile information  
-- Assigned assets (equipment, tools)  
-- Certificates and qualifications  
-
-✅ *Focus: What belongs to me*
-
----
-
-#### **C – Catalog**
-**Service Menu & Quick Access**
-
-- Request services (IT, maintenance, HR)  
-- Browse available offerings  
-- Access external tools/links  
-
-✅ *Focus: What I can request*
-
----
-
-#### **K – Knowledge**
-**Documents & Learning**
-
-- SOPs, policies, manuals  
-- Training materials  
-- Learning programs  
-
-✅ *Focus: What I need to know*
-
----
-
-#### **L – Location**
-**Physical Awareness**
-
-- Floor plans  
-- Site navigation  
-- Location of assets and teams  
-
-✅ *Focus: Where things are*
-
----
-
-#### **E – Emergency**
-**Critical Support**
-
-- Emergency contacts  
-- Incident reporting  
-- Risk and issue logging  
-
-✅ *Focus: What to do in urgent situations*
-
----
-
-### Staff Portal Summary
-
-👉 A **simple, action-oriented workspace** for employees to perform daily work efficiently.
-
----
-
-## 2. Team Panel – Team Operations
-
-The **Team Panel** provides a **shared workspace for teams** to manage work collectively.
-
-It focuses on:
-- Coordination  
-- Accountability  
-- Quality control  
-- Continuous improvement  
-
----
-
-### Why Team Panel Exists
-
-Work is not done individually — it is delivered by **teams with structured roles**.
-
-✅ Ensures:
-- Clear responsibilities  
-- Better coordination  
-- Higher quality output  
-
----
-
-### Team Roles (Operating Model)
-
-Each team operates using defined **functional roles**:
-
----
-
-#### <img src="pics/team_scout.png" width="48" height="48"> Scout (Entry & Final Authority)
-
-- Brings work into the team  
-- Owns intake (requests, assignments)  
-- Provides final sign-off  
-
-✅ Assures request fulfilment  
-
----
-
-#### <img src="pics/team_quartermaster.png" width="48" height="48"> Quartermaster (Resources)
-
-- Manages tools, assets, inventory  
-- Ensures readiness before work starts  
-
-✅ Removes operational delays  
-
----
-
-#### <img src="pics/team_coach.png" width="48" height="48"> Coach (Capability Development)
-
-- Trains team members  
-- Links LMS materials and assessments  
-- Improves skills over time  
-
-✅ Builds team competency  
-
----
-
-#### <img src="pics/team_players.png" width="48" height="48"> Player (Execution)
-
-- Performs actual work  
-- Completes assigned tasks  
-
-✅ Core workforce  
-
----
-
-#### <img src="pics/team_captain.png" width="48" height="48"> Captain (Quality & Ownership)
-
-- Oversees daily operations  
-- Ensures quality standards  
-
-✅ Team owner and controller  
-
----
-
-#### <img src="pics/team_tactician.png" width="48" height="48"> Tactician (Knowledge & Process)
-
-- Writes procedures (SOPs)  
-- Maintains documentation  
-- Standardizes processes  
-
-✅ Keeps work consistent and structured  
-
----
-
-### Team Workflow (Simple)
-
-1. **Scout** receives work  
-2. Work assigned to **Players**  
-3. **Quartermaster** ensures resources  
-4. Work is executed  
-5. **Captain** reviews quality  
-6. **Scout** signs off  
-7. **Tactician** updates knowledge  
-8. **Coach** improves skills  
-
----
-
-### Team Panel Summary
-
-👉 A **team operating system** that ensures work is delivered **properly, consistently, and with quality**
-
----
-
-## 3. Admin Portal – System Management
-
-The **Admin Portal** is used to **configure and maintain the platform**.
-
-It is not for daily operations, but for:
-- Setup  
-- Control  
-- Governance  
-
----
-
-### Key Responsibilities
-
-#### Configuration
-- Organization structure  
-- Locations  
-- Job positions and roles  
-- Attributes  
-
----
-
-#### Process Setup
-- Workflows  
-- Task templates & Work Packages  
-- Service Catalog  
-
----
-
-#### Access Control
-- Roles and permissions  
-- ABAC (attribute-based access)  
-- User and staff management  
-
----
-
-#### Content Management
-- Documents (DMS)  
-- Learning materials (LMS)  
-
----
-
-#### Monitoring
-- Requests and services  
-- Tasks and workflows  
-- Reports and dashboards  
-
----
-
-### Admin Portal Summary
-
-👉 A **control center** for configuring how the business operates within the system
-
----
-
-## Panel Comparison
-
-| Area | Staff Portal (TACKLE) | Team Panel | Admin Portal |
-|------|------|------|------|
-| Focus | Individual work | Team coordination | System configuration |
-| Users | All employees | Teams | Admins / managers |
-| Purpose | Execute tasks | Deliver work as a team | Configure & control |
-| Nature | Simple & guided | Operational & collaborative | Advanced & structured |
-
----
-
-## Overall System View
-
-The three panels work together:
-
-- **Staff Portal** drives **execution (individual level)**  
-- **Team Panel** drives **coordination (team level)**  
-- **Admin Portal** drives **control (system level)**  
-
----
-
-### Final Summary
-
-The platform ensures:
-
-✅ Individuals know what to do  
-✅ Teams know how to deliver  
-✅ The system ensures everything is controlled  
-
----
-
-### In Simple Terms
-
-- **Staff Portal** → *“Do my work”*  
-- **Team Panel** → *“Work together”*  
-- **Admin Portal** → *“Set the rules”*  
-
-👉 Together, they create a complete, scalable, and well-governed operational system.
-
-
-# Learning (Business Overview)<a id="learn"></a>
-
-
-# Certificate Management (Business Overview)<a id="certificate"></a>
-
-
 # Document Management System (Business Overview)<a id="document"></a>
 
 The **Document Management System (DMS)** ensures that all organizational documents are properly controlled, accessible, and compliant with standards such as **ISO 9001**.
 
 It manages documents using **Versioning**, **Workflow**, and a centralized **Audit Trail** to ensure full lifecycle control from creation to approval, publication, revision, and archival.
 
----
 
 ## Why This Matters (ISO 9001 Context)
 
@@ -2684,7 +2534,6 @@ ISO 9001 requires organizations to:
 
 This module ensures all these requirements are met consistently and auditable.
 
----
 
 ## Key Objectives
 
@@ -2696,7 +2545,6 @@ The DMS ensures:
 ✅ Documents are protected from unauthorized changes  
 ✅ Obsolete documents are controlled and archived
 
----
 
 ## Key Concepts
 
@@ -2722,7 +2570,6 @@ Examples:
 ✅ A Document **does not store content directly**  
 ✅ All content lives in **Versions**
 
----
 
 ### 2. Document Version (State)
 
@@ -2739,7 +2586,6 @@ Every document change creates a **new Version**, never overwriting existing ones
 ✅ Only **Published** versions are valid for operational use  
 ✅ Older versions remain immutable and traceable
 
----
 
 ### 3. Approval Workflow (Control)
 
@@ -2757,7 +2603,6 @@ Document changes are governed by a **Workflow** owned by an **OrgTeam**.
 - Determines who can approve
 - Triggers version state changes
 
----
 
 ### 4. Document Status (Derived from Version)
 
@@ -2770,7 +2615,6 @@ Document usability is determined by the **status of its Versions**:
 
 ✅ Only **Published Versions** may be used in operations
 
----
 
 ### 5. Audit Trail (Traceability)
 
@@ -2793,7 +2637,6 @@ Examples of audited actions:
 
 ✅ This satisfies ISO 9001 traceability requirements
 
----
 
 ## How It Works (Controlled Flow)
 
@@ -2809,7 +2652,6 @@ Examples of audited actions:
 ✅ No document bypasses workflow  
 ✅ No change happens without a version
 
----
 
 ## Example (Simple Scenario)
 
@@ -2835,7 +2677,6 @@ Later update:
 
 ✅ Full compliance and traceability
 
----
 
 ## ISO 9001 Compliance Mapping
 
@@ -2866,18 +2707,16 @@ Later update:
 - Centralized audit trail
 - Full history of actions and approvals
 
----
 
 ## Integration with Other Modules
 
 - **Workflow** → Controls document lifecycle
 - **Version** → Stores document state and content
-- **Org / OrgTeam** → Owns documents and workflows
+- [**Org Unit** / **Org Team**](#org) → Owns documents and workflows
 - **Person / Job** → Defines authors, reviewers, approvers
 - **Task** → Executes review or approval steps
 - **Audit** → Records all document actions
 
----
 
 ## Flexibility for Business
 
@@ -2889,7 +2728,6 @@ The system allows:
 - Custom review cycles
 - Regulatory extensions
 
----
 
 ## Custom Attributes
 
@@ -2903,7 +2741,6 @@ Documents and versions may include:
 
 ✅ Extendable without core changes
 
----
 
 ## Summary
 
@@ -2915,7 +2752,6 @@ The Document Management System ensures that:
 - All actions are auditable
 - ISO 9001 requirements are consistently met
 
----
 
 ## In Simple Terms
 
@@ -2928,6 +2764,474 @@ Think of it like:
 
 And the system ensures everyone always uses the **right document, approved the right way, at the right time**.
 
+# Learning (Business Overview)<a id="learn"></a>
 
+The **Learning Management System (LMS)** helps the organization manage employee training, skills, and certifications in a **controlled, auditable, and compliant** manner.
+
+It ensures that:
+
+- Employees are properly trained
+- Learning materials are controlled and approved
+- Required certifications are tracked
+- Skills are aligned with job requirements
+
+✅ Learning content is **version‑controlled**  
+✅ Training lifecycle is governed by **workflow**  
+✅ All actions are recorded in the **audit trail**
+
+
+## Why This Matters
+
+In a manufacturing environment:
+
+- Employees must follow strict procedures
+- Certifications may be mandatory (e.g., safety, machinery)
+- Skills must match job roles
+- Training records are required for audits and compliance
+
+Without proper control:
+
+- Outdated materials may be used
+- Training approvals may be skipped
+- Certification evidence may be incomplete
+- Audit readiness is weakened
+
+This module ensures the company always knows:
+
+✅ Who is trained  
+✅ On which approved material  
+✅ With what certification status  
+✅ And when retraining is required
+
+
+## Key Objectives
+
+The Learning module helps to:
+
+- Control learning materials through versioning
+- Enforce approval of training content
+- Track certifications and expiry
+- Align skills with job requirements
+- Provide audit‑ready training records
+
+
+## Key Concepts
+
+### 1. Training (Identity)
+
+A **Training** represents a learning program or subject offered by the organization.
+
+Examples:
+
+- Safety Training
+- Machine Operation Training
+- Quality Procedures
+
+✅ Training defines:
+
+- Title
+- Purpose
+- Owning OrgTeam
+- Applicability (roles, departments)
+
+✅ Training **does not store content directly**  
+✅ Content is managed via **Versions**
+
+
+### 2. Training Version (State)
+
+Each update to training material creates a **new Version**.
+
+✅ A Training Version includes:
+
+- Version number (Major / Minor / Patch)
+- Learning material (documents, videos, links)
+- Status (Draft, Approved, Published, Archived)
+- Change notes
+- Creator and timestamp
+
+✅ Only **Published Versions** may be used for training  
+✅ Older versions remain immutable and traceable
+
+
+### 3. Approval Workflow (Control)
+
+Training materials are governed by a **Workflow** owned by an **OrgTeam**.
+
+✅ Workflow ensures:
+
+- Draft → Review → Approval → Publication
+- Proper authorization
+- Controlled rollout of training changes
+
+✅ Workflow:
+
+- Controls when versions are approved
+- Determines who can publish training
+- Prevents use of unapproved materials
+
+
+### 4. Certification<a id="certificate"></a>
+
+A **Certification** represents proof that a person has completed training using an **approved version**.
+
+Examples:
+
+- Forklift License
+- Safety Certification
+- ISO Compliance Training
+
+✅ Certifications:
+
+- Are issued only from **Published Training Versions**
+- May have validity or expiry dates
+- Are linked to audit records
+
+
+### 5. Competency
+
+Defines the **skill level** of a person.
+
+Examples:
+
+- Beginner
+- Intermediate
+- Expert
+
+✅ Competency is:
+
+- Influenced by training and certification
+- Used to determine job fitness
+- Auditable and time‑bound if required
+
+
+## How It Works Together
+
+The LMS connects learning, people, and jobs:
+
+1. Training is defined (identity)
+2. Training material is added as a **Draft Version**
+3. Workflow routes version for approval
+4. Version is **Published**
+5. Employees attend training
+6. Certification is issued
+7. Competency level is updated
+8. All actions are logged in **Audit Trail**
+
+✅ No training bypasses approval  
+✅ No certification exists without approved material
+
+
+## Example (Simple Scenario)
+
+- Role: Machine Operator
+- Required Training: Machine Safety Training
+- Person: Ahmad
+
+Process:
+
+1. Safety Training is published as Version 2.0.0
+2. Ahmad is assigned training
+3. Ahmad completes training
+4. Certification is issued
+5. Ahmad’s competency is updated
+6. Audit trail records:
+    - Training completion
+    - Certification issuance
+
+✅ Ahmad is now qualified and auditable
+
+
+## Compliance & Audit
+
+The LMS ensures:
+
+- Only approved training materials are used
+- Certification evidence is traceable
+- Expired certifications are flagged
+- Training history is preserved
+
+✅ Critical for:
+
+- Safety compliance
+- ISO audits
+- Regulatory inspections
+
+
+## Integration with Other Modules
+
+- **Version** → Controls training material changes
+- **Workflow** → Governs approval and publication
+- **Audit** → Records training, certification, and changes
+- [**Org Unit** / **Org Team**](#org) → Owns training programs
+- **Person** → Identifies who is trained
+- **Job** → Defines required training
+- **Access / Authorization** → Restricts actions based on certification
+
+
+## Flexibility for Business
+
+The system allows the organization to:
+
+- Define different training per role or department
+- Update learning materials safely through versioning
+- Support internal and external training
+- Handle multiple certifications per employee
+- Enforce retraining cycles
+
+
+## Custom Attributes
+
+Training, versions, and certifications may include:
+
+- Training provider
+- Assessment score
+- Validity period
+- Skill category
+- Regulatory reference
+
+✅ Easily extended without core changes
+
+
+## Summary
+
+The Learning module ensures that:
+
+- Training materials are controlled and approved
+- Employees are trained on the correct versions
+- Certifications are valid and traceable
+- Skills align with job requirements
+- The organization remains audit‑ready
+
+
+## In Simple Terms
+
+Think of it like:
+
+- **Training** → What people need to learn
+- **Version** → The approved learning material
+- **Workflow** → How training gets approved
+- **Certification** → Proof they passed
+- **Competency** → How good they are at it
+- **Audit Trail** → The evidence
+
+And the system ensures the **right people learn the right material, approved the right way, at the right time**.
 
 # Asset Management (Business Overview)<a id="asset"></a>
+
+The **Asset Management module** manages all physical and operational assets within the organization across their full lifecycle.
+
+It ensures that assets are:
+- Properly registered
+- Maintained regularly
+- Used efficiently
+- Tracked until disposal
+
+---
+
+## Why This Matters
+
+In a manufacturing environment:
+
+- Machines and equipment are critical to operations
+- Breakdowns cause production loss
+- Poor tracking leads to inefficiencies
+- Compliance requires maintenance records
+
+This module ensures the organization always knows:
+
+✅ What assets exist  
+✅ Where they are  
+✅ What condition they are in  
+✅ When maintenance is due  
+✅ Who is responsible  
+
+---
+
+## Key Objectives
+
+The Asset module ensures:
+
+- Full visibility of all assets
+- Planned and controlled maintenance
+- Reduced downtime
+- Traceability of asset history
+- Support for audits and compliance
+
+---
+
+## Key Components
+
+### 1. Asset Register
+
+A central list of all assets.
+
+Examples:
+- Machines/Equipment
+- Tools
+- Movers : Vehicles/Transport/Trolley
+- Space : Storage/Compartment/Rack
+
+✅ Each asset includes:
+- Asset ID
+- Name and type
+- Brand(Maker) and Model
+- Location
+- Owner / responsible team
+- Status (active, under maintenance, disposed)
+
+---
+
+### 2. Asset Lifecycle
+
+Tracks the full life of an asset:
+
+1. Acquisition (purchase or installation)  
+2. Operation (in use)  
+3. Maintenance (servicing and repair)  
+4. Disposal (retirement or replacement)  
+
+✅ Ensures proper planning and cost control
+
+---
+
+### 3. Maintenance Management
+
+Ensures assets remain in good condition.
+
+Types of maintenance:
+- **Preventive** → Scheduled servicing  
+- **Corrective** → Fix after breakdown  
+- **Predictive** → Based on condition or usage  
+
+✅ Helps reduce unexpected failures
+
+---
+
+### 4. Work Orders
+
+Used to manage maintenance activities.
+
+✅ Includes:
+- Task details
+- Assigned personnel
+- Required parts/tools
+- Status tracking
+
+---
+
+### 5. Asset Status
+
+Shows current condition of the asset:
+
+- Setup / Installing
+- In Use / Active
+- In Maintenance
+- Out of Service
+- Obsolete / Disposed
+
+✅ Helps operations make quick decisions
+
+---
+
+## How It Works (Simple Flow)
+
+1. Asset is **registered** in the system, status becomes "Setup"  
+2. Assigned to a **location/team/staff**, status becomes "In Use"  
+3. Maintenance schedules are defined  
+4. Work orders are created when needed  
+5. Maintenance activities are recorded  
+6. Asset history is tracked  
+7. Asset is eventually **retired or replaced**
+
+---
+
+## Example (Simple Scenario)
+
+- Asset: CNC Machine  
+- Location: Production Floor  
+- Responsible: Maintenance Team  
+
+Process:
+- Machine is registered
+- Monthly maintenance is scheduled
+- A work order is created automatically
+- Technician performs maintenance
+- Record is saved in asset history
+- Machine continues operation
+
+---
+
+## Compliance & Audit Support
+
+The module supports operational and quality standards (including ISO practices) by:
+
+- Maintaining complete asset history
+- Recording all maintenance activities
+- Ensuring scheduled maintenance is not missed
+- Providing traceability of actions and responsibilities
+
+✅ Useful for audits and inspections  
+
+---
+
+## Integration with Other Modules
+
+- **Org** → Defines asset location and ownership  
+- **Person** → Identifies responsible personnel  
+- **Job** → Assigns roles (e.g., technician, approver)  
+- **Workflow** → Controls approvals for request, maintenance or disposal  
+- **Task** → Generates tasks to perform action on asset  
+- **Audit** → Tracks all asset-related changes 
+- **Entitlement** → Validation for request, ownership within limits     
+
+---
+
+## Flexibility for Business
+
+The system allows the organization to:
+
+- Manage multiple asset types
+- Support multi-site operations
+- Customize maintenance schedules
+- Track both simple and complex equipment
+
+---
+
+## Extra / Custom Attributes
+
+Assets can include additional business-specific details:
+
+- Manufacturer
+- Serial number
+- Warranty period
+- Maintenance frequency
+- Operating capacity
+
+✅ Easily extendable without redesign
+
+---
+
+## Summary
+
+The Asset Management module ensures that:
+
+- All assets are properly tracked
+- Maintenance is planned and executed
+- Downtime is minimized
+- Asset history is available for audits
+- The organization operates efficiently
+
+---
+
+## In Simple Terms
+
+Think of it like:
+
+- **Asset** → The equipment or item  
+- **Maintenance** → Keeping it in good condition 
+- **Request** → Workflow to acquire and place it to In Use.  
+- **Work Order** → The job to fix or service it  
+- **Lifecycle** → From purchase to disposal   
+
+And the system ensures every asset is **well-managed from start to end**.

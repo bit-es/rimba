@@ -6,20 +6,20 @@ models:
     name: string
     type: enum:company,government,vendor,institution nullable
     attributes: json nullable
-    timestamps: true
+
 
   OrgUnit:
     org_corp_id: id foreign:org_corps
     name: string
     parent_id: id nullable foreign:org_units
     attributes: json nullable
-    timestamps: true
+
 
   OrgTeam:
     org_unit_id: id foreign:org_units
     name: string
     attributes: json nullable
-    timestamps: true
+
 
   JobContract:
     name: string
@@ -35,7 +35,7 @@ models:
     end_date: date nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   JobPosition:
     job_contract_id: id foreign:job_contracts
@@ -47,7 +47,7 @@ models:
     status: enum:open,filled,closed default:open
 
     attributes: json nullable
-    timestamps: true
+
 
   JobRole:
     name: string
@@ -57,12 +57,12 @@ models:
     type: enum:approval,operation,admin,reporting nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   JobPositionRole:
     job_position_id: id foreign:job_positions
     job_role_id: id foreign:job_roles
-    timestamps: true
+
 
   Staff:
     user_id: id nullable foreign:users
@@ -77,7 +77,7 @@ models:
     status: enum:active,inactive,suspended default:active
 
     attributes: json nullable
-    timestamps: true
+
 
   Employee:
     staff_id: id foreign:staff
@@ -91,7 +91,7 @@ models:
     termination_date: date nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   StaffPosition:
     staff_id: id foreign:staff
@@ -105,7 +105,7 @@ models:
     status: enum:active,ended,pending default:active
 
     attributes: json nullable
-    timestamps: true
+
 
   Movement:
     movable_id: id
@@ -118,7 +118,7 @@ models:
     from: json nullable
     to: json nullable
 
-    timestamps: true
+
 
   # ------------------------------------------------------------------
   # Authorization
@@ -136,7 +136,7 @@ models:
 
     name: string
     guard_name: string default:web
-    timestamps: true
+
 
   Permission:
     # Represents a system "gate"
@@ -149,7 +149,7 @@ models:
 
     name: string
     guard_name: string default:web
-    timestamps: true
+
 
   RoleHasPermission:
     # Pivot: defines which roles can access which permissions (gates)
@@ -208,7 +208,7 @@ models:
     status: enum:active,inactive default:active
 
     attributes: json nullable
-    timestamps: true
+
 
   RoleAssignment:
     # Represents manual or owner-driven role assignment
@@ -233,7 +233,7 @@ models:
     end_date: date nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   # ------------------------------------------------------------------
   # OPTIONAL POLICY LAYER (FUTURE-READY, MINIMAL)
@@ -253,7 +253,7 @@ models:
     permission_id: id nullable foreign:permissions
 
     attributes: json nullable
-    timestamps: true
+
 
   # ------------------------------------------------------------------
   # Audit Trail
@@ -285,7 +285,7 @@ models:
 
     metadata: json nullable
 
-    timestamps: true
+
 
   # ------------------------------------------------------------------
   # Versioning
@@ -314,7 +314,7 @@ models:
     current_version_id: id nullable foreign:versions
 
     attributes: json nullable
-    timestamps: true
+
 
   Version:
     # Represents a snapshot/state of a Versionable entity
@@ -360,7 +360,7 @@ models:
     effective_to: timestamp nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   VersionApproval:
     # Tracks approval actions for versions
@@ -376,7 +376,7 @@ models:
     acted_at: timestamp
 
     attributes: json nullable
-    timestamps: true
+
 
   VersionRelation:
     # Defines relationships between versions
@@ -390,7 +390,7 @@ models:
 
     type: enum:previous,next,derived_from,supersedes
 
-    timestamps: true
+
 
   VersionLock:
     # Prevents concurrent modification of a version
@@ -408,7 +408,7 @@ models:
 
     reason: string nullable
 
-    timestamps: true
+
 
   # ------------------------------------------------------------------
   # Task Management
@@ -446,7 +446,7 @@ models:
     ref_id: id nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   TaskList:
     # Represents a group of related tasks
@@ -461,7 +461,7 @@ models:
     ref_id: id nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   TaskTemplate:
     # Represents a reusable task definition (single step)
@@ -479,7 +479,7 @@ models:
     default_due_days: integer nullable # e.g. +2 days after creation
 
     attributes: json nullable
-    timestamps: true
+
 
   TaskListTemplate:
     # Represents a reusable TaskList (multi-step process)
@@ -495,7 +495,7 @@ models:
     execution_type: enum:sequential,parallel default:parallel
 
     attributes: json nullable
-    timestamps: true
+
 
   TaskListTemplateItem:
     # Defines tasks inside a TaskListTemplate
@@ -511,7 +511,7 @@ models:
     depends_on_id: id nullable foreign:task_list_template_items
 
     attributes: json nullable
-    timestamps: true
+
 
   TaskAssignment:
     # Tracks assignment history and transitions
@@ -529,7 +529,7 @@ models:
     end_date: timestamp nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   # ------------------------------------------------------------------
   # Event Calendar
@@ -561,7 +561,7 @@ models:
     is_blocking: boolean default:false
 
     attributes: json nullable
-    timestamps: true
+
 
   Shift:
     # Represents BOTH:
@@ -592,7 +592,65 @@ models:
     end_date: date nullable
 
     attributes: json nullable
-    timestamps: true
+
+
+
+  # ------------------------------------------------------------------
+  # Location
+  # ------------------------------------------------------------------
+  Location:
+    # Represents any physical place in the real world
+    # Example:
+    # - Site (Factory)
+    # - Building
+    # - Area (Production Floor)
+    # - Section (Line 1)
+    #
+    # Supports full hierarchy using parent_id
+    # This is the ONLY core table needed for location structure
+
+    name: string
+
+    # Classification of location level/type
+    type: enum:site,building,area,section,room,zone,other nullable
+
+    # Hierarchy (self-referencing)
+    parent_id: id nullable foreign:locations
+
+    # Optional ownership / association
+    org_corp_id: id nullable foreign:org_corps
+
+    attributes: json nullable
+
+
+  LocationAssignment:
+    # Links locations to other entities
+    # Enables flexible association WITHOUT hardcoding relationships
+    #
+    # Examples:
+    # - Staff assigned to a location
+    # - Asset located at a place
+    # - JobPosition tied to a work area
+    # - OrgUnit operating in a facility
+    #
+    # This is a polymorphic assignment table
+
+    location_id: id foreign:locations
+
+    # Polymorphic target (what is assigned to this location)
+    assignable_type: string
+    assignable_id: id
+
+    # Optional purpose of assignment
+    type: enum:primary,secondary,temporary nullable
+
+    # Time-based assignment (supports movement/history)
+    start_date: date nullable
+    end_date: date nullable
+
+    attributes: json nullable
+
+
 
   # ------------------------------------------------------------------
   # Workflow
@@ -634,7 +692,7 @@ models:
     # - Version → WHAT state means (draft/published/is_menu)
     attributes: json nullable
 
-    timestamps: true
+
 
   WorkflowStep:
     # Represents a state/checkpoint in a workflow
@@ -677,7 +735,7 @@ models:
     # NOT enforced by database schema
     attributes: json nullable
 
-    timestamps: true
+
 
   WorkflowTransition:
     # Defines allowed movement between steps
@@ -697,7 +755,7 @@ models:
     requires_approval: boolean default:false
 
     attributes: json nullable
-    timestamps: true
+
 
   WorkflowStepTask:
     # Binds tasks or task lists to a workflow step
@@ -713,7 +771,7 @@ models:
     is_required: boolean default:true
 
     attributes: json nullable
-    timestamps: true
+
 
   WorkflowInstance:
     # Represents a running instance of a workflow
@@ -735,7 +793,7 @@ models:
     completed_at: timestamp nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   WorkflowInstanceStep:
     # Tracks actual step progression (history)
@@ -750,7 +808,7 @@ models:
     completed_at: timestamp nullable
 
     attributes: json nullable
-    timestamps: true
+
 
   WorkflowDecision:
     # Records decisions made at decision steps
@@ -776,63 +834,73 @@ models:
     # - metadata: decision, step, workflow
     attributes: json nullable
 
-    timestamps: true
+
+
 
   # ------------------------------------------------------------------
-  # Location
+  # Request Management
   # ------------------------------------------------------------------
-  Location:
-    # Represents any physical place in the real world
-    # Example:
-    # - Site (Factory)
-    # - Building
-    # - Area (Production Floor)
-    # - Section (Line 1)
+
+  Request:
+    # Represents a business demand submitted by a user
+    # This is the ENTRY POINT of most processes
     #
-    # Supports full hierarchy using parent_id
-    # This is the ONLY core table needed for location structure
+    # IMPORTANT:
+    # - Stores request data (form inputs)
+    # - Represents business intent
+    # - Independent from workflow execution
+    #
+    # WorkflowInstance processes this Request,
+    # but does NOT replace it
+
+    name: string nullable
+    description: text nullable
+
+    # Who submitted the request
+    requester_id: id foreign:staff
+
+    # Source service (via version)
+    version_id: id foreign:versions
+
+    # Optional classification
+    request_type: string nullable
+
+    # Status (high-level business status)
+    # NOTE:
+    # This is NOT the workflow engine state,
+    # but a simplified business-facing status
+    status: enum:submitted,in_review,approved,rejected,in_progress,completed,closed default:submitted
+
+    # Link to workflow execution
+    workflow_instance_id: id nullable foreign:workflow_instances
+
+    # Optional contextual references
+    ref_type: string nullable
+    ref_id: id nullable
+
+    attributes: json nullable
+
+
+  RequestType:
+    # Defines category of request
+    # Maps to workflow + business rules
+    #
+    # Example:
+    # - Maintenance Request
+    # - IT Support
+    # - HR Request
 
     name: string
 
-    # Classification of location level/type
-    type: enum:site,building,area,section,room,zone,other nullable
-
-    # Hierarchy (self-referencing)
-    parent_id: id nullable foreign:locations
-
-    # Optional ownership / association
-    org_corp_id: id nullable foreign:org_corps
+    # Default workflow to trigger
+    workflow_id: id nullable foreign:workflows
 
     attributes: json nullable
-    timestamps: true
 
-  LocationAssignment:
-    # Links locations to other entities
-    # Enables flexible association WITHOUT hardcoding relationships
-    #
-    # Examples:
-    # - Staff assigned to a location
-    # - Asset located at a place
-    # - JobPosition tied to a work area
-    # - OrgUnit operating in a facility
-    #
-    # This is a polymorphic assignment table
 
-    location_id: id foreign:locations
-
-    # Polymorphic target (what is assigned to this location)
-    assignable_type: string
-    assignable_id: id
-
-    # Optional purpose of assignment
-    type: enum:primary,secondary,temporary nullable
-
-    # Time-based assignment (supports movement/history)
-    start_date: date nullable
-    end_date: date nullable
-
-    attributes: json nullable
-    timestamps: true
+  # ------------------------------------------------------------------
+  # System Panels
+  # ------------------------------------------------------------------
 
   # ------------------------------------------------------------------
   # Service Catalog (Menu)
@@ -857,7 +925,7 @@ models:
     org_team_id: id foreign:org_teams
 
     attributes: json nullable
-    timestamps: true
+
 
   ServiceCategory:
     # Represents grouping of services for menu navigation
@@ -873,7 +941,7 @@ models:
     parent_id: id nullable foreign:service_categories
 
     attributes: json nullable
-    timestamps: true
+
 
   ServiceCategoryAssignment:
     # Links Service to categories
@@ -889,85 +957,341 @@ models:
     service_category_id: id foreign:service_categories
 
     attributes: json nullable
-    timestamps: true
-    
-  # ------------------------------------------------------------------
-  # Request Management
-  # ------------------------------------------------------------------
 
-  Request:
-    # Represents a business demand submitted by a user
-    # This is the ENTRY POINT of most processes
+    
+
+  # ------------------------------------------------------------------
+  # Document Management System
+  # ------------------------------------------------------------------
+  Document:
+    # Represents the identity of a controlled document
+    # Example:
+    # - SOP (Standard Operating Procedure)
+    # - Work Instruction
+    # - Policy
+    # - Technical Drawing
+    # - Contract
+    # - Learning Materials
     #
     # IMPORTANT:
-    # - Stores request data (form inputs)
-    # - Represents business intent
-    # - Independent from workflow execution
+    # - Document DOES NOT store content
+    # - Content is stored in Version
+    # - Document is stable identity
     #
-    # WorkflowInstance processes this Request,
-    # but does NOT replace it
+    # Version module handles:
+    # - content
+    # - lifecycle (draft, approved, published, archived)
+    # - change history
 
-    name: string nullable
+    title: string
     description: text nullable
 
-    # Who submitted the request
-    requester_id: id foreign:users
+    # Document classification
+    type: enum:sop,work_instruction,policy,drawing,contract,other nullable
 
-    # Source service (via version)
-    version_id: id foreign:versions
+    # Owning team (accountable for document)
+    org_team_id: id foreign:org_teams
 
-    # Optional classification
-    request_type: string nullable
-
-    # Status (high-level business status)
-    # NOTE:
-    # This is NOT the workflow engine state,
-    # but a simplified business-facing status
-    status: enum:submitted,in_review,approved,rejected,in_progress,completed,closed default:submitted
-
-    # Link to workflow execution
-    workflow_instance_id: id nullable foreign:workflow_instances
-
-    # Optional contextual references
-    ref_type: string nullable
-    ref_id: id nullable
+    # Optional applicability (where document applies)
+    org_unit_id: id nullable foreign:org_units
+    location_id: id nullable foreign:locations
 
     attributes: json nullable
-    timestamps: true
 
-  RequestType:
-    # Defines category of request
-    # Maps to workflow + business rules
-    #
+
+
+  DocumentCategory:
+    # Optional grouping for documents
     # Example:
-    # - Maintenance Request
-    # - IT Support
-    # - HR Request
+    # - Quality Documents
+    # - Safety Procedures
+    # - Technical Manuals
 
     name: string
+    description: text nullable
 
-    # Default workflow to trigger
-    workflow_id: id nullable foreign:workflows
+    parent_id: id nullable foreign:document_categories
 
     attributes: json nullable
-    timestamps: true
 
-  # ------------------------------------------------------------------
-  # System Panels
-  # ------------------------------------------------------------------
+
+
+  DocumentCategoryAssignment:
+    # Links Document to categories
+    # Keeps classification flexible and non-restrictive
+
+    document_id: id foreign:documents
+    document_category_id: id foreign:document_categories
+
+    attributes: json nullable
+
 
   # ------------------------------------------------------------------
   # Learning
   # ------------------------------------------------------------------
 
+  Course:
+    # Represents a high-level learning program (identity only)
+    # DOES NOT store content (content is in Version via Materials)
+
+    code: string unique
+    title: string
+    description: text nullable
+
+    org_team_id: id foreign:org_teams
+
+    # Controls whether course is visible/available (business-level, not version)
+    is_active: boolean default:true
+
+    attributes: json nullable
+
+
+
+  CourseGroup:
+    # Groups courses for navigation (optional hierarchy)
+
+    name: string
+    description: text nullable
+
+    parent_id: id nullable foreign:course_groups
+
+    attributes: json nullable
+
+
+
+  CourseGroupAssignment:
+    # Links Course to CourseGroup
+
+    course_id: id foreign:courses
+    course_group_id: id foreign:course_groups
+
+    attributes: json nullable
+
+
+
+  Module:
+    # Represents a reusable learning unit inside courses
+    # NO content stored here (content via Material → Version)
+
+    name: string
+    description: text nullable
+
+    duration_minutes: integer nullable
+
+    # Certification validity rule (if applicable)
+    validity_days: integer nullable
+
+    attributes: json nullable
+
+
+
+  CourseModule:
+    # Defines structure of modules inside a course
+
+    course_id: id foreign:courses
+    module_id: id foreign:modules
+
+    sequence: integer nullable
+
+    attributes: json nullable
+
+
+
+  Material:
+    # Represents learning material identity
+    # Content is stored in Version (Versionable)
+    #
+    # IMPORTANT:
+    # ONLY Published Versions should be used in learning
+
+    name: string
+    description: text nullable
+
+    type: enum:document,video,link,other nullable
+
+    org_team_id: id nullable foreign:org_teams
+
+    attributes: json nullable
+
+
+
+  MaterialModule:
+    # Links materials to modules
+
+    material_id: id foreign:materials
+    module_id: id foreign:modules
+
+    sequence: integer nullable
+
+    attributes: json nullable
+
+
+
+  Quiz:
+    # Assessment linked to module
+    # Permission-controlled via Spatie (e.g. quiz.view, quiz.attempt)
+
+    module_id: id foreign:modules
+
+    name: string
+    description: text nullable
+
+    pass_score: integer nullable
+
+    attributes: json nullable
+
+
+
+  QuizAttempt:
+    # Tracks each learner attempt
+    # Requires permission (e.g. quiz.attempt)
+
+    quiz_id: id foreign:quizzes
+    staff_id: id foreign:staff
+
+    score: integer nullable
+    result: enum:pass,fail nullable
+
+    attempted_at: timestamp nullable
+
+    attributes: json nullable
+
+
+
+  Evaluation:
+    # Manual or structured assessment (non-quiz)
+
+    module_id: id nullable foreign:modules
+    staff_id: id foreign:staff
+
+    evaluator_id: id nullable foreign:users
+
+    result: enum:pass,fail nullable
+
+    evaluated_at: timestamp nullable
+
+    attributes: json nullable
+
+
   # ------------------------------------------------------------------
   # Certificate Management
   # ------------------------------------------------------------------
+  Certificate:
+    # Proof of successful learning
+    # MUST be based on approved (published) material
 
-  # ------------------------------------------------------------------
-  # Document Management System
-  # ------------------------------------------------------------------
+    module_id: id foreign:modules
+    staff_id: id foreign:staff
+
+    # Evidence linkage
+    quiz_attempt_id: id nullable foreign:quiz_attempts
+    evaluation_id: id nullable foreign:evaluations
+
+    issued_by: id nullable foreign:users
+
+    issued_at: timestamp nullable
+    expires_at: timestamp nullable
+
+    status: enum:valid,expired,revoked default:valid
+
+    attributes: json nullable
+
+    # Represents proof of completion of a module
+    # MUST be based on approved (published) material
+
+    module_id: id foreign:modules
+    staff_id: id foreign:staff
+
+    # Evidence link
+    quiz_attempt_id: id nullable foreign:quiz_attempts
+    evaluation_id: id nullable foreign:evaluations
+
+    issued_by: id nullable foreign:users
+
+    issued_at: timestamp nullable
+    expires_at: timestamp nullable
+
+    status: enum:valid,expired,revoked default:valid
+
+    attributes: json nullable
+
+
 
   # ------------------------------------------------------------------
   #  Asset Management
   # ------------------------------------------------------------------
+  Asset:
+    # Represents a physical or operational asset (identity only)
+    # Example:
+    # - Machine
+    # - Tool
+    # - Vehicle
+    # - IT equipment
+    #
+    # IMPORTANT:
+    # - This is the current state only
+    # - Historical changes tracked via AuditLog
+    # - Lifecycle controlled via Workflow
+
+    code: string unique
+    name: string
+    description: text nullable
+
+    type: enum:machine,tool,vehicle,it,facility,other nullable
+
+    # Ownership
+    org_team_id: id foreign:org_teams
+
+    # Location (physical placement)
+    location_id: id nullable foreign:locations
+
+    # Current operational status
+    status: enum:active,under_maintenance,out_of_service,disposed default:active
+
+    attributes: json nullable
+
+
+
+  AssetType:
+    # Optional classification for assets
+    # Allows grouping and applying different rules/workflows
+
+    name: string
+
+    attributes: json nullable
+
+
+
+  AssetTypeAssignment:
+    # Links Asset to AssetType
+    # Supports flexible multi-classification
+
+    asset_id: id foreign:assets
+    asset_type_id: id foreign:asset_types
+
+    attributes: json nullable
+
+
+
+  AssetAssignment:
+    # Assigns responsibility or association of asset
+    # Example:
+    # - Assigned to staff
+    # - Assigned to team
+    # - Assigned to job position
+    #
+    # Helps track usage responsibility (NOT ownership)
+
+    asset_id: id foreign:assets
+
+    assignable_type: string
+    assignable_id: id
+
+    type: enum:primary,secondary,temporary nullable
+
+    start_date: date nullable
+    end_date: date nullable
+
+    attributes: json nullable
+
+    

@@ -1,0 +1,401 @@
+models:
+
+# ==================================================================
+# ORGANIZATION
+# ==================================================================
+
+  OrgCorp:
+    name: string
+    type: enum:company,government,vendor,institution nullable
+
+    relationships:
+      hasMany: OrgUnit
+
+
+  OrgUnit:
+    org_corp_id: id foreign:org_corps
+    parent_id: id nullable foreign:org_units
+    name: string
+
+    relationships:
+      belongsTo: OrgCorp
+      belongsTo: OrgUnit:parent
+      hasMany: OrgUnit:children
+      hasMany: OrgTeam
+
+
+  OrgTeam:
+    org_unit_id: id foreign:org_units
+    name: string
+
+    relationships:
+      belongsTo: OrgUnit
+      hasMany: Workflow
+      hasMany: JobContract
+
+
+
+# ==================================================================
+# JOB + PERSON
+# ==================================================================
+
+  JobContract:
+    name: string
+    org_unit_id: id nullable foreign:org_units
+    org_team_id: id nullable foreign:org_teams
+
+    relationships:
+      belongsTo: OrgUnit
+      belongsTo: OrgTeam
+      hasMany: JobPosition
+
+
+  JobPosition:
+    job_contract_id: id foreign:job_contracts
+    title: string
+
+    relationships:
+      belongsTo: JobContract
+      hasMany: StaffPosition
+
+
+  Staff:
+    user_id: id nullable foreign:users
+
+    relationships:
+      belongsTo: User
+      hasMany: StaffPosition
+      hasMany: Request
+      morphMany: AuditLog:model
+
+
+  StaffPosition:
+    staff_id: id foreign:staff
+    job_position_id: id foreign:job_positions
+
+    relationships:
+      belongsTo: Staff
+      belongsTo: JobPosition
+
+
+
+# ==================================================================
+# AUTH (SPATIE)
+# ==================================================================
+
+  Role:
+    name: string
+
+  Permission:
+    name: string
+
+  ModelHasRole:
+    role_id: id foreign:roles
+    model_id: id
+    model_type: string
+
+    relationships:
+      morphTo: model
+      belongsTo: Role
+
+  ModelHasPermission:
+    permission_id: id foreign:permissions
+    model_id: id
+    model_type: string
+
+    relationships:
+      morphTo: model
+      belongsTo: Permission
+
+
+
+# ==================================================================
+# AUDIT
+# ==================================================================
+
+  AuditLog:
+    user_id: id nullable foreign:users
+    staff_id: id nullable foreign:staff
+
+    model_id: id nullable
+    model_type: string nullable
+
+    action: string
+
+    relationships:
+      morphTo: model
+      belongsTo: Staff
+
+
+
+# ==================================================================
+# VERSION
+# ==================================================================
+
+  Versionable:
+    name: string
+    ref_id: id nullable
+    ref_type: string nullable
+    current_version_id: id nullable foreign:versions
+
+    relationships:
+      morphTo: ref
+      hasMany: Version
+      belongsTo: Version:current_version
+
+
+  Version:
+    versionable_id: id foreign:versionables
+    version: string
+
+    relationships:
+      belongsTo: Versionable
+
+
+
+# ==================================================================
+# TASK
+# ==================================================================
+
+  Task:
+    title: string
+    staff_id: id nullable foreign:staff
+
+    ref_id: id nullable
+    ref_type: string nullable
+
+    relationships:
+      belongsTo: Staff
+      morphTo: ref
+
+
+  TaskList:
+    name: string
+
+    relationships:
+      hasMany: Task
+
+
+
+# ==================================================================
+# WORKFLOW
+# ==================================================================
+
+  Workflow:
+    org_team_id: id foreign:org_teams
+    name: string
+
+    relationships:
+      belongsTo: OrgTeam
+      hasMany: WorkflowStep
+      hasMany: WorkflowInstance
+
+
+  WorkflowStep:
+    workflow_id: id foreign:workflows
+    name: string
+
+    relationships:
+      belongsTo: Workflow
+      hasMany: WorkflowTransition
+
+
+  WorkflowTransition:
+    workflow_id: id foreign:workflows
+    from_step_id: id foreign:workflow_steps
+    to_step_id: id foreign:workflow_steps
+
+    relationships:
+      belongsTo: Workflow
+      belongsTo: WorkflowStep:from_step
+      belongsTo: WorkflowStep:to_step
+
+
+  WorkflowInstance:
+    workflow_id: id foreign:workflows
+
+    ref_id: id nullable
+    ref_type: string nullable
+
+    relationships:
+      belongsTo: Workflow
+      morphTo: ref
+      hasMany: WorkflowInstanceStep
+
+
+  WorkflowInstanceStep:
+    workflow_instance_id: id foreign:workflow_instances
+    workflow_step_id: id foreign:workflow_steps
+
+    relationships:
+      belongsTo: WorkflowInstance
+      belongsTo: WorkflowStep
+
+
+
+# ==================================================================
+# REQUEST
+# ==================================================================
+
+  Request:
+    requester_id: id foreign:staff
+    workflow_instance_id: id nullable foreign:workflow_instances
+
+    ref_id: id nullable
+    ref_type: string nullable
+
+    relationships:
+      belongsTo: Staff:requester
+      belongsTo: WorkflowInstance
+      morphTo: ref
+
+
+
+# ==================================================================
+# SERVICE CATALOG
+# ==================================================================
+
+  Service:
+    name: string
+    org_team_id: id foreign:org_teams
+
+    relationships:
+      belongsTo: OrgTeam
+
+
+
+# ==================================================================
+# DOCUMENT
+# ==================================================================
+
+  Document:
+    title: string
+    org_team_id: id foreign:org_teams
+
+    relationships:
+      belongsTo: OrgTeam
+      morphOne: Versionable
+
+
+
+# ==================================================================
+# LMS
+# ==================================================================
+
+  Course:
+    code: string
+    org_team_id: id foreign:org_teams
+
+    relationships:
+      belongsTo: OrgTeam
+      hasMany: CourseModule
+
+
+  Module:
+    name: string
+
+    relationships:
+      hasMany: CourseModule
+      hasMany: MaterialModule
+
+
+  CourseModule:
+    course_id: id foreign:courses
+    module_id: id foreign:modules
+
+    relationships:
+      belongsTo: Course
+      belongsTo: Module
+
+
+  Material:
+    name: string
+
+    relationships:
+      hasMany: MaterialModule
+      morphOne: Versionable
+
+
+  MaterialModule:
+    material_id: id foreign:materials
+    module_id: id foreign:modules
+
+    relationships:
+      belongsTo: Material
+      belongsTo: Module
+
+
+  Quiz:
+    module_id: id foreign:modules
+
+    relationships:
+      belongsTo: Module
+      hasMany: QuizAttempt
+
+
+  QuizAttempt:
+    quiz_id: id foreign:quizzes
+    staff_id: id foreign:staff
+
+    relationships:
+      belongsTo: Quiz
+      belongsTo: Staff
+
+
+  Certificate:
+    module_id: id foreign:modules
+    staff_id: id foreign:staff
+
+    relationships:
+      belongsTo: Module
+      belongsTo: Staff
+
+
+
+# ==================================================================
+# LOCATION
+# ==================================================================
+
+  Location:
+    name: string
+    parent_id: id nullable foreign:locations
+
+    relationships:
+      belongsTo: Location:parent
+      hasMany: Location:children
+
+
+  LocationAssignment:
+    location_id: id foreign:locations
+    assignable_id: id
+    assignable_type: string
+
+    relationships:
+      belongsTo: Location
+      morphTo: assignable
+
+
+
+# ==================================================================
+# ASSET
+# ==================================================================
+
+  Asset:
+    code: string
+    org_team_id: id foreign:org_teams
+    location_id: id nullable foreign:locations
+
+    relationships:
+      belongsTo: OrgTeam
+      belongsTo: Location
+      morphMany: Request:ref
+
+
+  AssetAssignment:
+    asset_id: id foreign:assets
+    assignable_id: id
+    assignable_type: string
+
+    relationships:
+      belongsTo: Asset
+      morphTo: assignable
