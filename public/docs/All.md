@@ -1,4 +1,4 @@
-# Organization (Platform Overview)<a id="organization"></a>
+# Organization (Foundation Overview)<a id="organization"></a>
 
 The **Organization** module defines how a company is structured, who the people are, and how work is assigned.
 
@@ -140,7 +140,7 @@ Think of it like:
 
 And the system connects them in a clean, flexible way.
 
-# Authorization (Platform Overview)<a id="authorization"></a>
+# Authorization (Foundation Overview)<a id="authorization"></a>
 
 The **Authorization module** controls **what users are allowed to see and do** in the system.
 
@@ -800,7 +800,7 @@ Think of it like:
 
 And the system ensures only the right version is used at the right time, with full traceability.
 
-# Task Management (Overview)<a id="task"></a>
+# Task Management (Platform Overview)<a id="task"></a>
 
 The **Task module** manages work that needs to be done by people in the organization.
 
@@ -1043,7 +1043,7 @@ Think of it like:
 
 And the system ensures that **all work—simple or complex—is completed properly without missing any steps**.
 
-# Calendar Management (Overview)<a id="calendar"></a>
+# Calendar Management (Platform Overview)<a id="calendar"></a>
 
 The **Calendar module** manages all company-related dates, schedules, and events in a single place.
 
@@ -1418,7 +1418,7 @@ Think of it like:
 
 And the system ensures that **everything in the organization is connected to a real-world location**.
 
-# Workflow Management (Foundation Overview)<a id="workflow"></a>
+# Workflow Management (Platform Overview)<a id="workflow"></a>
 
 The **Workflow module** controls **how work moves through defined steps** in a structured and predictable way.
 
@@ -1760,7 +1760,7 @@ Think of it like:
 
 And the system ensures **every request follows a team‑owned, controlled process from start to finish**.
 
-# Request Management (Foundation Overview)<a id="request"></a>
+# Request Management (Business Overview)<a id="request"></a>
 
 The **Request module** manages how users ask for something to be done within the organization.
 
@@ -1966,7 +1966,7 @@ Think of it like:
 
 👉 A request **starts the process**, and workflow ensures **it is done properly from start to finish**.
 
-# System Panels (Foundation Overview)<a id="portal"></a>
+# System Panels (Overview)<a id="portal"></a>
 
 The platform provides a unified user experience through **three complementary panels**, each serving a distinct purpose:
 
@@ -2256,7 +2256,7 @@ The platform ensures:
 
 👉 Together, they create a complete, scalable, and well-governed operational system.
 
-# Service Catalog (Menu) – Business Overview<a id="catalog"></a>
+# Service Catalog / Menu (Business Overview) – Business Overview<a id="catalog"></a>
 
 The **Service Catalog module** defines the list of services that the organization provides internally.
 

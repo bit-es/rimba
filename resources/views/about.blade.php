@@ -217,7 +217,6 @@
                             'desc' =>
                                 'Owls are universally associated with wisdom and knowledge. Learning is about gaining insight — having the wisdom to act correctly in real-world scenarios.',
                         ],
-
                         [
                             'icon' => 'svg/eam-horse.svg',
                             'title' => 'Asset',
