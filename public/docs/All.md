@@ -2256,7 +2256,7 @@ The platform ensures:
 
 👉 Together, they create a complete, scalable, and well-governed operational system.
 
-# Service Catalog / Menu (Business Overview) – Business Overview<a id="catalog"></a>
+# Service Catalog / Menu (Business Overview)<a id="catalog"></a>
 
 The **Service Catalog module** defines the list of services that the organization provides internally.
 

@@ -162,8 +162,7 @@
                 <!-- END Intro -->
                 <!-- Self Service Portal -->
                 <div class="col-span-1 md:col-span-12">
-                    <a href="#moreinfo" @click="$dispatch('load-doc', 'All')">
-
+                    <a href="#moreinfo" @click="$dispatch('load-doc', 'portal')">
                         <div
                             class="relative flex flex-col overflow-hidden rounded-xl bg-zinc-100 p-12 dark:bg-zinc-900">
 
