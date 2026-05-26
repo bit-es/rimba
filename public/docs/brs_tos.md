@@ -2,22 +2,23 @@
 
 ## Business Requirements Specification (BRS)
 
-Version: 1.0
+Version: 1.2
 Status: Draft
 
 ---
 
 # 1. Overview
 
-The Team Offering Service (TOS) system is a shared service orchestration module that allows internal or external teams to offer services to staff or organizational users through a structured request and workflow-based fulfillment process.
+The Team Offering Service (TOS) system is a shared service orchestration module that allows internal or external teams to design, publish, and execute services through structured workflows.
 
-It is designed as a **shared package** that integrates with:
+It is designed as a composable ecosystem package integrating with:
 
-* Workflow Package (request lifecycle automation)
-* Task Package (execution of work steps)
-* EAM (Enterprise Asset Management) for asset availability and usage
+* DMS (Digital Asset Management System)
+* LMS (Learning Management System)
+* PWM (Process Workflow Management)
+* Task Execution Engine
+* EAM (Enterprise Asset Management)
 * Inventory / Procurement systems
-* DMS (document attachments and records)
 
 ---
 
@@ -25,335 +26,261 @@ It is designed as a **shared package** that integrates with:
 
 The TOS system aims to:
 
-* Enable any team to publish services
-* Allow staff to request services via structured forms
-* Route requests through configurable approval workflows
-* Support service fulfillment tracking
-* Ensure resource validation (inventory/assets)
-* Trigger procurement workflows when required
-* Provide full auditability of service delivery
+* Enable teams to design reusable service offerings
+* Support structured service execution using workflows
+* Integrate digital assets, learning content, and service definitions
+* Provide unified request-to-execution lifecycle
+* Ensure traceability of service delivery
+* Enable modular service composition across the organization
 
 ---
 
-# 3. Scope
+# 3. Core Concept
 
-The system covers the full service lifecycle:
+TOS is built around **three key capability domains** that teams manage:
+
+## 3.1 Digital Asset Creation (DMS Integration)
+
+Teams can create and manage digital assets such as:
+
+* documents
+* SOPs
+* templates
+* manuals
+* versioned files (uploads or URL references)
+
+All assets are stored and versioned in the DMS system.
+
+---
+
+## 3.2 Learning Module & Assessment Design (LMS Integration)
+
+Teams can define learning content such as:
+
+* training modules
+* lessons
+* quizzes
+* question schemas
+* certification rules
+
+These are stored and executed via LMS.
+
+---
+
+## 3.3 Service Offering & Workflow Design (TOS + PWM)
+
+Teams can define:
+
+* service catalogs
+* service forms
+* execution steps
+* approval chains
+* workflow definitions (managed by PWM)
+
+PWM (Process Workflow Management) is responsible for:
+
+* state transitions
+* approvals
+* workflow orchestration
+* execution control
+
+TOS focuses on service composition while PWM handles workflow execution logic.
+
+---
+
+# 4. Scope
+
+The system covers:
 
 ```text
-Service Catalog → Request → Workflow → Approval → Resource Check → Fulfillment → Completion
+DMS Assets
+→ LMS Learning Modules
+→ TOS Service Definitions
+→ PWM Workflow Execution
+→ Task Execution
+→ Service Completion
 ```
-
----
-
-# 4. Core Concept
-
-A "service" is any structured offering provided by a team.
-
-Examples:
-
-* IT support service
-* HR onboarding service
-* Maintenance request
-* Transport booking
-* Training request
-* Procurement request
-* Facility booking
 
 ---
 
 # 5. Actors
 
-| Actor                | Description                      |
-| -------------------- | -------------------------------- |
-| Requestor            | Staff submitting service request |
-| Requestor Dept Owner | Approves request initiation      |
-| Service Team Owner   | Owns service execution           |
-| Service Executor     | Performs task                    |
-| Procurement Team     | Handles inventory shortages      |
-| System               | Orchestrates workflow            |
+| Actor            | Description                                    |
+| ---------------- | ---------------------------------------------- |
+| Service Designer | Creates assets, learning modules, and services |
+| Team Owner       | Approves service offerings                     |
+| Requestor        | Uses services                                  |
+| Executor         | Performs tasks                                 |
+| System           | Orchestrates PWM workflows                     |
 
 ---
 
 # 6. Functional Requirements
 
-## 6.1 Service Catalog
+## 6.1 Digital Asset Creation (DMS Integration)
 
-The system shall allow teams to define services with:
+Teams SHALL be able to:
+
+* upload documents
+* create versioned assets
+* link external URLs
+* associate assets with services
+
+---
+
+## 6.2 Learning Module Creation (LMS Integration)
+
+Teams SHALL be able to:
+
+* create learning modules
+* define quizzes and assessments
+* attach prerequisites to services
+
+---
+
+## 6.3 Service Offering Creation
+
+Teams SHALL define service offerings with:
 
 * service name
 * description
-* required form fields
-* workflow definition
-* required resources (assets/items)
-* SLA definition
+* required DMS assets
+* required LMS modules
+* PWM workflow definition
+* execution tasks
 
 ---
 
-## 6.2 Service Request Creation
+## 6.4 PWM Workflow Execution
 
-Users shall be able to submit service requests via dynamic forms.
-
----
-
-## 6.3 Request Workflow Engine
-
-Each request shall pass through a structured workflow:
+Each service SHALL use PWM for:
 
 ```text
-Request Form Submission
-→ Dept Owner Approval
-→ Service Team Owner Approval
-→ Fulfillment
+Request Submitted
+→ Validation
+→ Approval
+→ Execution
 → Completion
 ```
 
----
-
-## 6.4 Approval Steps
-
-### Step 1: Requestor Department Approval
-
-* validates request legitimacy
-* ensures alignment with department needs
-
----
-
-### Step 2: Service Team Approval
-
-* validates service feasibility
-* assigns execution team
+PWM manages all workflow state transitions.
 
 ---
 
 ## 6.5 Task Execution
 
-Approved requests generate tasks via shared Task Package.
+PWM steps MAY generate tasks:
 
-Tasks include:
-
-* assignment
-* due dates
-* execution tracking
-* completion reporting
+* assigned to users or teams
+* linked to service instances
+* tracked for completion
 
 ---
 
-## 6.6 Resource Validation (EAM + Inventory)
-
-Before fulfillment:
-
-### If request requires assets/items:
-
-System shall:
-
-* check EAM for asset availability
-* check inventory stock levels
-
----
-
-## 6.7 Inventory Decision Logic
-
-### Case A: Sufficient Resources
+## 6.6 Service Lifecycle
 
 ```text
-Proceed to fulfillment
+Service Created
+→ Attach DMS assets
+→ Attach LMS modules
+→ Trigger PWM workflow
+→ Generate tasks
+→ Execute service
+→ Complete request
 ```
-
-### Case B: Insufficient Resources
-
-```text
-Trigger procurement workflow
-→ Acquire required items/assets
-→ Resume fulfillment
-```
-
----
-
-## 6.8 Procurement Trigger
-
-If resources are insufficient:
-
-* create procurement request
-* link procurement to original service request
-* pause service workflow
-
----
-
-## 6.9 Fulfillment
-
-Service team executes tasks and completes request.
-
-System records:
-
-* completion timestamp
-* output documentation
-* used resources
-* SLA compliance
-
----
-
-## 6.10 Completion & Closure
-
-Request is marked completed when:
-
-* all tasks are completed
-* resources accounted for
-* approvals finalized
 
 ---
 
 # 7. Business Rules
 
-| Rule ID | Rule                                                                      |
-| ------- | ------------------------------------------------------------------------- |
-| BR-001  | Every service request must originate from a defined service               |
-| BR-002  | Requests must pass department approval before execution                   |
-| BR-003  | Service team approval is mandatory                                        |
-| BR-004  | Fulfillment cannot proceed without resource validation                    |
-| BR-005  | Procurement must be triggered automatically if resources are insufficient |
-| BR-006  | All workflow steps must be auditable                                      |
-| BR-007  | Tasks are generated only after service approval                           |
+| Rule ID | Rule                                            |
+| ------- | ----------------------------------------------- |
+| BR-001  | Services may include DMS assets                 |
+| BR-002  | Services may include LMS learning modules       |
+| BR-003  | All service execution must use PWM workflows    |
+| BR-004  | Assets are managed exclusively in DMS           |
+| BR-005  | Learning modules are managed exclusively in LMS |
+| BR-006  | Workflow execution is owned by PWM              |
 
 ---
 
-# 8. Workflow Dependency (Shared Package)
+# 8. Integration Model
 
-The system relies on a shared workflow engine:
+## 8.1 DMS Integration
 
-```text
-Workflow Package
-→ defines stages
-→ defines transitions
-→ defines approvals
-→ defines conditions
-```
+* stores versioned digital assets
+* manages access control
 
-Each service request is an instance of a workflow.
+## 8.2 LMS Integration
 
----
+* stores learning modules
+* manages quizzes and certification
 
-# 9. Task Dependency (Shared Package)
+## 8.3 PWM Integration (Core Engine)
 
-Tasks are executed via shared Task Package:
+PWM is responsible for:
 
-* assignable to users or teams
-* trackable status
-* time-bound
-* linked to workflow steps
+* workflow modeling
+* state transitions
+* approval rules
+* execution orchestration
+
+TOS depends entirely on PWM for workflow execution.
 
 ---
 
-# 10. EAM Integration
+# 9. Data Entities
 
-The system integrates with EAM for:
-
-* asset availability checks
-* equipment reservation
-* asset allocation
-* maintenance conflict detection
-
----
-
-# 11. Inventory Integration
-
-Inventory system provides:
-
-* stock availability
-* item reservation
-* procurement triggers
-
----
-
-# 12. Data Entities
-
-## Core Entities
+## Core Tables
 
 * services
-* service_requests
+* service_assets (DMS references)
+* service_learning_modules (LMS references)
 * service_workflows
-* workflow_instances
-* tasks
-* approvals
-* resource_requirements
-* procurement_requests
+* pwm_instances
+* service_requests
+* service_tasks
 
 ---
 
-## Service Request Table
-
-* id
-* service_id
-* requested_by
-* department_id
-* status
-* workflow_instance_id
-
----
-
-## Resource Requirement
-
-* service_request_id
-* type (asset/item)
-* reference_id (EAM asset or inventory item)
-* quantity
-
----
-
-# 13. Event-Driven Architecture
+# 10. Event-Driven Architecture
 
 ## Key Events
 
-* ServiceRequested
-* DepartmentApproved
-* ServiceApproved
+* ServiceCreated
+* AssetLinked
+* LearningModuleAttached
+* PWMTriggered
 * TaskCreated
-* ResourcesChecked
-* ProcurementTriggered
-* ServiceFulfilled
 * ServiceCompleted
 
 ---
 
-## Example Flow
+# 11. Non-Functional Requirements
 
-```text
-ServiceRequested
-→ DepartmentApproval
-→ ServiceApproval
-→ TaskGeneration
-→ ResourceCheck
-→ (Procurement if needed)
-→ Fulfillment
-→ Completion
-```
+| Category      | Requirement                          |
+| ------------- | ------------------------------------ |
+| Scalability   | Modular service composition          |
+| Extensibility | Easy service creation                |
+| Traceability  | Full lifecycle tracking              |
+| Consistency   | PWM-managed execution                |
+| Reusability   | Assets and learning modules reusable |
 
 ---
 
-# 14. Non-Functional Requirements
-
-| Category      | Requirement                              |
-| ------------- | ---------------------------------------- |
-| Scalability   | Support many concurrent service requests |
-| Reliability   | Workflow must not lose state             |
-| Traceability  | Full audit trail required                |
-| Performance   | Fast workflow transitions                |
-| Extensibility | New services easily added                |
-
----
-
-# 15. Shared Package Architecture
+# 12. Shared Package Architecture
 
 ## Domain Structure
 
 ```text
 Domain/
 └── ServiceOffering/
-    ├── Models/
-    ├── Events/
-    ├── Listeners/
-    ├── Workflows/
     ├── Services/
-    ├── Actions/
+    ├── Assets/
+    ├── Learning/
+    ├── PWM/
+    ├── Tasks/
+    ├── Events/
     └── Policies/
 ```
 
@@ -373,55 +300,58 @@ packages/
 
 ---
 
-# 16. Filament Modules
+# 13. Filament Modules
 
-* Services
+* Service Catalog
+* Service Designer
+* DMS Asset Linking
+* LMS Learning Modules
+* PWM Workflow Builder
+* Task Execution
 * Service Requests
-* Approvals
-* Workflows
-* Tasks
-* Resource Checks
-* Procurement Links
 
 ---
 
-# 17. Key Design Principle
+# 14. Key Design Principle
 
 TOS is NOT just a request system.
 
 It is:
 
 ```text
-A workflow-driven service orchestration layer connecting people, assets, inventory, and execution teams
+A composable service orchestration layer combining DMS assets, LMS learning modules, and PWM workflow execution into a unified service lifecycle
 ```
 
 ---
 
-# 18. Future Enhancements
+# 15. Future Enhancements
 
-* AI-based request routing
-* SLA prediction engine
-* Auto-resource optimization
-* Chat-based service requests (WhatsApp/Slack)
-* Self-healing workflows
-* Cost estimation engine
+* AI service composition engine
+* Auto workflow generation
+* Service performance analytics
+* Cross-team service marketplace
+* Predictive SLA optimization
 
 ---
 
-# 19. Success Criteria
+# 16. Success Criteria
 
 The system is successful when:
 
-* all service requests are traceable
-* approvals are fully automated and auditable
-* resource conflicts are eliminated
-* procurement is triggered automatically
-* service delivery is measurable via SLA
+* services are fully composable
+* assets and learning modules are reusable
+* workflows are fully controlled by PWM
+* execution is traceable end-to-end
+* teams independently design services
 
 ---
 
-# 20. Conclusion
+# 17. Conclusion
 
-The TOS system provides a unified service orchestration layer across an organization.
+TOS is a **service composition layer** that integrates:
 
-It integrates workflow, tasks, EAM, and inventory systems into a single controlled service lifecycle engine.
+* DMS (digital assets)
+* LMS (learning systems)
+* PWM (workflow execution engine)
+
+It enables organizations to design, govern, and execute services in a structured and reusable manner.
