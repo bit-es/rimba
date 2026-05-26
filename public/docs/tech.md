@@ -99,3 +99,10 @@ app/
                                                                ▼
                                                       [ External Service ]
 ```
+DMS  → knowledge/asset layer
+LMS  → capability/learning layer
+TOS  → service composition layer
+WFM  → workforce planning layer
+HRM  → people lifecycle layer
+EAM  → asset lifecycle layer
+PWM  → workflow execution engine (CORE)
