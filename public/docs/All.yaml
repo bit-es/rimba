@@ -4,6 +4,7 @@ models:
   # ------------------------------------------------------------------
   OrgCorp:
     name: string
+    code: string unique
     type: enum:company,government,vendor,institution nullable
     attributes: json nullable
 
@@ -11,6 +12,7 @@ models:
   OrgUnit:
     org_corp_id: id foreign:org_corps
     name: string
+    code: string nullable
     parent_id: id nullable foreign:org_units
     attributes: json nullable
 
@@ -18,6 +20,7 @@ models:
   OrgTeam:
     org_unit_id: id foreign:org_units
     name: string
+    code: string nullable
     attributes: json nullable
 
 
