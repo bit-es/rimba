@@ -83,13 +83,13 @@ app/
 
 ---
 
-DMS  → knowledge/asset layer
-LMS  → capability/learning layer
-TOS  → service composition layer
-WFM  → workforce planning layer
-HRM  → people lifecycle layer
-EAM  → asset lifecycle layer
-PWM  → workflow execution engine (CORE)
+DMS  → knowledge/asset package  
+LMS  → capability/learning package  
+TOS  → service composition package  
+WFM  → workforce planning package  
+HRM  → people lifecycle package  
+EAM  → asset lifecycle package  
+PWM  → workflow execution engine (CORE)  
 
 ---
 
