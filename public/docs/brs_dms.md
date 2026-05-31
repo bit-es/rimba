@@ -2,8 +2,8 @@
 
 ## Business Requirements Specification (BRS)
 
-Version: 1.0
-Status: Draft
+Version: 1.0  
+Status: Draft<p align="right"><a href="all.md">Back to Main</a> | <a href="tech.md">Back to Tech Overview</a></p>
 
 ---
 
@@ -446,3 +446,4 @@ It provides:
 * cross-system integration
 * event-driven extensibility
 * secure file governance
+
