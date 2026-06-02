@@ -20,7 +20,7 @@ The platform is organized into four layers:
 
 [PWM](brs_pwm.md)   → workflow execution engine (CORE)  
 [LCM](brs_lcm.md)   → legal contracts package  
-[WFM](brs_wfm.md)   → workforce planning package  
+[WFM](brs_wfp.md)   → workforce planning package  
 [HRM](brs_hrm.md)   → people lifecycle package    
 [TOS](brs_tos.md)   → service composition package  
 [DMS](brs_dms.md)   → knowledge/asset package  

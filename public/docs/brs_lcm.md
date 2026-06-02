@@ -1,4 +1,4 @@
-# Contract Management System (CMS)
+# Legal Contract Management System (LCM)
 
 ## Business Requirements Specification (BRS)
 
@@ -9,7 +9,7 @@ Status: Draft<p align="right"><a href="all.md">Back to Main</a> | <a href="tech.
 
 # 1. Overview
 
-The Contract Management System (CMS) is a **generic shared contract orchestration package** designed to manage all types of contracts across an ecosystem.
+The Legal Contract Management System (LCM) is a **generic shared contract orchestration package** designed to manage all types of contracts across an ecosystem.
 
 It supports:
 
@@ -33,7 +33,7 @@ This system is NOT domain-specific. It is a reusable infrastructure package for 
 
 # 2. Objectives
 
-The CMS aims to:
+The LCM aims to:
 
 * Standardize contract representation across systems
 * Support multiple contract types in one engine
@@ -326,7 +326,7 @@ ContractActivated
 
 # 10. Integration Points
 
-The CMS integrates with:
+The LCM integrates with:
 
 * HR (employee contracts)
 * EAM (asset warranties)

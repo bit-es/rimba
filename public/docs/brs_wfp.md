@@ -1,4 +1,4 @@
-# Workforce Management (WFM)
+# Workforce Management (WFP)
 
 ## Business Requirements Specification (BRS)
 
@@ -9,13 +9,13 @@ Status: Draft<p align="right"><a href="all.md">Back to Main</a> | <a href="tech.
 
 # 1. Overview
 
-The Workforce Management (WFM) system is a **shared foundational orchestration package** that manages organizational structure, job architecture, and workforce resource planning.
+The Workforce Planning Management (WFP) system is a **shared foundational orchestration package** that manages organizational structure, job architecture, and workforce resource planning.
 
 It is NOT an HR lifecycle system.
 
 > IMPORTANT: Employee lifecycle (recruitment → onboarding → promotion → retirement/separation) is handled entirely by the HRM system.
 
-WFM focuses only on:
+WFP focuses only on:
 
 * organizational structure
 * job architecture
@@ -28,7 +28,7 @@ WFM focuses only on:
 
 # 2. Objectives
 
-The WFM system aims to:
+The WFP system aims to:
 
 * Define organizational structure clearly
 * Standardize job roles and positions
@@ -51,7 +51,7 @@ Workforce Management is built around 3 interconnected perspectives:
 (3) People Perspective      → Available workforce (provided by HRM system)
 ```
 
-WFM does NOT manage employee lifecycle.
+WFP does NOT manage employee lifecycle.
 
 ---
 
@@ -155,11 +155,11 @@ Vacancy includes:
 
 ## 8.1 Workforce Data Source
 
-WFM does NOT manage people lifecycle.
+WFP does NOT manage people lifecycle.
 
 All people data is sourced from HRM system.
 
-WFM only consumes:
+WFP only consumes:
 
 * availability
 * skills
@@ -168,7 +168,7 @@ WFM only consumes:
 
 ---
 
-## 8.2 Staff Types (Read-only in WFM)
+## 8.2 Staff Types (Read-only in WFP)
 
 * Employees (FTE / FTC)
 * Contractors (TPC)
@@ -245,14 +245,14 @@ Assigns workforce to work scopes.
 
 ## 10.1 HRM Integration (Critical)
 
-WFM consumes HRM data:
+WFP consumes HRM data:
 
 * staff profiles
 * skills
 * availability
 * employment type
 
-WFM does NOT modify HRM lifecycle data.
+WFP does NOT modify HRM lifecycle data.
 
 ---
 
@@ -294,12 +294,12 @@ Job contracts define engagement rules for filling vacancies.
 
 | Rule ID | Rule                                                       |
 | ------- | ---------------------------------------------------------- |
-| BR-001  | WFM does NOT manage employee lifecycle                     |
+| BR-001  | WFP does NOT manage employee lifecycle                     |
 | BR-002  | All people data comes from HRM                             |
 | BR-003  | Only approved vacancies can be filled                      |
 | BR-004  | A job position represents demand, not employment lifecycle |
 | BR-005  | Workforce assignment must respect capacity limits          |
-| BR-006  | No hiring process exists in WFM                            |
+| BR-006  | No hiring process exists in WFP                            |
 | BR-007  | Vacancy approval is required before resource allocation    |
 
 ---
@@ -381,7 +381,7 @@ Domain/
 
 ```text
 packages/
-└── wfm/
+└── wfp/
     ├── src/
     ├── database/
     ├── config/
@@ -404,7 +404,7 @@ packages/
 
 # 17. KEY DESIGN PRINCIPLE
 
-WFM is NOT HR.
+WFP is NOT HR.
 
 It is:
 
@@ -438,10 +438,10 @@ The system is successful when:
 
 # 20. CONCLUSION
 
-WFM acts as a **demand-to-allocation orchestration layer**, separating:
+WFP acts as a **demand-to-allocation orchestration layer**, separating:
 
 * organizational structure
 * job demand (vacancy)
 * workforce supply (HRM)
 
-This ensures clean separation between planning (WFM) and lifecycle management (HRM).
+This ensures clean separation between planning (WFP) and lifecycle management (HRM).
