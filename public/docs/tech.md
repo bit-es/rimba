@@ -18,19 +18,19 @@ The platform is organized into four layers:
 
 ## Business Layer Packages
 
-[PWM](brs_pwm.md)   → workflow execution engine (CORE)  
-[LCM](brs_lcm.md)   → legal contracts package  
-[WFM](brs_wfp.md)   → workforce planning package  
-[HRM](brs_hrm.md)   → people lifecycle package    
-[TOS](brs_tos.md)   → service composition package  
-[DMS](brs_dms.md)   → knowledge/asset package  
-[LMS](brs_lms.md)   → capability/learning package  
-[EAM](brs_eam.md)   → asset lifecycle package  
-[CAPA](brs_capa.md) → CAPA tracker package  
-[RMS](brs_RMS.md)   → risk management package  
-[VMS](brs_vms.md)   → vendor/supplier management package  
-[CMMS](brs_cmms.md) → maintenance management package  
-[EPM](brs_epm.md)   → enterprise planning & project management package  
+[PWM](brs_pwm.md)       → workflow execution engine (CORE)  
+[LCM](brs_lcm.md)       → legal contracts package  
+[WFM](brs_wfp.md)       → workforce planning package  
+[HRM](brs_hrm.md)       → people lifecycle package    
+[TOS](brs_tos.md)       → service composition package  
+[DMS](brs_dms.md)       → knowledge/asset package  
+[LMS](brs_lms.md)       → capability/learning package  
+[EAM](brs_eam.md)       → asset lifecycle package  
+[CIA](brs_eci.md)       → CAPA tracker package  
+[RMS](brs_rms.md)       → risk management package  
+[VMS](brs_vms.md)       → vendor/supplier management package  
+[MMS](brs_mms.md)       → maintenance management package  
+[EPM](brs_epm.md)       → enterprise planning & project management package  
 
 
 ---

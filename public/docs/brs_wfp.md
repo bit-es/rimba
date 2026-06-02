@@ -11,10 +11,6 @@ Status: Draft<p align="right"><a href="all.md">Back to Main</a> | <a href="tech.
 
 The Workforce Planning Management (WFP) system is a **shared foundational orchestration package** that manages organizational structure, job architecture, and workforce resource planning.
 
-It is NOT an HR lifecycle system.
-
-> IMPORTANT: Employee lifecycle (recruitment → onboarding → promotion → retirement/separation) is handled entirely by the HRM system.
-
 WFP focuses only on:
 
 * organizational structure
@@ -46,9 +42,9 @@ The WFP system aims to:
 Workforce Management is built around 3 interconnected perspectives:
 
 ```text
-(1) Organization Perspective → Structure of the company
-(2) Job Perspective         → Definition of work and vacancies
-(3) People Perspective      → Available workforce (provided by HRM system)
+(1) Organization Perspective    → Structure of the company
+(2) Job Perspective             → Definition of work and vacancies
+(3) People Perspective          → Available workforce (provided by HRM system)
 ```
 
 WFP does NOT manage employee lifecycle.
@@ -443,5 +439,9 @@ WFP acts as a **demand-to-allocation orchestration layer**, separating:
 * organizational structure
 * job demand (vacancy)
 * workforce supply (HRM)
+
+WFP is NOT an HR lifecycle system.
+
+> IMPORTANT: Employee lifecycle (recruitment → onboarding → promotion → retirement/separation) is handled entirely by the HRM system.
 
 This ensures clean separation between planning (WFP) and lifecycle management (HRM).
