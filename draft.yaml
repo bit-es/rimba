@@ -25,7 +25,7 @@ models:
   # This should be the ONLY audit table in the system
   # Stores who did what, to which model, and the outcome
     user_id: id nullable foreign:users
-    staff_id: id nullable foreign:staff
+    # staff_id: id nullable foreign:staff
     result: enum:allowed,denied
     actor: string # Stores who the person is "staff.staff_no[staff.name|job position.title]" this is for easy reference in logs without needing to join staff table
     action: string

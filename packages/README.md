@@ -25,8 +25,7 @@ Implements organization's business domains, to be more precise the business requ
 - **DMS (Document Management System)**  
   Manages SOPs, policies, drawings, contracts, and controlled documents.
 
-- **TOS (Team Offering System)**  
-  Handles internal service requests such as maintenance, IT, and facilities, including SLA tracking.
+
 
 - **LMS (Learning Management System)**  
   Manages training, certifications, and employee competency records.
@@ -42,17 +41,13 @@ Defines the core structure of the organization. Applying the organization contex
 - **Branding**  
   Manages corporate identity such as themes, logos, and layout configuration.
 
-- **Org**  
-  Models are Organization, OrgUnit, OrgTeam. These models carry organizational attributes, not people. All would have polymorphic many to many to Attributes model storing the additional organization attributes.
+- **TOS (Team Offering System)**  
+  Handles internal service requests such as maintenance, IT, and facilities, including SLA tracking.
 
-- **Person**  
-  Models are User, Staff, Employee. These models carry person attributes, not work definition. All would have polymorphic many to many to Attributes model storing the additional person attributes.
-
-- **Job**  
-  Models are JobPosition, JobRole, JobContract. These models carry job / work attributes, time‑bound and contract‑aware. All would have polymorphic many to many to Attributes model storing the additional job attributes.
-
-- **Access**  
-  Auth in Platform handles Authentication, therefore Access handles the next step, Authorization. Authorization, roles, permissions, and segregation of duties enforcement. Roles are create thru ABAC from Attributes or can be manually added.
+- **WFP (Workforce Planning System)**  
+  Organization Structures are OrgCorp, OrgUnit, OrgTeam. These models carry organizational attributes, not people.
+  Models are JobPosition, JobRole, JobContract. These models carry job / work attributes, time‑bound and contract‑aware.
+  Person are User, Staff, Employee. These models carry person attributes, not work definition.
 
 ---
 
@@ -62,8 +57,11 @@ Provides base technical capabilities used by all packages.
 - **UX (Filament)**  
   Define the Filament setup and panels that exist; mainly Staff Panel and Admin Panel
 
-- **Auth**  
+- **AuthN**  
   Handles authentication, SSO, and identity federation (e.g. LDAP, AD, Keycloak).
+
+- **AuthZ**  
+  `AuthN` in Platform handles `Authentication`, therefore `AuthZ` handles the next step, `Authorization`. Roles, permissions, and segregation of duties enforcement. Roles are create thru ABAC from Attributes or can be manually added.
 
 - **Sync**  
   Manages data synchronization with external systems.
