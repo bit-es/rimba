@@ -1,7 +1,7 @@
 models:
 # ==================================================================
 # API Configuration and Data
-  Support\Sync\ApiConfig:                      # Configuration for external API source
+  Platform\Sync\ApiConfig:                      # Configuration for external API source
     name: string unique index                  # Unique identifier for the API config
     source_type: string                        # Type of source (e.g. rest, graphql, file)
     source_config: json                        # Connection details (URL, headers, auth, etc.)
@@ -11,7 +11,7 @@ models:
     active: boolean default:true index         # Enable/disable config (indexed for quick filtering)
     relationships:
       hasMany: ApiData                         # One config produces many data records
-  Support\Sync\ApiData:                        # Stores fetched API data instances
+  Platform\Sync\ApiData:                        # Stores fetched API data instances
     api_config_id: id foreign:api_configs cascadeOnDelete   # Link to ApiConfig, cascade delete
     fingerprint: string nullable index         # Hash/unique key to prevent duplicate records
     payload: json                              # Raw API response data
@@ -25,8 +25,8 @@ models:
   # This should be the ONLY audit table in the system
   # Stores who did what, to which model, and the outcome
     user_id: id nullable foreign:users
-    # staff_id: id nullable foreign:staff
-    result: enum:allowed,denied
+    staff_id: id nullable foreign:staff
+    result: string nullable
     actor: string # Stores who the person is "staff.staff_no[staff.name|job position.title]" this is for easy reference in logs without needing to join staff table
     action: string
   # Example:
@@ -39,7 +39,7 @@ models:
       morphTo: model
 # ==================================================================
 # VERSION
-  Support\Versioning\Models\Versionable:
+  Support\Copies\Models\Versionable:
   # Represents the identity of an entity that supports versioning
   # Example:
   # - Document
@@ -55,7 +55,7 @@ models:
     relationships:
       morphTo: ref
       hasMany: Version
-  Support\Versioning\Models\Version:
+  Support\Copies\Models\Version:
     versionable_id: id foreign:versionables
     created_by: id nullable foreign:staff
     approved_by: id nullable foreign:staff
@@ -77,13 +77,13 @@ models:
     attributes: json nullable
     relationships:
       hasMany: VersionApproval, VersionRelation:relations, VersionRelation:relatedRelations
-  Support\Versioning\Models\VersionApproval:
+  Support\Copies\Models\VersionApproval:
     version_id: id foreign:versions
     user_id: id foreign:staff
-  Support\Versioning\Models\VersionRelation:
+  Support\Copies\Models\VersionRelation:
     version_id: id foreign:versions
     related_version_id: id foreign:versions
-  Support\Versioning\Models\VersionLock:
+  Support\Copies\Models\VersionLock:
     version_id: id foreign:versions
     locked_by: id foreign:staff
 # ==================================================================
@@ -364,7 +364,55 @@ models:
 # - contract_signatures
 #
 # Keep them inside confidential payload initially.
-
+# ==================================================================
+# TASK
+  Support\Todo\Models\Task:
+    role_id: id nullable foreign:roles
+    staff_id: id nullable foreign:staff
+    task_list_id: id nullable foreign:task_lists
+    title: string
+    description: text nullable
+    relationships:
+      morphTo: ref
+      hasMany: TaskAssignment
+  Support\Todo\Models\TaskList:
+    name: string
+    relationships:
+      hasMany: Task
+      morphTo: ref
+  Support\Todo\Models\TaskTemplate:
+    role_id: id nullable foreign:roles
+    name: string
+    relationships:
+      hasMany: TaskListTemplateItem
+  Support\Todo\Models\TaskListTemplate:
+    name: string
+    relationships:
+      hasMany: TaskListTemplateItem
+  Support\Todo\Models\TaskListTemplateItem:
+    task_list_template_id: id foreign:task_list_templates
+    task_template_id: id foreign:task_templates
+    depends_on_id: id nullable foreign:task_list_template_items # Previous item (Finish-to-Start logic)
+    relationships:
+      hasMany: TaskListTemplateItem:dependents # Reverse dependency (who depends on me)
+  Support\Todo\Models\TaskAssignment:
+    task_id: id foreign:tasks
+    role_id: id nullable foreign:roles
+    staff_id: id nullable foreign:staff
+    assigned_by: id nullable foreign:staff
+# ==================================================================
+# Event Calendar
+  Support\Schedule\Models\Event:
+    org_corp_id: id nullable foreign:org_corps
+    org_unit_id: id nullable foreign:org_units
+    org_team_id: id nullable foreign:org_teams
+    type: enum:holiday,company,operational,training,maintenance,other
+    name: string
+    description: text nullable
+    start_at: timestamp
+    end_at: timestamp nullable
+    is_blocking: boolean default:false
+    attributes: json nullable
 # ==================================================================
 # ORGANIZATION
   Foundation\Org\Models\OrgCorp:
@@ -509,56 +557,10 @@ models:
     start_date: date nullable
     end_date: date nullable
     attributes: json nullable
+
 # ==================================================================
-# TASK
-  Platform\Todo\Models\Task:
-    role_id: id nullable foreign:roles
-    staff_id: id nullable foreign:staff
-    task_list_id: id nullable foreign:task_lists
-    title: string
-    description: text nullable
-    relationships:
-      morphTo: ref
-      hasMany: TaskAssignment
-  Platform\Todo\Models\TaskList:
-    name: string
-    relationships:
-      hasMany: Task
-      morphTo: ref
-  Platform\Todo\Models\TaskTemplate:
-    role_id: id nullable foreign:roles
-    name: string
-    relationships:
-      hasMany: TaskListTemplateItem
-  Platform\Todo\Models\TaskListTemplate:
-    name: string
-    relationships:
-      hasMany: TaskListTemplateItem
-  Platform\Todo\Models\TaskListTemplateItem:
-    task_list_template_id: id foreign:task_list_templates
-    task_template_id: id foreign:task_templates
-    depends_on_id: id nullable foreign:task_list_template_items # Previous item (Finish-to-Start logic)
-    relationships:
-      hasMany: TaskListTemplateItem:dependents # Reverse dependency (who depends on me)
-  Platform\Todo\Models\TaskAssignment:
-    task_id: id foreign:tasks
-    role_id: id nullable foreign:roles
-    staff_id: id nullable foreign:staff
-    assigned_by: id nullable foreign:staff
-# ==================================================================
-# Event Calendar
-  Platform\Calendar\Models\Event:
-    org_corp_id: id nullable foreign:org_corps
-    org_unit_id: id nullable foreign:org_units
-    org_team_id: id nullable foreign:org_teams
-    type: enum:holiday,company,operational,training,maintenance,other
-    name: string
-    description: text nullable
-    start_at: timestamp
-    end_at: timestamp nullable
-    is_blocking: boolean default:false
-    attributes: json nullable
-  Platform\Calendar\Models\Shift:
+# Shift Calendar
+  Foundation\Calendar\Models\Shift:
     org_unit_id: id nullable foreign:org_units
     org_team_id: id nullable foreign:org_teams
     staff_id: id nullable foreign:staff

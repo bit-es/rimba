@@ -1,0 +1,83 @@
+<?php
+
+namespace {{ namespace }};
+
+{{ imports }}
+use App\Models\User;
+
+use Bites\Support\AuditTrail\Models\AuditLog;
+use Bites\Support\Copies\Models\Versionable;
+use Bites\Support\Copies\Models\Version;
+use Bites\Support\Copies\Models\VersionApproval;
+use Bites\Support\Copies\Models\VersionRelation;
+use Bites\Support\Copies\Models\VersionLock;
+use Bites\Support\FloorPlan\Models\Location;
+use Bites\Support\FloorPlan\Models\LocationAssignment;
+use Bites\Support\Legal\Models\ContractType;
+use Bites\Support\Legal\Models\Contract;
+use Bites\Support\Legal\Models\ContractParty;
+use Bites\Support\Legal\Models\ContractConfidentiality;
+use Bites\Support\Todo\Models\Task;
+use Bites\Support\Todo\Models\TaskList;
+use Bites\Support\Todo\Models\TaskTemplate;
+use Bites\Support\Todo\Models\TaskListTemplate;
+use Bites\Support\Todo\Models\TaskListTemplateItem;
+use Bites\Support\Todo\Models\TaskAssignment;
+use Bites\Support\Schedule\Models\Event;
+use Bites\Foundation\Org\Models\OrgCorp;
+use Bites\Foundation\Org\Models\OrgUnit;
+use Bites\Foundation\Org\Models\OrgTeam;
+use Bites\Foundation\Job\Models\JobContract;
+use Bites\Foundation\Job\Models\JobPosition;
+use Bites\Foundation\Job\Models\JobRole;
+use Bites\Foundation\Job\Models\JobPositionRole;
+use Bites\Foundation\Ppl\Models\Staff;
+use Bites\Foundation\Ppl\Models\StaffPosition;
+use Bites\Foundation\Ppl\Models\Movement;
+use Bites\Foundation\AuthZ\Models\Role;
+use Bites\Foundation\AuthZ\Models\Permission;
+use Bites\Foundation\AuthZ\Models\RoleHasPermission;
+use Bites\Foundation\AuthZ\Models\ModelHasRole;
+use Bites\Foundation\AuthZ\Models\ModelHasPermission;
+use Bites\Foundation\AuthZ\Models\StaffRole;
+use Bites\Foundation\AuthZ\Models\RoleAssignment;
+use Bites\Foundation\Calendar\Models\Shift;
+use Bites\Platform\Sync\ApiConfig; 
+use Bites\Platform\Sync\ApiData; 
+use Bites\Platform\Process\Models\Workflow;
+use Bites\Platform\Process\Models\WorkflowStep;
+use Bites\Platform\Process\Models\WorkflowTransition;
+use Bites\Platform\Process\Models\WorkflowStepTask;
+use Bites\Platform\Process\Models\WorkflowInstance;
+use Bites\Platform\Process\Models\WorkflowInstanceStep;
+use Bites\Platform\Process\Models\WorkflowDecision;
+use Bites\Business\Hrm\Models\Employee;
+use Bites\Business\Tos\Models\Request;
+use Bites\Business\Tos\Models\RequestType;
+use Bites\Business\Tos\Models\Offer;
+use Bites\Business\Tos\Models\OfferCategory;
+use Bites\Business\Tos\Models\OfferCategoryAssignment;
+use Bites\Business\Dms\Models\Document;
+use Bites\Business\Dms\Models\DocumentCategory;
+use Bites\Business\Dms\Models\DocumentCategoryAssignment;
+use Bites\Business\Lms\Models\Course;
+use Bites\Business\Lms\Models\CourseGroup;
+use Bites\Business\Lms\Models\CourseGroupAssignment;
+use Bites\Business\Lms\Models\Module;
+use Bites\Business\Lms\Models\CourseModule;
+use Bites\Business\Lms\Models\Material;
+use Bites\Business\Lms\Models\MaterialModule;
+use Bites\Business\Lms\Models\Quiz;
+use Bites\Business\Lms\Models\QuizAttempt;
+use Bites\Business\Lms\Models\Evaluation;
+use Bites\Business\Lms\Models\Certificate;
+use Bites\Business\Eam\Models\Asset;
+use Bites\Business\Eam\Models\AssetType;
+use Bites\Business\Eam\Models\AssetTypeAssignment;
+use Bites\Business\Eam\Models\AssetAssignment;
+
+#%observer
+class {{ class }} extends Model
+{
+    use HasFactory;
+}
