@@ -1,51 +1,111 @@
-# Rimba Roadmap
+# Rimba Community
 
-## Phase 1
+## Vision
 
-Foundation Platform
+Rimba aims to become the operational digital backbone for manufacturing organizations.
 
-* Authentication
-* Organization Structure
-* Workforce Planning
-* Workflow Engine
-* Task Management
-* Document Management
+We welcome developers, manufacturers, consultants, trainers, auditors, and industry specialists to participate in building the ecosystem.
 
-## Phase 2
+---
 
-People & Knowledge
+## Architecture Principles
 
-* HRM
-* LMS
-* Competency Management
-* Certification Management
+### Open Core
 
-## Phase 3
+The foundation platform remains openly available to encourage adoption and community participation.
 
-Operations
+### Modular Design
 
-* Asset Management
-* Maintenance Management
-* Vendor Management
-* Contract Management
+Capabilities are delivered through independent modules that can evolve without affecting the entire platform.
 
-## Phase 4
+### API First
 
-Governance
+Every capability should be accessible through well-defined APIs.
 
-* Risk Management
-* CAPA Management
-* Audit Management
+### Event Driven
 
-## Phase 5
+Modules communicate through events to promote flexibility and scalability.
 
-Enterprise Platform
+### Multi Organization
 
-* Program Management
-* Portfolio Management
-* Enterprise Planning
-* AI Knowledge Services
+The platform is designed to support multiple organizations and business units.
 
-## Long-Term Vision
+---
 
-Become the unified operational platform for manufacturing organizations.
+## Technology Stack
+
+* Laravel
+* Filament
+* Livewire
+* MySQL / PostgreSQL
+* Redis
+
+---
+
+## Ways to Contribute
+
+### Software Development
+
+* Bug Fixes
+* New Features
+* Performance Improvements
+* Automated Testing
+
+### Documentation
+
+* Guides
+* Tutorials
+* Examples
+* Reference Materials
+
+### Business Content
+
+* Workflow Templates
+* SOP Libraries
+* Compliance Packs
+* Risk Libraries
+* Competency Frameworks
+
+### Industry Expertise
+
+* Manufacturing Best Practices
+* Quality Systems
+* Safety Programs
+* Maintenance Programs
+
+---
+
+## Development Standards
+
+* Clear Documentation
+* Backward Compatibility
+* Automated Testing
+* Modular Design
+* Consistent User Experience
+
+---
+
+## Pull Request Process
+
+1. Fork the repository
+2. Create a feature branch
+3. Implement changes
+4. Add tests where appropriate
+5. Submit a pull request
+6. Participate in review
+
+---
+
+## Community Values
+
+* Practicality over complexity
+* Collaboration over silos
+* Transparency over obscurity
+* Long-term maintainability
+* Manufacturing-first thinking
+
+---
+
+## Join the Journey
+
+Whether you are a developer, consultant, trainer, auditor, or manufacturer, your contribution helps build a stronger operational platform for the manufacturing community.
