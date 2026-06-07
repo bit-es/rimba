@@ -37,7 +37,7 @@ Examples:
 * Incident Management
 * CAPA
 
-### SOP Libraries
+### SOP Packs
 
 * HR Procedures
 * Maintenance Procedures
@@ -52,14 +52,14 @@ Examples:
 * HACCP
 * GMP
 
-### Competency Libraries
+### Competency Packs
 
 * Job Descriptions
 * Competency Frameworks
 * Training Paths
 * Certification Programs
 
-## AI Knowledge Packs
+### Knowledge Packs
 
 * ISO 9001 Knowledge Base
 * ISO 14001 Knowledge Base
