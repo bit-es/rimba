@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Actions;
+
+use App\Contracts\DataFetcher;
+use Illuminate\Support\Facades\Http;
+
+class RestDataFetcher implements DataFetcher
+{
+    public function fetch(array $config): array
+    {
+        return Http::withHeaders($config['headers'] ?? [])
+            ->get($config['url'], $config['query'] ?? [])
+            ->json();
+    }
+}

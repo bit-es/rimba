@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Bites\Foundation\Person\Entities\Staff;
+use App\Models\Ppl\Staff;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,10 +13,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Http;
+use Filament\Models\Contracts\HasAvatar;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable
+class User extends Authenticatable implements HasAvatar
 {
     use HasFactory;
     use HasRoles;
@@ -38,5 +40,32 @@ class User extends Authenticatable
     public function staff(): BelongsTo
     {
         return $this->belongsTo(Staff::class);
+    }
+
+    public function getFilamentAvatarUrl(): ?string
+    {
+        $number = $this->staff?->staff_old_number;
+
+        // Always have a safe default
+        $default = asset('images/unknown_user.png');
+
+        if (! $number) {
+            return $default;
+        }
+
+        $url = sprintf('http://10.40.3.41:8080/%s.jpg', $number);
+
+        try {
+            // Lightweight check without downloading the file body
+            $response = Http::timeout(1.5)->head($url);
+
+            if ($response->ok()) {
+                return $url;
+            }
+        } catch (\Throwable $throwable) {
+            // Swallow network/timeout errors and fall back
+        }
+
+        return $default;
     }
 }
