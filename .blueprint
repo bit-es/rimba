@@ -1,0 +1,267 @@
+created:
+    - database/factories/Support/Sync/ApiConfigFactory.php
+    - database/factories/Support/Sync/ApiDataFactory.php
+    - database/factories/Support/AuditTrail/AuditLogFactory.php
+    - database/factories/Support/Copies/VersionableFactory.php
+    - database/factories/Support/Copies/VersionFactory.php
+    - database/factories/Support/Copies/VersionApprovalFactory.php
+    - database/factories/Support/Copies/VersionRelationFactory.php
+    - database/factories/Support/Copies/VersionLockFactory.php
+    - database/factories/Support/FloorPlan/LocationFactory.php
+    - database/factories/Support/FloorPlan/LocationAssignmentFactory.php
+    - database/factories/Support/Legal/ContractTypeFactory.php
+    - database/factories/Support/Legal/ContractFactory.php
+    - database/factories/Support/Legal/ContractPartyFactory.php
+    - database/factories/Support/Legal/ContractConfidentialityFactory.php
+    - database/factories/Support/Todo/TaskFactory.php
+    - database/factories/Support/Todo/TaskListFactory.php
+    - database/factories/Support/Todo/TaskTemplateFactory.php
+    - database/factories/Support/Todo/TaskListTemplateFactory.php
+    - database/factories/Support/Todo/TaskListTemplateItemFactory.php
+    - database/factories/Support/Todo/TaskAssignmentFactory.php
+    - database/factories/Support/Schedule/EventFactory.php
+    - database/factories/Org/OrgCorpFactory.php
+    - database/factories/Org/OrgUnitFactory.php
+    - database/factories/Org/OrgTeamFactory.php
+    - database/factories/Job/JobContractFactory.php
+    - database/factories/Job/JobPositionFactory.php
+    - database/factories/Job/JobRoleFactory.php
+    - database/factories/Job/JobPositionRoleFactory.php
+    - database/factories/Ppl/StaffFactory.php
+    - database/factories/Ppl/StaffPositionFactory.php
+    - database/factories/Ppl/MovementFactory.php
+    - database/factories/AuthZ/StaffRoleFactory.php
+    - database/factories/AuthZ/RoleAssignmentFactory.php
+    - database/factories/Calendar/ShiftFactory.php
+    - database/factories/Process/WorkflowFactory.php
+    - database/factories/Process/WorkflowStepFactory.php
+    - database/factories/Process/WorkflowTransitionFactory.php
+    - database/factories/Process/WorkflowStepTaskFactory.php
+    - database/factories/Process/WorkflowInstanceFactory.php
+    - database/factories/Process/WorkflowInstanceStepFactory.php
+    - database/factories/Process/WorkflowDecisionFactory.php
+    - database/factories/Business/Hrm/Models/EmployeeFactory.php
+    - database/factories/Business/Hrm/Models/JobTitleFactory.php
+    - database/factories/Business/Tos/Models/RequestFactory.php
+    - database/factories/Business/Tos/Models/RequestTypeFactory.php
+    - database/factories/Business/Tos/Models/OfferFactory.php
+    - database/factories/Business/Tos/Models/OfferCategoryFactory.php
+    - database/factories/Business/Tos/Models/OfferCategoryAssignmentFactory.php
+    - database/factories/Business/Dms/Models/DocumentFactory.php
+    - database/factories/Business/Dms/Models/DocumentCategoryFactory.php
+    - database/factories/Business/Dms/Models/DocumentCategoryAssignmentFactory.php
+    - database/factories/Business/Lms/Models/CourseFactory.php
+    - database/factories/Business/Lms/Models/CourseGroupFactory.php
+    - database/factories/Business/Lms/Models/CourseGroupAssignmentFactory.php
+    - database/factories/Business/Lms/Models/ModuleFactory.php
+    - database/factories/Business/Lms/Models/CourseModuleFactory.php
+    - database/factories/Business/Lms/Models/MaterialFactory.php
+    - database/factories/Business/Lms/Models/MaterialModuleFactory.php
+    - database/factories/Business/Lms/Models/QuizFactory.php
+    - database/factories/Business/Lms/Models/QuizAttemptFactory.php
+    - database/factories/Business/Lms/Models/EvaluationFactory.php
+    - database/factories/Business/Lms/Models/CertificateFactory.php
+    - database/factories/Business/Eam/Models/AssetFactory.php
+    - database/factories/Business/Eam/Models/AssetTypeFactory.php
+    - database/factories/Business/Eam/Models/AssetTypeAssignmentFactory.php
+    - database/factories/Business/Eam/Models/AssetAssignmentFactory.php
+    - database/migrations/2026_06_10_044624_create_api_configs_table.php
+    - database/migrations/2026_06_10_044625_create_api_data_table.php
+    - database/migrations/2026_06_10_044626_create_audit_logs_table.php
+    - database/migrations/2026_06_10_044627_create_versionables_table.php
+    - database/migrations/2026_06_10_044628_create_versions_table.php
+    - database/migrations/2026_06_10_044629_create_version_approvals_table.php
+    - database/migrations/2026_06_10_044630_create_version_relations_table.php
+    - database/migrations/2026_06_10_044631_create_version_locks_table.php
+    - database/migrations/2026_06_10_044632_create_locations_table.php
+    - database/migrations/2026_06_10_044633_create_location_assignments_table.php
+    - database/migrations/2026_06_10_044634_create_contract_types_table.php
+    - database/migrations/2026_06_10_044635_create_contracts_table.php
+    - database/migrations/2026_06_10_044636_create_contract_parties_table.php
+    - database/migrations/2026_06_10_044637_create_contract_confidentialities_table.php
+    - database/migrations/2026_06_10_044638_create_tasks_table.php
+    - database/migrations/2026_06_10_044639_create_task_lists_table.php
+    - database/migrations/2026_06_10_044640_create_task_templates_table.php
+    - database/migrations/2026_06_10_044641_create_task_list_templates_table.php
+    - database/migrations/2026_06_10_044642_create_task_list_template_items_table.php
+    - database/migrations/2026_06_10_044643_create_task_assignments_table.php
+    - database/migrations/2026_06_10_044644_create_events_table.php
+    - database/migrations/2026_06_10_044645_create_org_corps_table.php
+    - database/migrations/2026_06_10_044646_create_org_units_table.php
+    - database/migrations/2026_06_10_044647_create_org_teams_table.php
+    - database/migrations/2026_06_10_044648_create_job_contracts_table.php
+    - database/migrations/2026_06_10_044649_create_job_positions_table.php
+    - database/migrations/2026_06_10_044650_create_job_roles_table.php
+    - database/migrations/2026_06_10_044651_create_job_position_roles_table.php
+    - database/migrations/2026_06_10_044652_create_staff_table.php
+    - database/migrations/2026_06_10_044653_create_staff_positions_table.php
+    - database/migrations/2026_06_10_044654_create_movements_table.php
+    - database/migrations/2026_06_10_044655_create_staff_roles_table.php
+    - database/migrations/2026_06_10_044656_create_role_assignments_table.php
+    - database/migrations/2026_06_10_044657_create_shifts_table.php
+    - database/migrations/2026_06_10_044658_create_workflows_table.php
+    - database/migrations/2026_06_10_044659_create_workflow_steps_table.php
+    - database/migrations/2026_06_10_044700_create_workflow_transitions_table.php
+    - database/migrations/2026_06_10_044701_create_workflow_step_tasks_table.php
+    - database/migrations/2026_06_10_044702_create_workflow_instances_table.php
+    - database/migrations/2026_06_10_044703_create_workflow_instance_steps_table.php
+    - database/migrations/2026_06_10_044704_create_workflow_decisions_table.php
+    - database/migrations/2026_06_10_044705_create_employees_table.php
+    - database/migrations/2026_06_10_044706_create_job_titles_table.php
+    - database/migrations/2026_06_10_044707_create_requests_table.php
+    - database/migrations/2026_06_10_044708_create_request_types_table.php
+    - database/migrations/2026_06_10_044709_create_offers_table.php
+    - database/migrations/2026_06_10_044710_create_offer_categories_table.php
+    - database/migrations/2026_06_10_044711_create_offer_category_assignments_table.php
+    - database/migrations/2026_06_10_044712_create_documents_table.php
+    - database/migrations/2026_06_10_044713_create_document_categories_table.php
+    - database/migrations/2026_06_10_044714_create_document_category_assignments_table.php
+    - database/migrations/2026_06_10_044715_create_courses_table.php
+    - database/migrations/2026_06_10_044716_create_course_groups_table.php
+    - database/migrations/2026_06_10_044717_create_course_group_assignments_table.php
+    - database/migrations/2026_06_10_044718_create_modules_table.php
+    - database/migrations/2026_06_10_044719_create_course_modules_table.php
+    - database/migrations/2026_06_10_044720_create_materials_table.php
+    - database/migrations/2026_06_10_044721_create_material_modules_table.php
+    - database/migrations/2026_06_10_044722_create_quizzes_table.php
+    - database/migrations/2026_06_10_044723_create_quiz_attempts_table.php
+    - database/migrations/2026_06_10_044724_create_evaluations_table.php
+    - database/migrations/2026_06_10_044725_create_certificates_table.php
+    - database/migrations/2026_06_10_044726_create_assets_table.php
+    - database/migrations/2026_06_10_044727_create_asset_types_table.php
+    - database/migrations/2026_06_10_044728_create_asset_type_assignments_table.php
+    - database/migrations/2026_06_10_044729_create_asset_assignments_table.php
+    - app/Models/Support/Sync/ApiConfig.php
+    - app/Models/Support/Sync/ApiData.php
+    - app/Models/Support/AuditTrail/AuditLog.php
+    - app/Models/Support/Copies/Versionable.php
+    - app/Models/Support/Copies/Version.php
+    - app/Models/Support/Copies/VersionApproval.php
+    - app/Models/Support/Copies/VersionRelation.php
+    - app/Models/Support/Copies/VersionLock.php
+    - app/Models/Support/FloorPlan/Location.php
+    - app/Models/Support/FloorPlan/LocationAssignment.php
+    - app/Models/Support/Legal/ContractType.php
+    - app/Models/Support/Legal/Contract.php
+    - app/Models/Support/Legal/ContractParty.php
+    - app/Models/Support/Legal/ContractConfidentiality.php
+    - app/Models/Support/Todo/Task.php
+    - app/Models/Support/Todo/TaskList.php
+    - app/Models/Support/Todo/TaskTemplate.php
+    - app/Models/Support/Todo/TaskListTemplate.php
+    - app/Models/Support/Todo/TaskListTemplateItem.php
+    - app/Models/Support/Todo/TaskAssignment.php
+    - app/Models/Support/Schedule/Event.php
+    - app/Models/Org/OrgCorp.php
+    - app/Models/Org/OrgUnit.php
+    - app/Models/Org/OrgTeam.php
+    - app/Models/Job/JobContract.php
+    - app/Models/Job/JobPosition.php
+    - app/Models/Job/JobRole.php
+    - app/Models/Job/JobPositionRole.php
+    - app/Models/Ppl/Staff.php
+    - app/Models/Ppl/StaffPosition.php
+    - app/Models/Ppl/Movement.php
+    - app/Models/AuthZ/StaffRole.php
+    - app/Models/AuthZ/RoleAssignment.php
+    - app/Models/Calendar/Shift.php
+    - app/Models/Process/Workflow.php
+    - app/Models/Process/WorkflowStep.php
+    - app/Models/Process/WorkflowTransition.php
+    - app/Models/Process/WorkflowStepTask.php
+    - app/Models/Process/WorkflowInstance.php
+    - app/Models/Process/WorkflowInstanceStep.php
+    - app/Models/Process/WorkflowDecision.php
+    - app/Models/Business/Hrm/Models/Employee.php
+    - app/Models/Business/Hrm/Models/JobTitle.php
+    - app/Models/Business/Tos/Models/Request.php
+    - app/Models/Business/Tos/Models/RequestType.php
+    - app/Models/Business/Tos/Models/Offer.php
+    - app/Models/Business/Tos/Models/OfferCategory.php
+    - app/Models/Business/Tos/Models/OfferCategoryAssignment.php
+    - app/Models/Business/Dms/Models/Document.php
+    - app/Models/Business/Dms/Models/DocumentCategory.php
+    - app/Models/Business/Dms/Models/DocumentCategoryAssignment.php
+    - app/Models/Business/Lms/Models/Course.php
+    - app/Models/Business/Lms/Models/CourseGroup.php
+    - app/Models/Business/Lms/Models/CourseGroupAssignment.php
+    - app/Models/Business/Lms/Models/Module.php
+    - app/Models/Business/Lms/Models/CourseModule.php
+    - app/Models/Business/Lms/Models/Material.php
+    - app/Models/Business/Lms/Models/MaterialModule.php
+    - app/Models/Business/Lms/Models/Quiz.php
+    - app/Models/Business/Lms/Models/QuizAttempt.php
+    - app/Models/Business/Lms/Models/Evaluation.php
+    - app/Models/Business/Lms/Models/Certificate.php
+    - app/Models/Business/Eam/Models/Asset.php
+    - app/Models/Business/Eam/Models/AssetType.php
+    - app/Models/Business/Eam/Models/AssetTypeAssignment.php
+    - app/Models/Business/Eam/Models/AssetAssignment.php
+models:
+    User: { username: 'string nullable', name: string, email: 'string nullable', email_verified_at: 'datetime nullable', password: 'string nullable', app_authentication_secret: 'text nullable', remember_token: 'string nullable', ldap_domain: 'string nullable', ldap_guid: 'string nullable', employee_id: 'string nullable', department: 'string nullable', title: 'string nullable', manager_dn: 'string nullable', bio_readonly: "boolean default:'0'" }
+    Support\Sync\ApiConfig: { name: 'string unique index', source_type: string, source_config: json, data_path: 'string nullable', depends_on: 'json nullable', mapping: json, active: 'boolean default:true index', relationships: { hasMany: ApiData } }
+    Support\Sync\ApiData: { api_config_id: 'id foreign:api_configs cascadeOnDelete', fingerprint: 'string nullable index', payload: json, status: 'string default:pending index', processed_at: 'timestamp nullable', error: 'text nullable' }
+    Support\AuditTrail\AuditLog: { user_id: 'id nullable foreign:users', staff_id: 'id nullable foreign:staff', result: 'string nullable', actor: string, action: string, reason: 'string nullable', metadata: 'json nullable', relationships: { morphTo: ref } }
+    Support\Copies\Versionable: { type: 'enum:document,workflow,template,service,config,other', name: string, current_version_id: 'id nullable foreign:versions', attributes: 'json nullable', relationships: { morphTo: ref, hasMany: Version } }
+    Support\Copies\Version: { versionable_id: 'id foreign:versionables', created_by: 'id nullable foreign:staff', approved_by: 'id nullable foreign:staff', published_by: 'id nullable foreign:staff', status: 'enum:draft,approved,published,archived,rejected', content_type: 'enum:file,url,inline,json nullable', content_path: 'string nullable', major: integer, minor: integer, patch: integer, version: string, change_summary: 'string nullable', change_notes: 'text nullable', is_menu: boolean, approved_at: 'timestamp nullable', published_at: 'timestamp nullable', effective_from: 'timestamp nullable', effective_to: 'timestamp nullable', attributes: 'json nullable', relationships: { hasMany: 'VersionApproval, VersionRelation:relations, VersionRelation:relatedRelations' } }
+    Support\Copies\VersionApproval: { version_id: 'id foreign:versions', user_id: 'id foreign:staff' }
+    Support\Copies\VersionRelation: { version_id: 'id foreign:versions', related_version_id: 'id foreign:versions' }
+    Support\Copies\VersionLock: { version_id: 'id foreign:versions', locked_by: 'id foreign:staff' }
+    Support\FloorPlan\Location: { parent_id: 'id nullable foreign:locations', org_corp_id: 'id nullable foreign:org_corps', type: 'enum:site,building,area,section,room,zone,other nullable', name: string, attributes: 'json nullable', relationships: { hasMany: 'Location:children, LocationAssignment' } }
+    Support\FloorPlan\LocationAssignment: { location_id: 'id foreign:locations', type: 'enum:primary,secondary,temporary nullable', start_date: 'date nullable', end_date: 'date nullable', attributes: 'json nullable', relationships: { morphTo: assignable } }
+    Support\Legal\ContractType: { uuid: 'uuid unique', name: string, code: 'string unique', description: 'text nullable', template: 'longtext nullable', public_schema: 'json nullable', confidential_schema: 'json nullable', notify: 'json nullable', expiry_notify_days: 'integer default:30', requires_approval: 'boolean default:false', requires_signature: 'boolean default:false', workflow_id: 'id nullable foreign:workflows', meta: 'json nullable', relationships: { hasMany: Contract } }
+    Support\Legal\Contract: { uuid: 'uuid unique', contract_type_id: 'id foreign:contract_types', org_corp_id: 'id nullable foreign:org_corps', contract_no: 'string nullable', title: string, summary: 'text nullable', start_date: 'date nullable', end_date: 'date nullable', renewal_date: 'date nullable', status: 'enum:draft,pending,active,expired,terminated,archived default:draft', terms: 'json nullable', meta: 'json nullable', relationships: { morphTo: contractable, hasOne: ContractConfidentiality, hasMany: ContractParty } }
+    Support\Legal\ContractParty: { contract_id: 'id foreign:contracts', role: 'string nullable', is_signatory: 'boolean default:false', notify_on_expiry: 'boolean default:true', meta: 'json nullable', relationships: { morphTo: Party } }
+    Support\Legal\ContractConfidentiality: { contract_id: 'id foreign:contracts unique', payload: hashed, allowed_roles: 'json nullable', meta: 'json nullable' }
+    Support\Todo\Task: { role_id: 'id nullable foreign:roles', staff_id: 'id nullable foreign:staff', task_list_id: 'id nullable foreign:task_lists', title: string, description: 'text nullable', relationships: { morphTo: ref, hasMany: TaskAssignment, belongsTo: \Spatie\Permission\Models\Role } }
+    Support\Todo\TaskList: { name: string, relationships: { hasMany: Task, morphTo: ref } }
+    Support\Todo\TaskTemplate: { role_id: 'id nullable foreign:roles', name: string, relationships: { hasMany: TaskListTemplateItem, belongsTo: \Spatie\Permission\Models\Role } }
+    Support\Todo\TaskListTemplate: { name: string, relationships: { hasMany: TaskListTemplateItem } }
+    Support\Todo\TaskListTemplateItem: { task_list_template_id: 'id foreign:task_list_templates', task_template_id: 'id foreign:task_templates', depends_on_id: 'id nullable foreign:task_list_template_items', relationships: { hasMany: 'TaskListTemplateItem:dependents' } }
+    Support\Todo\TaskAssignment: { task_id: 'id foreign:tasks', role_id: 'id nullable foreign:roles', staff_id: 'id nullable foreign:staff', assigned_by: 'id nullable foreign:staff', relationships: { belongsTo: \Spatie\Permission\Models\Role } }
+    Support\Schedule\Event: { org_corp_id: 'id nullable foreign:org_corps', org_unit_id: 'id nullable foreign:org_units', org_team_id: 'id nullable foreign:org_teams', type: 'enum:holiday,company,operational,training,maintenance,other', name: string, description: 'text nullable', start_at: timestamp, end_at: 'timestamp nullable', is_blocking: 'boolean default:false', attributes: 'json nullable' }
+    Org\OrgCorp: { name: string, code: 'string unique', type: 'enum:company,government,vendor,institution nullable', attributes: 'json nullable', relationships: { hasMany: OrgUnit } }
+    Org\OrgUnit: { org_corp_id: 'id foreign:org_corps', parent_id: 'id nullable foreign:org_units', name: string, code: 'string nullable', description: 'string nullable', attributes: 'json nullable', relationships: { hasMany: 'OrgUnit:children, OrgTeam' } }
+    Org\OrgTeam: { org_unit_id: 'id foreign:org_units', name: string, code: 'string nullable', is_active: 'boolean default:true', attributes: 'json nullable', relationships: { hasMany: 'Workflow, JobContract' } }
+    Job\JobContract: { name: string, org_unit_id: 'id nullable foreign:org_units', org_team_id: 'id nullable foreign:org_teams', type: 'enum:permanent,contract,temporary,outsource nullable', status: 'enum:draft,active,on_hold,closed default:active', position_limit: 'integer nullable', start_date: 'date nullable', end_date: 'date nullable', attributes: 'json nullable', relationships: { hasMany: JobPosition } }
+    Job\JobPosition: { job_contract_id: 'id foreign:job_contracts', level: 'enum:junior,mid,senior,lead,manager nullable', status: 'enum:open,filled,closed default:open', title: string, description: 'text nullable', attributes: 'json nullable', relationships: { hasMany: StaffPosition } }
+    Job\JobRole: { type: 'enum:approval,operation,admin,reporting nullable', name: string, description: 'text nullable', attributes: 'json nullable' }
+    Job\JobPositionRole: { job_position_id: 'id foreign:job_positions', job_role_id: 'id foreign:job_roles' }
+    Ppl\Staff: { user_id: 'id nullable foreign:users', org_unit_id: 'id nullable foreign:org_units', job_contract_id: 'id nullable foreign:job_contracts', type: 'enum:internal,external,contractor default:internal', status: 'enum:active,inactive,suspended default:active', name: 'string nullable', staff_no: 'string nullable', attributes: 'json nullable', relationships: { hasMany: 'StaffPosition, Request', morphMany: 'AuditLog:model' } }
+    Ppl\StaffPosition: { staff_id: 'id foreign:staff', job_position_id: 'id foreign:job_positions', assignment_type: 'enum:primary,secondary,acting default:primary', status: 'enum:active,ended,pending default:active', start_date: date, end_date: 'date nullable', attributes: 'json nullable' }
+    Ppl\Movement: { type: 'enum:transfer,promotion,demotion,assignment,end_of_assignment', effective_date: date, from: 'json nullable', to: 'json nullable', relationships: { morphTo: movable } }
+    AuthZ\StaffRole: { staff_id: 'id foreign:staff', role_id: 'id foreign:roles', org_corp_id: 'id nullable foreign:org_corps', org_unit_id: 'id nullable foreign:org_units', org_team_id: 'id nullable foreign:org_teams', job_position_id: 'id nullable foreign:job_positions', job_role_id: 'id nullable foreign:job_roles', job_contract_id: 'id nullable foreign:job_contracts', source: 'enum:auto,manual default:auto', status: 'enum:active,inactive default:active', start_date: 'date nullable', end_date: 'date nullable', attributes: 'json nullable', relationships: { belongsTo: \Spatie\Permission\Models\Role } }
+    AuthZ\RoleAssignment: { role_id: 'id foreign:roles', staff_id: 'id foreign:staff', assigned_by: 'id nullable foreign:staff', org_unit_id: 'id nullable foreign:org_units', org_team_id: 'id nullable foreign:org_teams', start_date: 'date nullable', end_date: 'date nullable', attributes: 'json nullable', relationships: { belongsTo: \Spatie\Permission\Models\Role } }
+    Calendar\Shift: { org_unit_id: 'id nullable foreign:org_units', org_team_id: 'id nullable foreign:org_teams', staff_id: 'id nullable foreign:staff', type: 'enum:fixed,rotational nullable', name: string, description: 'text nullable', start_time: time, end_time: time, start_date: 'date nullable', end_date: 'date nullable', attributes: 'json nullable' }
+    Process\Workflow: { org_team_id: 'id foreign:org_teams', start_step_id: 'id nullable foreign:workflow_steps', name: string, description: 'text nullable', is_active: 'boolean default:true', attributes: 'json nullable', relationships: { hasMany: 'WorkflowStep, WorkflowInstance' } }
+    Process\WorkflowStep: { workflow_id: 'id foreign:workflows', type: 'enum:start,process,decision,end default:process', name: string, description: 'text nullable', requires_tasks: 'boolean default:false', requires_decision: 'boolean default:false', is_automatic: 'boolean default:false', attributes: 'json nullable', relationships: { hasMany: 'WorkflowTransition:from_transitions, WorkflowTransition:to_transitions, WorkflowStepTask, WorkflowInstanceStep, WorkflowDecision' } }
+    Process\WorkflowTransition: { workflow_id: 'id foreign:workflows', from_step_id: 'id foreign:workflow_steps', to_step_id: 'id foreign:workflow_steps', name: 'string nullable', conditions: 'json nullable', requires_approval: 'boolean default:false', attributes: 'json nullable' }
+    Process\WorkflowStepTask: { workflow_step_id: 'id foreign:workflow_steps', task_template_id: 'id nullable foreign:task_templates', task_list_template_id: 'id nullable foreign:task_list_templates', is_required: 'boolean default:true', attributes: 'json nullable' }
+    Process\WorkflowInstance: { workflow_id: 'id foreign:workflows', current_step_id: 'id nullable foreign:workflow_steps', status: 'enum:active,completed,cancelled default:active', started_at: 'timestamp nullable', completed_at: 'timestamp nullable', attributes: 'json nullable', relationships: { morphTo: ref, hasMany: 'WorkflowInstanceStep, WorkflowDecision' } }
+    Process\WorkflowInstanceStep: { workflow_instance_id: 'id foreign:workflow_instances', workflow_step_id: 'id foreign:workflow_steps', status: 'enum:pending,active,completed,skipped default:pending', started_at: 'timestamp nullable', completed_at: 'timestamp nullable', attributes: 'json nullable' }
+    Process\WorkflowDecision: { workflow_instance_id: 'id foreign:workflow_instances', workflow_step_id: 'id foreign:workflow_steps', user_id: 'id foreign:staff', decision: 'enum:approve,reject,request_changes', comment: 'text nullable', decided_at: timestamp, attributes: 'json nullable' }
+    Business\Hrm\Models\Employee: { staff_id: 'id foreign:staff', org_corp_id: 'id foreign:org_corps', status: 'enum:active,resigned,terminated,retired default:active', employee_no: 'string nullable', hire_date: 'date nullable', termination_date: 'date nullable', attributes: 'json nullable' }
+    Business\Hrm\Models\JobTitle: { title: string, jobgrade: 'string nullable', uuid: 'uuid unique', description: 'text nullable', attributes: 'json nullable', masco_code: 'string nullable' }
+    Business\Tos\Models\Request: { requester_id: 'id foreign:staff', workflow_instance_id: 'id nullable foreign:workflow_instances', status: 'enum:submitted,in_review,approved,rejected,in_progress,completed,closed default:submitted', name: 'string nullable', description: 'text nullable', request_type: 'string nullable', attributes: 'json nullable', relationships: { morphTo: ref } }
+    Business\Tos\Models\RequestType: { workflow_id: 'id nullable foreign:workflows', name: string, attributes: 'json nullable' }
+    Business\Tos\Models\Offer: { org_team_id: 'id foreign:org_teams', name: string, description: 'text nullable', attributes: 'json nullable', relationships: { morphOne: Versionable, hasMany: OfferCategoryAssignment } }
+    Business\Tos\Models\OfferCategory: { parent_id: 'id nullable foreign:Offer_categories', name: string, description: 'text nullable', attributes: 'json nullable', relationships: { hasMany: 'OfferCategory:children, OfferCategoryAssignment' } }
+    Business\Tos\Models\OfferCategoryAssignment: { offer_id: 'id foreign:offers', offer_category_id: 'id foreign:offer_categories', attributes: 'json nullable' }
+    Business\Dms\Models\Document: { org_team_id: 'id foreign:org_teams', org_unit_id: 'id nullable foreign:org_units', location_id: 'id nullable foreign:locations', type: 'enum:sop,work_instruction,policy,drawing,contract,other nullable', title: string, description: 'text nullable', attributes: 'json nullable', relationships: { morphOne: Versionable, hasMany: DocumentCategoryAssignment } }
+    Business\Dms\Models\DocumentCategory: { parent_id: 'id nullable foreign:document_categories', name: string, description: 'text nullable', attributes: 'json nullable', relationships: { hasMany: 'DocumentCategory:children, DocumentCategoryAssignment' } }
+    Business\Dms\Models\DocumentCategoryAssignment: { document_id: 'id foreign:documents', document_category_id: 'id foreign:document_categories', attributes: 'json nullable' }
+    Business\Lms\Models\Course: { org_team_id: 'id foreign:org_teams', code: 'string unique', title: string, description: 'text nullable', is_active: 'boolean default:true', attributes: 'json nullable', relationships: { hasMany: 'CourseModule, CourseGroupAssignment' } }
+    Business\Lms\Models\CourseGroup: { parent_id: 'id nullable foreign:course_groups', name: string, description: 'text nullable', attributes: 'json nullable', relationships: { hasMany: 'CourseGroup:children, CourseGroupAssignment' } }
+    Business\Lms\Models\CourseGroupAssignment: { course_id: 'id foreign:courses', course_group_id: 'id foreign:course_groups', attributes: 'json nullable' }
+    Business\Lms\Models\Module: { name: string, description: 'text nullable', duration_minutes: 'integer nullable', validity_days: 'integer nullable', attributes: 'json nullable', relationships: { hasMany: 'CourseModule, MaterialModule, Quiz, Certificate' } }
+    Business\Lms\Models\CourseModule: { course_id: 'id foreign:courses', module_id: 'id foreign:modules', sequence: 'integer nullable', attributes: 'json nullable' }
+    Business\Lms\Models\Material: { org_team_id: 'id nullable foreign:org_teams', type: 'enum:document,video,link,other nullable', name: string, description: 'text nullable', attributes: 'json nullable', relationships: { hasMany: MaterialModule, morphOne: Versionable } }
+    Business\Lms\Models\MaterialModule: { material_id: 'id foreign:materials', module_id: 'id foreign:modules', sequence: 'integer nullable', attributes: 'json nullable' }
+    Business\Lms\Models\Quiz: { module_id: 'id foreign:modules', name: string, description: 'text nullable', pass_score: 'integer nullable', attributes: 'json nullable', relationships: { hasMany: QuizAttempt } }
+    Business\Lms\Models\QuizAttempt: { quiz_id: 'id foreign:quizzes', staff_id: 'id foreign:staff', result: 'enum:pass,fail nullable', score: 'integer nullable', attempted_at: 'timestamp nullable', attributes: 'json nullable', relationships: { hasMany: 'Certificate:certificates' } }
+    Business\Lms\Models\Evaluation: { module_id: 'id nullable foreign:modules', staff_id: 'id foreign:staff', evaluator_id: 'id nullable foreign:users', result: 'enum:pass,fail nullable', evaluated_at: 'timestamp nullable', attributes: 'json nullable', relationships: { hasMany: 'Certificate:certificates' } }
+    Business\Lms\Models\Certificate: { module_id: 'id foreign:modules', staff_id: 'id foreign:staff', quiz_attempt_id: 'id nullable foreign:quiz_attempts', evaluation_id: 'id nullable foreign:evaluations', issued_by: 'id nullable foreign:users', status: 'enum:valid,expired,revoked default:valid', issued_at: 'timestamp nullable', expires_at: 'timestamp nullable', attributes: 'json nullable' }
+    Business\Eam\Models\Asset: { org_team_id: 'id foreign:org_teams', location_id: 'id nullable foreign:locations', code: 'string unique', name: string, description: 'text nullable', type: 'enum:machine,tool,vehicle,storage,facility,other nullable', brand: 'string nullable', model: 'string nullable', serial_number: 'string nullable', status: 'enum:setup,active,maintenance,out_of_service,disposed default:setup', attributes: 'json nullable', relationships: { hasMany: AssetAssignment, morphMany: 'Request:ref' } }
+    Business\Eam\Models\AssetType: { name: string, description: 'text nullable', attributes: 'json nullable', relationships: { hasMany: AssetTypeAssignment } }
+    Business\Eam\Models\AssetTypeAssignment: { asset_id: 'id foreign:assets', asset_type_id: 'id foreign:asset_types', attributes: 'json nullable' }
+    Business\Eam\Models\AssetAssignment: { asset_id: 'id foreign:assets', type: 'enum:primary,secondary,temporary nullable', start_date: 'date nullable', end_date: 'date nullable', attributes: 'json nullable', relationships: { morphTo: assignable } }

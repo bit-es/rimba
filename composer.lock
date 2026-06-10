@@ -4,32 +4,30 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5bb733a9a6d1247ee86428ccd256042",
+    "content-hash": "d54ef94516ddc2eca7e68b1b1b1b765f",
     "packages": [
         {
-            "name": "bit-es/foundation",
+            "name": "bit-es/business",
             "version": "dev-main",
             "dist": {
                 "type": "path",
-                "url": "packages/Foundation",
-                "reference": "951705400b64255a24576434a0ee01abe49c92e7"
+                "url": "packages/Business",
+                "reference": "4a933136c834519d6214bece5c362f20512c6d08"
             },
             "require": {
-                "bit-es/platform": "*",
-                "bit-es/support": "*",
                 "php": "^8.3"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "Bites\\Foundation\\FoundationServiceProvider"
+                        "Bites\\Business\\BusinessServiceProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Bites\\Foundation\\": "src/"
+                    "Bites\\Business\\": "src/"
                 }
             },
             "scripts": {
@@ -51,109 +49,7 @@
                     "email": "bit.ecosystem@gmail.com"
                 }
             ],
-            "description": "Foundation package for the BITES.",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "bit-es/platform",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "packages/Platform",
-                "reference": "4dacad8861bdbc383d71ccdb52e380fe62fd80a7"
-            },
-            "require": {
-                "directorytree/ldaprecord-laravel": "^3.4",
-                "php": "^8.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Bites\\Platform\\PlatformServiceProvider",
-                        "Bites\\Platform\\UX\\Panel\\AdminPanelProvider",
-                        "Bites\\Platform\\UX\\Panel\\StaffPanelProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Bites\\Platform\\": "src/",
-                    "Bites\\Platform\\Utility\\": "util/"
-                }
-            },
-            "scripts": {
-                "setup": [
-                    "composer install",
-                    "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-                    "@php artisan key:generate",
-                    "@php artisan migrate --force",
-                    "npm install",
-                    "npm run build"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "BIT Ecosystem",
-                    "email": "bit.ecosystem@gmail.com"
-                }
-            ],
-            "description": "Platform package for the BITES.",
-            "transport-options": {
-                "symlink": true,
-                "relative": true
-            }
-        },
-        {
-            "name": "bit-es/support",
-            "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "packages/Support",
-                "reference": "8bfa2efcceae1c7073828069a1de5f7e8c41128b"
-            },
-            "require": {
-                "php": "^8.3"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Bites\\Support\\SupportServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Bites\\Support\\": "src/"
-                }
-            },
-            "scripts": {
-                "setup": [
-                    "composer install",
-                    "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-                    "@php artisan key:generate",
-                    "@php artisan migrate --force",
-                    "npm install",
-                    "npm run build"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "BIT Ecosystem",
-                    "email": "bit.ecosystem@gmail.com"
-                }
-            ],
-            "description": "Support packages for the BITES.",
+            "description": "Business package for the BITES.",
             "transport-options": {
                 "symlink": true,
                 "relative": true
@@ -779,149 +675,6 @@
                 "source": "https://github.com/dflydev/dflydev-dot-access-data/tree/v3.0.3"
             },
             "time": "2024-07-08T12:26:09+00:00"
-        },
-        {
-            "name": "directorytree/ldaprecord",
-            "version": "v3.8.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DirectoryTree/LdapRecord.git",
-                "reference": "a1cab9f078eb4756fc6fad58caea1e3d11cad0ec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord/zipball/a1cab9f078eb4756fc6fad58caea1e3d11cad0ec",
-                "reference": "a1cab9f078eb4756fc6fad58caea1e3d11cad0ec",
-                "shasum": ""
-            },
-            "require": {
-                "ext-iconv": "*",
-                "ext-json": "*",
-                "ext-ldap": "*",
-                "illuminate/collections": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
-                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
-                "nesbot/carbon": "*",
-                "php": ">=8.1",
-                "psr/log": "*",
-                "psr/simple-cache": "^1.0|^2.0|^3.0"
-            },
-            "require-dev": {
-                "fakerphp/faker": "^1.21",
-                "laravel/pint": "^1.6",
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^9.0",
-                "spatie/ray": "^1.24"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "LdapRecord\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Steve Bauman",
-                    "email": "steven_bauman@outlook.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A fully-featured LDAP ORM.",
-            "homepage": "https://www.ldaprecord.com",
-            "keywords": [
-                "active directory",
-                "ad",
-                "adLDAP",
-                "adldap2",
-                "directory",
-                "ldap",
-                "ldaprecord",
-                "orm",
-                "windows"
-            ],
-            "support": {
-                "docs": "https://ldaprecord.com",
-                "email": "steven_bauman@outlook.com",
-                "issues": "https://github.com/DirectoryTree/LdapRecord/issues",
-                "source": "https://github.com/DirectoryTree/LdapRecord"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/stevebauman",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-03-19T20:55:30+00:00"
-        },
-        {
-            "name": "directorytree/ldaprecord-laravel",
-            "version": "v3.4.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DirectoryTree/LdapRecord-Laravel.git",
-                "reference": "86925b558655e1595aabccbb8c530eb747e87ef5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DirectoryTree/LdapRecord-Laravel/zipball/86925b558655e1595aabccbb8c530eb747e87ef5",
-                "reference": "86925b558655e1595aabccbb8c530eb747e87ef5",
-                "shasum": ""
-            },
-            "require": {
-                "directorytree/ldaprecord": "^v3.3",
-                "ext-json": "*",
-                "ext-ldap": "*",
-                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
-                "php": ">=8.1",
-                "ramsey/uuid": "*"
-            },
-            "require-dev": {
-                "laravel/pint": "^1.9",
-                "laravel/sanctum": "*",
-                "mockery/mockery": "^1.0",
-                "orchestra/testbench": "^6.0|^7.0|^8.0|^9.0|^10.0|^11.0",
-                "phpunit/phpunit": "^8.0|^9.0|^10.0|^11.0",
-                "spatie/ray": "^1.28"
-            },
-            "type": "project",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "LdapRecord\\Laravel\\LdapServiceProvider",
-                        "LdapRecord\\Laravel\\LdapAuthServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "LdapRecord\\Laravel\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "LDAP Authentication & Management for Laravel.",
-            "keywords": [
-                "adldap2",
-                "laravel",
-                "ldap",
-                "ldaprecord"
-            ],
-            "support": {
-                "issues": "https://github.com/DirectoryTree/LdapRecord-Laravel/issues",
-                "source": "https://github.com/DirectoryTree/LdapRecord-Laravel/tree/v3.4.3"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/stevebauman",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-03-19T21:11:17+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -2322,16 +2075,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v13.14.0",
+            "version": "v13.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "e60b1c817a9ef7da319e4007de6cfda5301a58c0"
+                "reference": "7e23b2aa4e1133a43835c93a810b4bedc40e425b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/e60b1c817a9ef7da319e4007de6cfda5301a58c0",
-                "reference": "e60b1c817a9ef7da319e4007de6cfda5301a58c0",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/7e23b2aa4e1133a43835c93a810b4bedc40e425b",
+                "reference": "7e23b2aa4e1133a43835c93a810b4bedc40e425b",
                 "shasum": ""
             },
             "require": {
@@ -2542,7 +2295,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2026-06-04T18:46:35+00:00"
+            "time": "2026-06-09T13:45:51+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -7001,16 +6754,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.38.1",
+            "version": "v1.38.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92"
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/14c5439eec4ccff081ac14eca2dc57feb2a66d92",
-                "reference": "14c5439eec4ccff081ac14eca2dc57feb2a66d92",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
+                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
                 "shasum": ""
             },
             "require": {
@@ -7062,7 +6815,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.1"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.2"
             },
             "funding": [
                 {
@@ -7082,7 +6835,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-26T12:51:13+00:00"
+            "time": "2026-05-27T06:59:30+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
@@ -8657,6 +8410,107 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.1.1"
             },
             "time": "2025-04-30T06:54:44+00:00"
+        },
+        {
+            "name": "laravel-shift/blueprint",
+            "version": "v2.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-shift/blueprint.git",
+                "reference": "a7c74809d2b769d62a549104d96d02b524173fe5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-shift/blueprint/zipball/a7c74809d2b769d62a549104d96d02b524173fe5",
+                "reference": "a7c74809d2b769d62a549104d96d02b524173fe5",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": ">=12.0",
+                "illuminate/database": ">=12.0",
+                "illuminate/filesystem": ">=12.0",
+                "illuminate/support": ">=12.0",
+                "laravel-shift/faker-registry": "^0.3.0",
+                "nunomaduro/termwind": "^2.3",
+                "symfony/yaml": ">=7.0"
+            },
+            "require-dev": {
+                "laravel/pint": "~1.25.0",
+                "mockery/mockery": "^1.4.4",
+                "orchestra/testbench": ">=9.0",
+                "phpunit/phpunit": "^11.5.3"
+            },
+            "suggest": {
+                "jasonmccreary/laravel-test-assertions": "Required to use additional assertions in generated tests (^2.0)."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Blueprint\\BlueprintServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Blueprint\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "An expressive, human readable code generation tool.",
+            "keywords": [
+                "code generation",
+                "framework",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel-shift/blueprint/issues",
+                "source": "https://github.com/laravel-shift/blueprint/tree/v2.13.0"
+            },
+            "time": "2025-11-13T20:57:52+00:00"
+        },
+        {
+            "name": "laravel-shift/faker-registry",
+            "version": "v0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-shift/faker-registry.git",
+                "reference": "968ab023b6c76c2f67cc474ba6d81fce8ff869a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-shift/faker-registry/zipball/968ab023b6c76c2f67cc474ba6d81fce8ff869a9",
+                "reference": "968ab023b6c76c2f67cc474ba6d81fce8ff869a9",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Shift\\Faker\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jason McCreary",
+                    "email": "jason@pureconcepts.net"
+                }
+            ],
+            "description": "A registry for generating Faker data from a name or data type.",
+            "support": {
+                "issues": "https://github.com/laravel-shift/faker-registry/issues",
+                "source": "https://github.com/laravel-shift/faker-registry/tree/v0.3.0"
+            },
+            "time": "2023-11-24T15:54:02+00:00"
         },
         {
             "name": "laravel/pail",
@@ -10684,6 +10538,82 @@
             "time": "2024-10-20T05:08:20+00:00"
         },
         {
+            "name": "symfony/yaml",
+            "version": "v8.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "efb42bd2c6f4f3ccfd4683583449938b5fc146b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/efb42bd2c6f4f3ccfd4683583449938b5fc146b0",
+                "reference": "efb42bd2c6f4f3ccfd4683583449938b5fc146b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.4.1",
+                "symfony/polyfill-ctype": "^1.8"
+            },
+            "conflict": {
+                "symfony/console": "<7.4"
+            },
+            "require-dev": {
+                "symfony/console": "^7.4|^8.0",
+                "yaml/yaml-test-suite": "*"
+            },
+            "bin": [
+                "Resources/bin/yaml-lint"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Loads and dumps YAML files",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/yaml/tree/v8.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-05-29T05:06:50+00:00"
+        },
+        {
             "name": "theseer/tokenizer",
             "version": "2.0.1",
             "source": {
@@ -10803,9 +10733,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "bit-es/foundation": 20,
-        "bit-es/platform": 20,
-        "bit-es/support": 20
+        "bit-es/business": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

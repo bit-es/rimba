@@ -1,7 +1,7 @@
 models:
 # ==================================================================
 # API Configuration and Data
-  Platform\Sync\ApiConfig:                      # Configuration for external API source
+  Support\Sync\ApiConfig:                      # Configuration for external API source
     name: string unique index                  # Unique identifier for the API config
     source_type: string                        # Type of source (e.g. rest, graphql, file)
     source_config: json                        # Connection details (URL, headers, auth, etc.)
@@ -11,7 +11,7 @@ models:
     active: boolean default:true index         # Enable/disable config (indexed for quick filtering)
     relationships:
       hasMany: ApiData                         # One config produces many data records
-  Platform\Sync\ApiData:                        # Stores fetched API data instances
+  Support\Sync\ApiData:                        # Stores fetched API data instances
     api_config_id: id foreign:api_configs cascadeOnDelete   # Link to ApiConfig, cascade delete
     fingerprint: string nullable index         # Hash/unique key to prevent duplicate records
     payload: json                              # Raw API response data
@@ -20,7 +20,7 @@ models:
     error: text nullable                       # Error message if processing failed
 # ==================================================================
 # AUDIT
-  Support\AuditTrail\Models\AuditLog:
+  Support\AuditTrail\AuditLog:
   # Centralized audit table for ALL modules (Authorization, Version, Workflow, etc.)
   # This should be the ONLY audit table in the system
   # Stores who did what, to which model, and the outcome
@@ -36,10 +36,10 @@ models:
     reason: string nullable
     metadata: json nullable
     relationships:
-      morphTo: model
+      morphTo: ref
 # ==================================================================
 # VERSION
-  Support\Copies\Models\Versionable:
+  Support\Copies\Versionable:
   # Represents the identity of an entity that supports versioning
   # Example:
   # - Document
@@ -55,7 +55,7 @@ models:
     relationships:
       morphTo: ref
       hasMany: Version
-  Support\Copies\Models\Version:
+  Support\Copies\Version:
     versionable_id: id foreign:versionables
     created_by: id nullable foreign:staff
     approved_by: id nullable foreign:staff
@@ -77,18 +77,18 @@ models:
     attributes: json nullable
     relationships:
       hasMany: VersionApproval, VersionRelation:relations, VersionRelation:relatedRelations
-  Support\Copies\Models\VersionApproval:
+  Support\Copies\VersionApproval:
     version_id: id foreign:versions
     user_id: id foreign:staff
-  Support\Copies\Models\VersionRelation:
+  Support\Copies\VersionRelation:
     version_id: id foreign:versions
     related_version_id: id foreign:versions
-  Support\Copies\Models\VersionLock:
+  Support\Copies\VersionLock:
     version_id: id foreign:versions
     locked_by: id foreign:staff
 # ==================================================================
 # LOCATION
-  Support\FloorPlan\Models\Location:
+  Support\FloorPlan\Location:
     parent_id: id nullable foreign:locations
     org_corp_id: id nullable foreign:org_corps
     type: enum:site,building,area,section,room,zone,other nullable
@@ -96,7 +96,7 @@ models:
     attributes: json nullable
     relationships:
       hasMany: Location:children, LocationAssignment
-  Support\FloorPlan\Models\LocationAssignment:
+  Support\FloorPlan\LocationAssignment:
     location_id: id foreign:locations
     type: enum:primary,secondary,temporary nullable
     start_date: date nullable
@@ -115,7 +115,7 @@ models:
 # - confidential fields
 # - notification rules
 # - workflow rules
-  Support\Legal\Models\ContractType:
+  Support\Legal\ContractType:
     uuid: uuid unique
     name: string # Human readable name
     code: string unique # employment, nda, asset_lease
@@ -149,7 +149,7 @@ models:
 # - signatures
 # - attachments
 # - workflow internals
-  Support\Legal\Models\Contract:
+  Support\Legal\Contract:
     uuid: uuid unique
     contract_type_id: id foreign:contract_types
     org_corp_id: id nullable foreign:org_corps
@@ -207,7 +207,7 @@ models:
 # Permissions and notifications rely on this table.
 #
 # ==========================================================================
-  Support\Legal\Models\ContractParty:
+  Support\Legal\ContractParty:
     contract_id: id foreign:contracts
   # ------------------------------------------------------------------------
   # ROLE IN CONTRACT
@@ -242,7 +242,7 @@ models:
 # - Contract Parties
 #
 # ==========================================================================
-  Support\Legal\Models\ContractConfidentiality:
+  Support\Legal\ContractConfidentiality:
     contract_id: id foreign:contracts unique
 
   # ------------------------------------------------------------------------
@@ -366,7 +366,7 @@ models:
 # Keep them inside confidential payload initially.
 # ==================================================================
 # TASK
-  Support\Todo\Models\Task:
+  Support\Todo\Task:
     role_id: id nullable foreign:roles
     staff_id: id nullable foreign:staff
     task_list_id: id nullable foreign:task_lists
@@ -375,34 +375,38 @@ models:
     relationships:
       morphTo: ref
       hasMany: TaskAssignment
-  Support\Todo\Models\TaskList:
+      belongsTo: \Spatie\Permission\Models\Role
+  Support\Todo\TaskList:
     name: string
     relationships:
       hasMany: Task
       morphTo: ref
-  Support\Todo\Models\TaskTemplate:
+  Support\Todo\TaskTemplate:
     role_id: id nullable foreign:roles
     name: string
     relationships:
       hasMany: TaskListTemplateItem
-  Support\Todo\Models\TaskListTemplate:
+      belongsTo: \Spatie\Permission\Models\Role
+  Support\Todo\TaskListTemplate:
     name: string
     relationships:
       hasMany: TaskListTemplateItem
-  Support\Todo\Models\TaskListTemplateItem:
+  Support\Todo\TaskListTemplateItem:
     task_list_template_id: id foreign:task_list_templates
     task_template_id: id foreign:task_templates
     depends_on_id: id nullable foreign:task_list_template_items # Previous item (Finish-to-Start logic)
     relationships:
       hasMany: TaskListTemplateItem:dependents # Reverse dependency (who depends on me)
-  Support\Todo\Models\TaskAssignment:
+  Support\Todo\TaskAssignment:
     task_id: id foreign:tasks
     role_id: id nullable foreign:roles
     staff_id: id nullable foreign:staff
     assigned_by: id nullable foreign:staff
+    relationships:
+      belongsTo: \Spatie\Permission\Models\Role
 # ==================================================================
 # Event Calendar
-  Support\Schedule\Models\Event:
+  Support\Schedule\Event:
     org_corp_id: id nullable foreign:org_corps
     org_unit_id: id nullable foreign:org_units
     org_team_id: id nullable foreign:org_teams
@@ -415,14 +419,14 @@ models:
     attributes: json nullable
 # ==================================================================
 # ORGANIZATION
-  Foundation\Org\Models\OrgCorp:
+  Org\OrgCorp:
     name: string
     code: string unique
     type: enum:company,government,vendor,institution nullable
     attributes: json nullable
     relationships:
       hasMany: OrgUnit
-  Foundation\Org\Models\OrgUnit:
+  Org\OrgUnit:
     org_corp_id: id foreign:org_corps
     parent_id: id nullable foreign:org_units
     name: string
@@ -431,7 +435,7 @@ models:
     attributes: json nullable
     relationships:
       hasMany: OrgUnit:children, OrgTeam
-  Foundation\Org\Models\OrgTeam:
+  Org\OrgTeam:
     org_unit_id: id foreign:org_units
     name: string
     code: string nullable
@@ -441,7 +445,7 @@ models:
       hasMany: Workflow, JobContract
 # ==================================================================
 # JOB
-  Foundation\Job\Models\JobContract:
+  Job\JobContract:
     name: string
     org_unit_id: id nullable foreign:org_units
     org_team_id: id nullable foreign:org_teams
@@ -453,7 +457,7 @@ models:
     attributes: json nullable
     relationships:
       hasMany: JobPosition
-  Foundation\Job\Models\JobPosition:
+  Job\JobPosition:
     job_contract_id: id foreign:job_contracts
     level: enum:junior,mid,senior,lead,manager nullable
     status: enum:open,filled,closed default:open
@@ -462,17 +466,17 @@ models:
     attributes: json nullable
     relationships:
       hasMany: StaffPosition
-  Foundation\Job\Models\JobRole:
+  Job\JobRole:
     type: enum:approval,operation,admin,reporting nullable # optional: classify behavior
     name: string
     description: text nullable
     attributes: json nullable
-  Foundation\Job\Models\JobPositionRole:
+  Job\JobPositionRole:
     job_position_id: id foreign:job_positions
     job_role_id: id foreign:job_roles
 # ==================================================================
 # PERSON
-  Foundation\Ppl\Models\Staff:
+  Ppl\Staff:
     user_id: id nullable foreign:users
     org_unit_id: id nullable foreign:org_units
     job_contract_id: id nullable foreign:job_contracts
@@ -484,7 +488,7 @@ models:
     relationships:
       hasMany: StaffPosition, Request
       morphMany: AuditLog:model
-  Foundation\Ppl\Models\StaffPosition:
+  Ppl\StaffPosition:
     staff_id: id foreign:staff
     job_position_id: id foreign:job_positions
     assignment_type: enum:primary,secondary,acting default:primary
@@ -492,7 +496,7 @@ models:
     start_date: date
     end_date: date nullable
     attributes: json nullable
-  Foundation\Ppl\Models\Movement:
+  Ppl\Movement:
     type: enum:transfer,promotion,demotion,assignment,end_of_assignment
     effective_date: date
     from: json nullable
@@ -501,26 +505,29 @@ models:
       morphTo: movable
 # ==================================================================
 # AUTH (SPATIE)
-  Foundation\AuthZ\Models\Role:
-    name: string
-  Foundation\AuthZ\Models\Permission:
-    name: string
-  Foundation\AuthZ\Models\RoleHasPermission:
-  # Pivot: defines which roles can access which permissions (gates)
-    permission_id: id foreign:permissions
-    role_id: id foreign:roles
-    timestamps: false
-  Foundation\AuthZ\Models\ModelHasRole:
-    role_id: id foreign:roles
-    timestamps: false
-    relationships:
-      morphTo: model
-  Foundation\AuthZ\Models\ModelHasPermission:
-    permission_id: id foreign:permissions
-    timestamps: false
-    relationships:
-      morphTo: model
-  Foundation\AuthZ\Models\StaffRole:
+  # AuthZ\Role:
+  #   name: string
+  # AuthZ\Permission:
+  #   name: string
+  # AuthZ\RoleHasPermission:
+  # # Pivot: defines which roles can access which permissions (gates)
+  #   permission_id: id foreign:permissions
+  #   role_id: id foreign:roles
+  #   timestamps: false
+  #   relationships:
+  #     belongsTo: \Spatie\Permission\Models\Role
+  # AuthZ\ModelHasRole:
+  #   role_id: id foreign:roles
+  #   timestamps: false
+  #   relationships:
+  #     belongsTo: \Spatie\Permission\Models\Role
+  #     morphTo: model
+  # AuthZ\ModelHasPermission:
+  #   permission_id: id foreign:permissions
+  #   timestamps: false
+  #   relationships:
+  #     morphTo: model
+  AuthZ\StaffRole:
   # CORE BUSINESS TABLE
   # Represents resolved/active roles per Staff WITH context
   #
@@ -540,7 +547,9 @@ models:
     start_date: date nullable
     end_date: date nullable
     attributes: json nullable
-  Foundation\AuthZ\Models\RoleAssignment:
+    relationships:
+      belongsTo: \Spatie\Permission\Models\Role
+  AuthZ\RoleAssignment:
   # Represents manual assignment BEFORE resolution
   #
   # Think of this as "input"
@@ -557,10 +566,12 @@ models:
     start_date: date nullable
     end_date: date nullable
     attributes: json nullable
+    relationships:
+      belongsTo: \Spatie\Permission\Models\Role
 
 # ==================================================================
 # Shift Calendar
-  Foundation\Calendar\Models\Shift:
+  Calendar\Shift:
     org_unit_id: id nullable foreign:org_units
     org_team_id: id nullable foreign:org_teams
     staff_id: id nullable foreign:staff
@@ -574,7 +585,7 @@ models:
     attributes: json nullable
 # ==================================================================
 # WORKFLOW
-  Platform\Process\Models\Workflow:
+  Process\Workflow:
   # Represents a complete business process
   # MUST be owned by exactly one OrgTeam
   # Defines control logic only (NOT execution, NOT data state)
@@ -586,7 +597,7 @@ models:
     attributes: json nullable
     relationships:
       hasMany: WorkflowStep, WorkflowInstance
-  Platform\Process\Models\WorkflowStep:
+  Process\WorkflowStep:
     workflow_id: id foreign:workflows
     type: enum:start,process,decision,end default:process
     name: string
@@ -597,7 +608,7 @@ models:
     attributes: json nullable
     relationships:
       hasMany: WorkflowTransition:from_transitions, WorkflowTransition:to_transitions, WorkflowStepTask, WorkflowInstanceStep, WorkflowDecision
-  Platform\Process\Models\WorkflowTransition:
+  Process\WorkflowTransition:
     workflow_id: id foreign:workflows
     from_step_id: id foreign:workflow_steps
     to_step_id: id foreign:workflow_steps
@@ -605,13 +616,13 @@ models:
     conditions: json nullable
     requires_approval: boolean default:false
     attributes: json nullable
-  Platform\Process\Models\WorkflowStepTask:
+  Process\WorkflowStepTask:
     workflow_step_id: id foreign:workflow_steps
     task_template_id: id nullable foreign:task_templates
     task_list_template_id: id nullable foreign:task_list_templates
     is_required: boolean default:true
     attributes: json nullable
-  Platform\Process\Models\WorkflowInstance:
+  Process\WorkflowInstance:
     workflow_id: id foreign:workflows
     current_step_id: id nullable foreign:workflow_steps
     status: enum:active,completed,cancelled default:active
@@ -621,14 +632,14 @@ models:
     relationships:
       morphTo: ref
       hasMany: WorkflowInstanceStep, WorkflowDecision
-  Platform\Process\Models\WorkflowInstanceStep:
+  Process\WorkflowInstanceStep:
     workflow_instance_id: id foreign:workflow_instances
     workflow_step_id: id foreign:workflow_steps
     status: enum:pending,active,completed,skipped default:pending
     started_at: timestamp nullable
     completed_at: timestamp nullable
     attributes: json nullable
-  Platform\Process\Models\WorkflowDecision:
+  Process\WorkflowDecision:
     workflow_instance_id: id foreign:workflow_instances
     workflow_step_id: id foreign:workflow_steps
     user_id: id foreign:staff
@@ -646,6 +657,13 @@ models:
     hire_date: date nullable
     termination_date: date nullable
     attributes: json nullable
+  Business\Hrm\Models\JobTitle:
+    title: string
+    jobgrade: string nullable
+    uuid: uuid unique
+    description: text nullable
+    attributes: json nullable
+    masco_code: string nullable
 # ==================================================================
 # REQUEST
   Business\Tos\Models\Request:
