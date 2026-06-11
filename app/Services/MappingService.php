@@ -48,11 +48,16 @@ class MappingService
                     }
                 }
 
-                if (! isset($field['to'])) {
+                // ✅ attribute mapping (no "to", only "into")
+                if (isset($field['into']) && !isset($field['to'])) {
+                    $row['attributes'][$field['into']] = $value;
                     continue;
                 }
 
-                $row[$field['to']] = $value;
+                // ✅ normal column mapping
+                if (isset($field['to'])) {
+                    $row[$field['to']] = $value;
+                }
             }
 
             if (isset($entity['skip_if'])) {

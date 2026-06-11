@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('versions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('versionable_id')->constrained();
-            $table->foreignId('created_by')->nullable()->constrained('staff', 'by');
-            $table->foreignId('approved_by')->nullable()->constrained('staff', 'by');
-            $table->foreignId('published_by')->nullable()->constrained('staff', 'by');
+            $table->foreignId('created_by')->nullable()->constrained('staff');
+            $table->foreignId('approved_by')->nullable()->constrained('staff');
+            $table->foreignId('published_by')->nullable()->constrained('staff');
             $table->enum('status', ["draft","approved","published","archived","rejected"]);
             $table->enum('content_type', ["file","url","inline","json"])->nullable();
             $table->string('content_path')->nullable();

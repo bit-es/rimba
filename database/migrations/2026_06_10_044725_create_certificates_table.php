@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('staff_id')->constrained();
             $table->foreignId('quiz_attempt_id')->nullable()->constrained();
             $table->foreignId('evaluation_id')->nullable()->constrained();
-            $table->foreignId('issued_by')->nullable()->constrained('users', 'by');
+            $table->foreignId('issued_by')->nullable()->constrained('users');
             $table->enum('status', ["valid","expired","revoked"])->default('valid');
             $table->timestamp('issued_at')->nullable();
             $table->timestamp('expires_at')->nullable();

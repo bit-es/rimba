@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('version_locks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('version_id')->constrained();
-            $table->foreignId('locked_by')->constrained('staff', 'by');
+            $table->foreignId('locked_by')->constrained('staff');
             $table->timestamps();
         });
 

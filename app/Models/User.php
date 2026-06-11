@@ -44,7 +44,7 @@ class User extends Authenticatable implements HasAvatar
 
     public function getFilamentAvatarUrl(): ?string
     {
-        $number = $this->staff?->staff_old_number;
+        $number = $this->staff?->attribute['staff_old_number'];
 
         // Always have a safe default
         $default = asset('images/unknown_user.png');

@@ -7,9 +7,9 @@ namespace App\Services;
 use App\Models\User;
 use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Hash;
-use App\Contracts\AuthService;
+use App\Contracts\AuthContract;
 
-class BuiltInAuthService implements AuthService
+class BuiltInAuthService implements AuthContract
 {
     public function authenticate(
         string $login,

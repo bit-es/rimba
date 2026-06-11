@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Contracts\AuthService;
+use App\Contracts\AuthContract;
 
 class AuthOrchestrator
 {
     /**
-     * @param array<AuthService> $services
+     * @param array<AuthContract> $services
      */
     public function __construct(
         protected array $services = [],

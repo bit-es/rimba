@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('role_id')->constrained();
             $table->foreignId('staff_id')->constrained();
-            $table->foreignId('assigned_by')->nullable()->constrained('staff', 'by');
+            $table->foreignId('assigned_by')->nullable()->constrained('staff');
             $table->foreignId('org_unit_id')->nullable()->constrained();
             $table->foreignId('org_team_id')->nullable()->constrained();
             $table->date('start_date')->nullable();

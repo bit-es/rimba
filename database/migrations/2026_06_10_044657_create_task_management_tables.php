@@ -78,7 +78,7 @@ return new class extends Migration
             $table->foreignId('task_id')->constrained();
             $table->foreignId('role_id')->nullable()->constrained();
             $table->foreignId('staff_id')->nullable()->constrained();
-            $table->foreignId('assigned_by')->nullable()->constrained('staff', 'by');
+            $table->foreignId('assigned_by')->nullable()->constrained('staff');
             $table->timestamps();
         });
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Contracts;
 
-interface AuthService
+interface AuthContract
 {
     public function authenticate(
         string $login,
