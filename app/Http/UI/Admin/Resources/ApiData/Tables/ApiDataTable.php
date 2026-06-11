@@ -1,36 +1,27 @@
 <?php
 
-namespace App\Http\UI\Admin\Resources\RoleAssignments\Tables;
+namespace App\Http\UI\Admin\Resources\ApiData\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class RoleAssignmentsTable
+class ApiDataTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('role.name')
+                TextColumn::make('apiConfig.name')
                     ->searchable(),
-                TextColumn::make('staff.name')
+                TextColumn::make('fingerprint')
                     ->searchable(),
-                TextColumn::make('assigned_by')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('orgUnit.name')
+                TextColumn::make('status')
                     ->searchable(),
-                TextColumn::make('orgTeam.name')
-                    ->searchable(),
-                TextColumn::make('start_date')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('end_date')
-                    ->date()
+                TextColumn::make('processed_at')
+                    ->dateTime()
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -45,7 +36,6 @@ class RoleAssignmentsTable
                 //
             ])
             ->recordActions([
-                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([

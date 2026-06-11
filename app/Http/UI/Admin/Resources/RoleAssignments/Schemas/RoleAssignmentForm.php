@@ -2,15 +2,11 @@
 
 namespace App\Http\UI\Admin\Resources\RoleAssignments\Schemas;
 
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\{
-    Select,
-    DatePicker,
-    Textarea
-};
-use App\Models\Org\OrgTeam;
-use Spatie\Permission\Models\Role;
 
 class RoleAssignmentForm
 {
@@ -18,50 +14,22 @@ class RoleAssignmentForm
     {
         return $schema
             ->components([
-
-                Section::make('Assignment')
-                    ->schema([
-                        Select::make('staff_id')
-                            ->label('Staff')
-                            ->relationship('staff', 'name')
-                            ->searchable()
-                            ->required(),
-                        Select::make('role_id')
-                            ->label('Role')
-                            ->options(Role::query()->pluck('name', 'id'))
-                            ->searchable()
-                            ->required(),
-                    ])->columns(2),
-                Section::make('Context')
-                    ->description('Assign role within a specific context')
-                    ->schema([
-                        Select::make('org_unit_id')
-                            ->label('Org Unit')
-                            ->relationship('orgUnit', 'name')
-                            ->searchable(),
-                        Select::make('org_team_id')
-                            ->label('Org Team')
-                            ->relationship('orgTeam', 'name')
-                            ->searchable()
-                            ->reactive()
-                            ->afterStateUpdated(function ($state, callable $set) {
-                                if ($state) {
-                                    $team = OrgTeam::find($state);
-                                    $set('org_unit_id', $team?->org_unit_id);
-                                }
-                            }),
-                    ])->columns(2),
-                Section::make('Validity')
-                    ->schema([
-                        DatePicker::make('start_date'),
-                        DatePicker::make('end_date'),
-                    ])->columns(2),
-                Section::make('Extra')
-                    ->schema([
-                        Textarea::make('attributes')
-                            ->json()
-                            ->rows(3),
-                    ]),
+                Select::make('role_id')
+                    ->relationship('role', 'name')
+                    ->required(),
+                Select::make('staff_id')
+                    ->relationship('staff', 'name')
+                    ->required(),
+                TextInput::make('assigned_by')
+                    ->numeric(),
+                Select::make('org_unit_id')
+                    ->relationship('orgUnit', 'name'),
+                Select::make('org_team_id')
+                    ->relationship('orgTeam', 'name'),
+                DatePicker::make('start_date'),
+                DatePicker::make('end_date'),
+                Textarea::make('attributes')
+                    ->columnSpanFull(),
             ]);
     }
 }
