@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Bites\Platform\Sync\Services;
 
-use Bites\Platform\Sync\Actions\DatabaseDataFetcher;
-use Bites\Platform\Sync\Actions\RestDataFetcher;
+use Bites\Platform\Sync\Actions\FetchDatabaseData;
+use Bites\Platform\Sync\Actions\FetchRestData;
 use Bites\Platform\Sync\Entities\ApiConfig;
 use Bites\Platform\Sync\Entities\ApiData;
-use Bites\Platform\Utility\FingerPrint;
+use Bites\Platform\Utility\PutFingerPrint;
 
 class FetchService
 {
     public function fetch(ApiConfig $config): void
     {
         $fetcher = match ($config->source_type) {
-            'rest' => new RestDataFetcher,
-            'database' => new DatabaseDataFetcher,
+            'rest' => new FetchRestData,
+            'database' => new FetchDatabaseData,
         };
 
         $data = $fetcher->fetch($config->source_config);
@@ -27,7 +27,7 @@ class FetchService
         ApiData::firstOrCreate(
             [
                 'api_config_id' => $config->id,
-                'fingerprint' => FingerPrint::make((array) $items),
+                'fingerprint' => PutFingerPrint::make((array) $items),
             ],
             [
                 'payload' => (array) $items,

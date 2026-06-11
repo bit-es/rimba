@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Actions\DatabaseDataFetcher;
-use App\Actions\RestDataFetcher;
+use App\Actions\FetchDatabaseData;
+use App\Actions\FetchRestData;
 use App\Models\Support\Sync\ApiConfig;
 use App\Models\Support\Sync\ApiData;
-use App\Actions\FingerPrint;
+use App\Actions\PutFingerPrint;
 
 class FetchService
 {
     public function fetch(ApiConfig $config): void
     {
         $fetcher = match ($config->source_type) {
-            'rest' => new RestDataFetcher,
-            'database' => new DatabaseDataFetcher,
+            'rest' => new FetchRestData,
+            'database' => new FetchDatabaseData,
         };
 
         $data = $fetcher->fetch($config->source_config);
@@ -27,7 +27,7 @@ class FetchService
         ApiData::firstOrCreate(
             [
                 'api_config_id' => $config->id,
-                'fingerprint' => FingerPrint::make((array) $items),
+                'fingerprint' => PutFingerPrint::make((array) $items),
             ],
             [
                 'payload' => (array) $items,

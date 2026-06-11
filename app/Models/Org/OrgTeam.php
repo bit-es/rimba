@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Concerns\HasUniqueCode;
 
 class OrgTeam extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUniqueCode;
+    // --- Trait HasUniqueCode Settings ---
+    public $codeLength = 4;       // Generates a 4-character random block
+    public $codePrefix = 'T';   // Adds "T-" to the front of the code
 
     /**
      * The attributes that are mass assignable.

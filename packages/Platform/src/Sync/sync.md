@@ -27,8 +27,8 @@ It loads source data from an API or database, stores it as `ApiData`, then maps 
 
 `FetchService::fetch(ApiConfig $config)` does the following:
 1. Chooses a fetcher by `source_type`:
-   - `rest` → `RestDataFetcher`
-   - `database` → `DatabaseDataFetcher`
+   - `rest` → `FetchRestData`
+   - `database` → `FetchDatabaseData`
 2. Fetches raw data from the configured source.
 3. Extracts items using `data_path` (default: `data`).
 4. Creates or reuses an `ApiData` record by `api_config_id` and payload fingerprint.

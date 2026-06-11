@@ -6,7 +6,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Business\Hrm\Models\JobTitle;
+use App\Models\Job\JobTitle;
 use App\Models\Job\JobContract;
 use App\Models\Job\JobPosition;
 use App\Models\Ppl\Staff;

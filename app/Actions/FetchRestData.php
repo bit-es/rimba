@@ -7,7 +7,7 @@ namespace App\Actions;
 use App\Contracts\DataFetcher;
 use Illuminate\Support\Facades\Http;
 
-class RestDataFetcher implements DataFetcher
+class FetchRestData implements DataFetcher
 {
     public function fetch(array $config): array
     {

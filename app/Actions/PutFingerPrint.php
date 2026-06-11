@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
-class FingerPrint
+class PutFingerPrint
 {
     public static function make(array $payload): string
     {

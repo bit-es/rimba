@@ -7,7 +7,7 @@ namespace Bites\Platform\Sync\Actions;
 use Bites\Platform\Sync\Contracts\DataFetcher;
 use Illuminate\Support\Facades\DB;
 
-class DatabaseDataFetcher implements DataFetcher
+class FetchDatabaseData implements DataFetcher
 {
     public function fetch(array $config): array
     {

@@ -7,7 +7,7 @@ namespace Bites\Platform\Sync\Actions;
 use Bites\Platform\Sync\Contracts\DataFetcher;
 use Illuminate\Support\Facades\Http;
 
-class RestDataFetcher implements DataFetcher
+class FetchRestData implements DataFetcher
 {
     public function fetch(array $config): array
     {

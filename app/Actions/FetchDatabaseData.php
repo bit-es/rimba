@@ -7,7 +7,7 @@ namespace App\Actions;
 use App\Contracts\DataFetcher;
 use Illuminate\Support\Facades\DB;
 
-class DatabaseDataFetcher implements DataFetcher
+class FetchDatabaseData implements DataFetcher
 {
     public function fetch(array $config): array
     {
