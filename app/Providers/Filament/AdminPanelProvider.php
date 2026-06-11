@@ -34,7 +34,11 @@ class AdminPanelProvider extends PanelProvider
             ->colors(['primary' => config('bites.ui.panels.admin.2', Color::Green)])
             ->brandName(config('bites.ui.panels.admin.3', 'Administration'))
             ->homeUrl(fn(): string => route(config('bites.ui.panels.admin.4', 'filament.admin.pages.dashboard')))
-
+            
+            // Discover for UI
+            ->discoverResources(in: app_path('Http/UI/Admin/Resources'), for: 'App\\Http\\UI\\Admin\\Resources')
+            ->discoverPages(in: app_path('Http/UI/Admin/Pages'), for: 'App\Http\UI\Admin\Pages')
+            ->discoverWidgets(in: app_path('Http/UI/Admin/Widgets'), for: 'App\Http\UI\Admin\Widgets')
             // Custom render hooks for UI
             ->renderHook('panels::auth.login.form.after', fn(): View => view('panel.extra'))
             ->renderHook('panels::auth.register.form.after', fn(): View => view('panel.extra'));

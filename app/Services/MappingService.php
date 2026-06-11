@@ -11,7 +11,7 @@ class MappingService
 {
     public function run(ApiData $data): void
     {
-        foreach ($data->api_config->mapping as $entity) {
+        foreach ($data->apiConfig->mapping as $entity) {
             $this->processEntity($entity, $data->payload);
         }
     }

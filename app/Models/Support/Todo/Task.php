@@ -7,61 +7,51 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use App\Enums\TaskStatus;
+use Spatie\Permission\Models\Role;
+use App\Observers\TaskObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use App\Concerns\HasTaskStatus;
 
+#[ObservedBy(TaskObserver::class)]
 class Task extends Model
 {
-    use HasFactory;
+    use HasTaskStatus;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'role_id',
-        'staff_id',
-        'task_list_id',
+        'work_package_id',
+        'task_template_id',
         'title',
         'description',
+        'seq',
+        'list',
+        'role_id',
+        'staff_id',
+        'status',
+        'started_at',
+        'completed_at',
+        'action_url',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected $dates = ['started_at', 'completed_at'];
+
+    public function workPackage()
     {
-        return [
-            'id' => 'integer',
-            'role_id' => 'integer',
-            'staff_id' => 'integer',
-            'task_list_id' => 'integer',
-        ];
+        return $this->belongsTo(WorkPackage::class);
     }
 
-    public function ref(): MorphTo
+    public function taskTemplate()
     {
-        return $this->morphTo();
+        return $this->belongsTo(TaskTemplate::class);
     }
 
-    public function taskAssignments(): HasMany
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function assignments()
     {
         return $this->hasMany(TaskAssignment::class);
-    }
-
-    public function role(): BelongsTo
-    {
-        return $this->belongsTo(\Spatie\Permission\Models\Role::class);
-    }
-
-    public function staff(): BelongsTo
-    {
-        return $this->belongsTo(\App\Models\Ppl\Staff::class);
-    }
-
-    public function taskList(): BelongsTo
-    {
-        return $this->belongsTo(TaskList::class);
     }
 }

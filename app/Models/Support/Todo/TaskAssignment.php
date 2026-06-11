@@ -2,14 +2,13 @@
 
 namespace App\Models\Support\Todo;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Permission\Models\Role;
+use App\Models\Ppl\Staff;
 
 class TaskAssignment extends Model
 {
-    use HasFactory;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -40,7 +39,7 @@ class TaskAssignment extends Model
 
     public function role(): BelongsTo
     {
-        return $this->belongsTo(\Spatie\Permission\Models\Role::class);
+        return $this->belongsTo(Role::class);
     }
 
     public function task(): BelongsTo
@@ -50,11 +49,11 @@ class TaskAssignment extends Model
 
     public function staff(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Ppl\Staff::class);
+        return $this->belongsTo(Staff::class);
     }
 
     public function assignedBy(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Ppl\Staff::class);
+        return $this->belongsTo(Staff::class);
     }
 }

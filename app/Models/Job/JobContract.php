@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class JobContract extends Model
 {
@@ -17,15 +18,13 @@ class JobContract extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'org_unit_id',
-        'org_team_id',
-        'type',
-        'status',
-        'position_limit',
+        'uuid',
+        'job_title_id',
+        'staff_id',
+        'issuing_org_corp_id',
+        'contract_type',
         'start_date',
         'end_date',
-        'attributes',
     ];
 
     /**
@@ -37,6 +36,7 @@ class JobContract extends Model
     {
         return [
             'id' => 'integer',
+            'job_title_id' => 'integer',
             'org_unit_id' => 'integer',
             'org_team_id' => 'integer',
             'start_date' => 'date',
@@ -45,10 +45,10 @@ class JobContract extends Model
         ];
     }
 
-    public function jobPositions(): HasMany
-    {
-        return $this->hasMany(JobPosition::class);
-    }
+    // public function jobTitle(): HasOne
+    // {
+    //     return $this->hasOne(JobTitle::class);
+    // }
 
     public function orgUnit(): BelongsTo
     {

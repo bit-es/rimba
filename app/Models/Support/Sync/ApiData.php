@@ -2,10 +2,13 @@
 
 namespace App\Models\Support\Sync;
 
+use App\Observers\ApiDataObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+#[ObservedBy(ApiDataObserver::class)]
 class ApiData extends Model
 {
     use HasFactory;
@@ -42,5 +45,22 @@ class ApiData extends Model
     public function apiConfig(): BelongsTo
     {
         return $this->belongsTo(ApiConfig::class);
+    }
+    public function markProcessed(): void
+    {
+        $this->update([
+            'status' => 'processed',
+            'processed_at' => now(),
+            'error' => null,
+            'payload' => 'committed',
+        ]);
+    }
+
+    public function markFailed(string $message): void
+    {
+        $this->update([
+            'status' => 'failed',
+            'error' => $message,
+        ]);
     }
 }

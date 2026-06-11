@@ -8,7 +8,7 @@ use App\Actions\DatabaseDataFetcher;
 use App\Actions\RestDataFetcher;
 use App\Models\Support\Sync\ApiConfig;
 use App\Models\Support\Sync\ApiData;
-use Bites\Platform\Utility\FingerPrint;
+use App\Actions\FingerPrint;
 
 class FetchService
 {

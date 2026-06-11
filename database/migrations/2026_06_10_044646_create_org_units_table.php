@@ -15,9 +15,10 @@ return new class extends Migration
 
         Schema::create('org_units', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('org_corp_id')->constrained();
+            $table->foreignId('org_corp_id')->nullable()->constrained();
             $table->foreignId('parent_id')->nullable()->constrained('org_units');
             $table->string('name');
+            $table->string('uuid')->unique();
             $table->string('code')->nullable();
             $table->string('description')->nullable();
             $table->json('attributes')->nullable();

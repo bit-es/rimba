@@ -20,6 +20,7 @@ class OrgUnit extends Model
         'org_corp_id',
         'parent_id',
         'name',
+        'uuid',
         'code',
         'description',
         'attributes',

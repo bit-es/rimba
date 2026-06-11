@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('job_positions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('job_contract_id')->constrained();
-            $table->enum('level', ["junior","mid","senior","lead","manager"])->nullable();
-            $table->enum('status', ["open","filled","closed"])->default('open');
+            $table->foreignId('org_unit_id')->constrained();
+            $table->enum('level', ["junior", "mid", "senior", "lead", "manager"])->nullable();
+            $table->enum('status', ["open", "filled", "closed"])->default('open');
             $table->string('title');
             $table->text('description')->nullable();
             $table->json('attributes')->nullable();

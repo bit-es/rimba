@@ -17,6 +17,7 @@ class OrgCorp extends Model
      */
     protected $fillable = [
         'name',
+        'uuid',
         'code',
         'type',
         'attributes',

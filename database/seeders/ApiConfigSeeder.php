@@ -6,13 +6,13 @@
 
 namespace Database\Seeders;
 
-use Bites\Foundation\Job\Entities\JobContract;
-use Bites\Foundation\Job\Entities\JobPosition;
-use Bites\Foundation\Org\Entities\Organization;
-use Bites\Foundation\Org\Entities\OrgUnit;
-use Bites\Foundation\Person\Entities\Staff;
-use Bites\Platform\Sync\Entities\ApiConfig;
-use Bites\Support\Shared\Entities\JobTitle;
+use App\Models\Business\Hrm\Models\JobTitle;
+use App\Models\Job\JobContract;
+use App\Models\Job\JobPosition;
+use App\Models\Ppl\Staff;
+use App\Models\Org\OrgCorp;
+use App\Models\Org\OrgUnit;
+use App\Models\Support\Sync\ApiConfig;
 use Illuminate\Database\Seeder;
 
 class ApiConfigSeeder extends Seeder
@@ -158,10 +158,19 @@ class ApiConfigSeeder extends Seeder
                             // ['from' => 'location_uuid', 'to' => 'location_uuid'],
                             ['from' => 'manager_uuid', 'to' => 'manager_uuid'],
                             [
-                                'from' => 'location_uuid',
-                                'to' => 'issuing_organization_id',
+                                'from' => 'job_title_uuid',
+                                'to' => 'job_title_id',
                                 'do' => [
-                                    'query' => 'SELECT id FROM organizations WHERE uuid = ?',
+                                    'query' => 'SELECT id FROM job_titles WHERE uuid = ?',
+                                    'bindings' => ['$value'],
+                                    'column' => 'id'
+                                ],
+                            ],
+                            [
+                                'from' => 'location_uuid',
+                                'to' => 'issuing_org_corp_id',
+                                'do' => [
+                                    'query' => 'SELECT id FROM org_corps WHERE uuid = ?',
                                     'bindings' => ['$value'],
                                     'column' => 'id'
                                 ],
@@ -177,15 +186,15 @@ class ApiConfigSeeder extends Seeder
                                 'unique_by' => 'full_name',
                                 'add_extra' => true,
                                 'fields' => [
-                                    ['from' => 'lastname',   'to' => 'full_name'],
-                                    ['from' => 'workcode',   'to' => 'staff_number'],
-                                    ['value' => 'FTE',       'to' => 'staff_type'],
+                                    ['from' => 'lastname',   'to' => 'name'],
+                                    ['from' => 'workcode',   'to' => 'staff_no'],
+                                    ['value' => 'FTE',       'to' => 'type'],
                                     ['from' => 'field8',    'to' => 'shift_code'],
                                     [
                                         'from' => 'location_uuid',
-                                        'to' => 'organization_id',
+                                        'to' => 'org_corp_id',
                                         'do' => [
-                                            'query' => 'SELECT id FROM organizations WHERE uuid = ?',
+                                            'query' => 'SELECT id FROM org_corps WHERE uuid = ?',
                                             'bindings' => ['$value'],
                                             'column' => 'id'
                                         ],
@@ -194,6 +203,7 @@ class ApiConfigSeeder extends Seeder
 
                                 // 👈 inject Staff ID into JobContract.staff_id
                                 'parent_key' => 'staff_id',
+                                'foreign_key' => 'job_contract_id',
                             ],
 
                             // ==========================================================
@@ -208,15 +218,6 @@ class ApiConfigSeeder extends Seeder
                                 'fields' => [
                                     ['from' => 'job_title_uuid', 'to' => 'title'],
                                     [
-                                        'from' => 'job_title_uuid',
-                                        'to' => 'job_title_id',
-                                        'do' => [
-                                            'query' => 'SELECT id FROM job_titles WHERE uuid = ?',
-                                            'bindings' => ['$value'],
-                                            'column' => 'id'
-                                        ],
-                                    ],
-                                    [
                                         'from' => 'department_uuid',
                                         'to' => 'org_unit_id',
                                         'do' => [
@@ -226,9 +227,7 @@ class ApiConfigSeeder extends Seeder
                                         ],
                                     ],
                                 ],
-
-                                // 👈 inject JobPosition ID into JobContract.job_position_id
-                                'parent_key' => 'job_position_id',
+                                'foreign_key' => 'job_contract_id',
                             ],
                         ],
 
@@ -297,7 +296,7 @@ class ApiConfigSeeder extends Seeder
                 'mapping' => [
                     [
                         'table' => 'locations',
-                        'model' => Organization::class,
+                        'model' => OrgCorp::class,
                         'path' => '',
                         'many' => true,
                         'unique_by' => 'uuid',

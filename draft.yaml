@@ -421,16 +421,18 @@ models:
 # ORGANIZATION
   Org\OrgCorp:
     name: string
-    code: string unique
+    code: string nullable
+    uuid: string unique
     type: enum:company,government,vendor,institution nullable
     attributes: json nullable
     relationships:
       hasMany: OrgUnit
   Org\OrgUnit:
-    org_corp_id: id foreign:org_corps
+    org_corp_id: id nullable foreign:org_corps
     parent_id: id nullable foreign:org_units
     name: string
     code: string nullable
+    uuid: string unique
     description: string nullable
     attributes: json nullable
     relationships:
@@ -446,19 +448,29 @@ models:
 # ==================================================================
 # JOB
   Job\JobContract:
-    name: string
-    org_unit_id: id nullable foreign:org_units
-    org_team_id: id nullable foreign:org_teams
-    type: enum:permanent,contract,temporary,outsource nullable
-    status: enum:draft,active,on_hold,closed default:active
-    position_limit: integer nullable
+    uuid: string unique
+    job_position_id: id nullable foreign:job_positions
+    staff_id: id nullable foreign:staff
+    issuing_org_corp_id: id foreign:org_corps
+    contract_type: enum:FTE,FTC,TPC,INTERN nullable
     start_date: date nullable
     end_date: date nullable
-    attributes: json nullable
+    # compensation_id: id nullable foreign:job_compensations
+    # name: string
+    # org_unit_id: id nullable foreign:org_units
+    # org_team_id: id nullable foreign:org_teams
+    # type: enum:permanent,contract,temporary,outsource nullable
+    # status: enum:draft,active,on_hold,closed default:active
+    # position_limit: integer nullable
+    # start_date: date nullable
+    # end_date: date nullable
+    # attributes: json nullable
     relationships:
+      hasOne: OrgCorp
       hasMany: JobPosition
   Job\JobPosition:
     job_contract_id: id foreign:job_contracts
+    org_unit_id: id nullable foreign:org_units
     level: enum:junior,mid,senior,lead,manager nullable
     status: enum:open,filled,closed default:open
     title: string
@@ -478,9 +490,10 @@ models:
 # PERSON
   Ppl\Staff:
     user_id: id nullable foreign:users
+    org_corp_id: id nullable foreign:org_corps
     org_unit_id: id nullable foreign:org_units
     job_contract_id: id nullable foreign:job_contracts
-    type: enum:internal,external,contractor default:internal
+    type: enum:FTE,FTC,TPC,Intern default:FTE
     status: enum:active,inactive,suspended default:active
     name: string nullable
     staff_no: string nullable

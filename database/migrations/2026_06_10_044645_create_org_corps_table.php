@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('org_corps', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('code')->unique();
+            $table->string('uuid')->unique();
+            $table->string('code')->nullable();
             $table->enum('type', ["company","government","vendor","institution"])->nullable();
             $table->json('attributes')->nullable();
             $table->timestamps();

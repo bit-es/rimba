@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use App\Concerns\HasAttributes;
 
 class Staff extends Model
 {
-    use HasFactory;
+    use HasFactory, HasAttributes;
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +20,7 @@ class Staff extends Model
      */
     protected $fillable = [
         'user_id',
+        'org_corp_id',
         'org_unit_id',
         'job_contract_id',
         'type',
@@ -38,6 +40,7 @@ class Staff extends Model
         return [
             'id' => 'integer',
             'user_id' => 'integer',
+            'org_corp_id' => 'integer',
             'org_unit_id' => 'integer',
             'job_contract_id' => 'integer',
             'attributes' => 'array',

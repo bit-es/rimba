@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Concerns\HasAttributes;
 
 class JobPosition extends Model
 {
-    use HasFactory;
+    use HasFactory, HasAttributes;
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +19,7 @@ class JobPosition extends Model
      */
     protected $fillable = [
         'job_contract_id',
+        'org_unit_id',
         'level',
         'status',
         'title',

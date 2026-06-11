@@ -13,17 +13,16 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('job_contracts', function (Blueprint $table) {
+        Schema::create('job_contracts', function (Blueprint $table): void {
             $table->id();
-            $table->string('name');
-            $table->foreignId('org_unit_id')->nullable()->constrained();
-            $table->foreignId('org_team_id')->nullable()->constrained();
-            $table->enum('type', ["permanent","contract","temporary","outsource"])->nullable();
-            $table->enum('status', ["draft","active","on_hold","closed"])->default('active');
-            $table->integer('position_limit')->nullable();
+            $table->string('uuid')->unique(); // Unique identifier for cross-system mapping
+            $table->foreignId('job_title_id')->nullable()->constrained('job_titles');
+            $table->foreignId('staff_id')->nullable()->constrained('staff');
+            $table->foreignId('issuing_org_corp_id')->constrained('org_corps');
+            // Contract Basics
+            $table->enum('contract_type', ['FTE', 'FTC', 'TPC', 'INTERN'])->nullable(); // Full-Time Employee, Fixed-Term Contract, Third-Party Contractor, Intern
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->json('attributes')->nullable();
             $table->timestamps();
         });
 

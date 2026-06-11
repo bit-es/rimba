@@ -10,6 +10,7 @@ class ProcessingService
 {
     public function process(ApiData $data): void
     {
+        dump("Processing API data ID: {$data->id} with config: {$data->apiConfig->name}");
         try {
             app(MappingService::class)->run($data);
             $data->markProcessed();
