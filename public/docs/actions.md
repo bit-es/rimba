@@ -58,5 +58,5 @@
 | **Builders** | `[ModelName]Builder` | Custom database query scopes. It holds your custom `where` logic. | `OrderBuilder`, `UserBuilder` |
 | **Events** | `[Noun] + [Past-Tense Verb]` | Plain data structures reporting something that *already happened*. | `OrderPlaced`, `UserRegistered` |
 | **API Resources** | `[ModelName]Resource` | JSON transformers that clean up database data for your API. | `UserResource`, `InvoiceResource` |
-| **Jobs** | `[Verb] + [Noun]` | Async queue workers doing heavy tasks in the background. | `SendWelcomeEmail`, `ProcessVideoUpload` |
-| **Listeners** | `[Verb] + [EventName]` or `[Action]` | Reactive workers that run automatically when an event fires. | `SendOrderConfirmation`, `UpdateInventoryCount` |
+| **Jobs** | `[Verb] + [Noun]` | Async queue workers doing heavy tasks in the background. Wrap around an action class for clean code. | `SendWelcomeEmail`, `ProcessVideoUpload` |
+| **Listeners** | `[Verb] + [EventName]` or `[Action]` | Reactive workers that run automatically when an event fires. Wrap around an action class for clean code. | `SendOrderConfirmation`, `UpdateInventoryCount` |
