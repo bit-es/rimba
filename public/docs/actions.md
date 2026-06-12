@@ -49,3 +49,14 @@
 | **Behaviors** | `Publishable` | Allows content to be hidden or made public. | `scopePublished()`, `publish()` |
 | | `Archivable` | Allows records to be safely tucked away. | `scopeArchived()`, `archive()` |
 | | `Likeable` | Allows users to give a thumbs-up to a model. | `likes()`, `like()`, `unlike()` |
+
+# rest of classes ....
+
+
+| Grouping / Folder | Naming Rule | When to Use It (Comment) | Clean Example |
+| :--- | :--- | :--- | :--- |
+| **Builders** | `[ModelName]Builder` | Custom database query scopes. It holds your custom `where` logic. | `OrderBuilder`, `UserBuilder` |
+| **Events** | `[Noun] + [Past-Tense Verb]` | Plain data structures reporting something that *already happened*. | `OrderPlaced`, `UserRegistered` |
+| **API Resources** | `[ModelName]Resource` | JSON transformers that clean up database data for your API. | `UserResource`, `InvoiceResource` |
+| **Jobs** | `[Verb] + [Noun]` | Async queue workers doing heavy tasks in the background. | `SendWelcomeEmail`, `ProcessVideoUpload` |
+| **Listeners** | `[Verb] + [EventName]` or `[Action]` | Reactive workers that run automatically when an event fires. | `SendOrderConfirmation`, `UpdateInventoryCount` |
