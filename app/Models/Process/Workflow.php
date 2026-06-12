@@ -22,7 +22,7 @@ class Workflow extends Model
         'name',
         'description',
         'is_active',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -37,7 +37,7 @@ class Workflow extends Model
             'org_team_id' => 'integer',
             'start_step_id' => 'integer',
             'is_active' => 'boolean',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

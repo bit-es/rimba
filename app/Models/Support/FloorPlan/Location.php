@@ -21,7 +21,7 @@ class Location extends Model
         'org_corp_id',
         'type',
         'name',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -35,7 +35,7 @@ class Location extends Model
             'id' => 'integer',
             'parent_id' => 'integer',
             'org_corp_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

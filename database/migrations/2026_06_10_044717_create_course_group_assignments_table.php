@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('course_group_id')->constrained();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

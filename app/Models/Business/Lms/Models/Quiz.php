@@ -21,7 +21,7 @@ class Quiz extends Model
         'name',
         'description',
         'pass_score',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -34,7 +34,7 @@ class Quiz extends Model
         return [
             'id' => 'integer',
             'module_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

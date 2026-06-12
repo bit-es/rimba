@@ -28,7 +28,7 @@ class Asset extends Model
         'model',
         'serial_number',
         'status',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -42,7 +42,7 @@ class Asset extends Model
             'id' => 'integer',
             'org_team_id' => 'integer',
             'location_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

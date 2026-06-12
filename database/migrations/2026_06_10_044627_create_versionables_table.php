@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('type', ["document","workflow","template","service","config","other"]);
             $table->string('name');
             $table->foreignId('current_version_id')->nullable()->constrained('versions');
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->morphs('ref');
             $table->timestamps();
         });

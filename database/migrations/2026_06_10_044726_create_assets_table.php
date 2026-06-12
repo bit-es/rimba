@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('model')->nullable();
             $table->string('serial_number')->nullable();
             $table->enum('status', ["setup","active","maintenance","out_of_service","disposed"])->default('setup');
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

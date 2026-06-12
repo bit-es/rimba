@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('document_id')->constrained();
             $table->foreignId('document_category_id')->constrained();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

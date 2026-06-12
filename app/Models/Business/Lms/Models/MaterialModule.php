@@ -19,7 +19,7 @@ class MaterialModule extends Model
         'material_id',
         'module_id',
         'sequence',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -33,7 +33,7 @@ class MaterialModule extends Model
             'id' => 'integer',
             'material_id' => 'integer',
             'module_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

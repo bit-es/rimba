@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('workflow_id')->nullable()->constrained();
             $table->string('name');
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

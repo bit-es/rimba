@@ -7,17 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use App\Concerns\HasAttributes;
+use App\Concerns\HasAbacs;
 
 class Staff extends Model
 {
-    use HasFactory, HasAttributes;
+    use HasFactory, HasAbacs;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'user_id',
         'org_corp_id',
@@ -27,25 +22,18 @@ class Staff extends Model
         'status',
         'name',
         'staff_no',
-        'attributes',
+        'extra',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'id' => 'integer',
-            'user_id' => 'integer',
-            'org_corp_id' => 'integer',
-            'org_unit_id' => 'integer',
-            'job_contract_id' => 'integer',
-            'attributes' => 'array',
-        ];
-    }
+    protected $casts = [
+        'id' => 'integer',
+        'user_id' => 'integer',
+        'org_corp_id' => 'integer',
+        'org_unit_id' => 'integer',
+        'job_contract_id' => 'integer',
+        'extra' => 'array',
+    ];
+
 
     public function staffPositions(): HasMany
     {

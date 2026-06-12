@@ -22,7 +22,7 @@ class Material extends Model
         'type',
         'name',
         'description',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -35,7 +35,7 @@ class Material extends Model
         return [
             'id' => 'integer',
             'org_team_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

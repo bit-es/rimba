@@ -22,7 +22,7 @@ class Evaluation extends Model
         'evaluator_id',
         'result',
         'evaluated_at',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -38,7 +38,7 @@ class Evaluation extends Model
             'staff_id' => 'integer',
             'evaluator_id' => 'integer',
             'evaluated_at' => 'timestamp',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

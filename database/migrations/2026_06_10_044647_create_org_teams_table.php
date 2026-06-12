@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('code')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

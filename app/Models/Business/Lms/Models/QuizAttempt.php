@@ -22,7 +22,7 @@ class QuizAttempt extends Model
         'result',
         'score',
         'attempted_at',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -37,7 +37,7 @@ class QuizAttempt extends Model
             'quiz_id' => 'integer',
             'staff_id' => 'integer',
             'attempted_at' => 'timestamp',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

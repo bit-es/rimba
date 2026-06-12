@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Concerns\HasUniqueCode;
-
+use App\Observers\OrgTeamObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+ 
+#[ObservedBy([OrgTeamObserver::class])]
 class OrgTeam extends Model
 {
     use HasFactory, HasUniqueCode;
@@ -25,7 +28,7 @@ class OrgTeam extends Model
         'name',
         'code',
         'is_active',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -39,7 +42,7 @@ class OrgTeam extends Model
             'id' => 'integer',
             'org_unit_id' => 'integer',
             'is_active' => 'boolean',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

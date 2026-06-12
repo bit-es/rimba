@@ -35,7 +35,7 @@ class Version extends Model
         'published_at',
         'effective_from',
         'effective_to',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -56,7 +56,7 @@ class Version extends Model
             'published_at' => 'timestamp',
             'effective_from' => 'timestamp',
             'effective_to' => 'timestamp',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

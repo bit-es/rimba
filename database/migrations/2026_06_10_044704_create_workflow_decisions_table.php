@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('decision', ["approve","reject","request_changes"]);
             $table->text('comment')->nullable();
             $table->timestamp('decided_at');
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

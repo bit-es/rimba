@@ -23,7 +23,7 @@ class Request extends Model
         'name',
         'description',
         'request_type',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -37,7 +37,7 @@ class Request extends Model
             'id' => 'integer',
             'requester_id' => 'integer',
             'workflow_instance_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

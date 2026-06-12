@@ -23,7 +23,7 @@ return new class extends Migration
             $table->enum('status', ["active","inactive","suspended"])->default('active');
             $table->string('name')->nullable();
             $table->string('staff_no')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

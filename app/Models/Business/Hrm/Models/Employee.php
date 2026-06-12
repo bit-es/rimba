@@ -22,7 +22,7 @@ class Employee extends Model
         'employee_no',
         'hire_date',
         'termination_date',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -38,7 +38,7 @@ class Employee extends Model
             'org_corp_id' => 'integer',
             'hire_date' => 'date',
             'termination_date' => 'date',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

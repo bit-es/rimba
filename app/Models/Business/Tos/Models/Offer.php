@@ -21,7 +21,7 @@ class Offer extends Model
         'org_team_id',
         'name',
         'description',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -34,7 +34,7 @@ class Offer extends Model
         return [
             'id' => 'integer',
             'org_team_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

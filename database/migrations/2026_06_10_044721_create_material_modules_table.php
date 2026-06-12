@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('material_id')->constrained();
             $table->foreignId('module_id')->constrained();
             $table->integer('sequence')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

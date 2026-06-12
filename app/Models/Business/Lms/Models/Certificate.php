@@ -24,7 +24,7 @@ class Certificate extends Model
         'status',
         'issued_at',
         'expires_at',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -43,7 +43,7 @@ class Certificate extends Model
             'issued_by' => 'integer',
             'issued_at' => 'timestamp',
             'expires_at' => 'timestamp',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

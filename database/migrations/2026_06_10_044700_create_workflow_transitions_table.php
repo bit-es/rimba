@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->json('conditions')->nullable();
             $table->boolean('requires_approval')->default(false);
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

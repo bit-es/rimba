@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->string('request_type')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->morphs('ref');
             $table->timestamps();
         });

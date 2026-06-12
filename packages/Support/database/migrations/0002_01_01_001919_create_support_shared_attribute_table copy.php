@@ -11,7 +11,7 @@ return new class extends Migration
         /* ============================================================
          | SHARED: ATTRIBUTES (ABAC BACKBONE)
          |============================================================ */
-        Schema::create('attributes', function (Blueprint $table): void {
+        Schema::create('extra', function (Blueprint $table): void {
             $table->id();
             $table->string('code');              // plant, skill, grade
             $table->string('value')->nullable(); // string or json

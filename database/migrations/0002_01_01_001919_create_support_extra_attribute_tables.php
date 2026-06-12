@@ -11,7 +11,7 @@ return new class extends Migration
         /* ============================================================
          | SHARED: ATTRIBUTES (ABAC BACKBONE)
          |============================================================ */
-        Schema::create('attributes', function (Blueprint $table): void {
+        Schema::create('abacs', function (Blueprint $table): void {
             $table->id();
             $table->string('code');              // plant, skill, grade
             $table->string('value')->nullable(); // string or json
@@ -19,23 +19,23 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('attributables', function (Blueprint $table): void {
+        Schema::create('abacables', function (Blueprint $table): void {
             $table->id();
-            $table->foreignId('attribute_id')->constrained('attributes');
-            $table->morphs('attributable');
+            $table->foreignId('abac_id')->constrained('abacs');
+            $table->morphs('abacable');
             $table->timestamps();
 
             $table->unique([
-                'attribute_id',
-                'attributable_id',
-                'attributable_type',
+                'abac_id',
+                'abacable_id',
+                'abacable_type',
             ]);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('attributables');
-        Schema::dropIfExists('attributes');
+        Schema::dropIfExists('abacables');
+        Schema::dropIfExists('abacs');
     }
 };

@@ -28,7 +28,7 @@ class StaffRole extends Model
         'status',
         'start_date',
         'end_date',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -50,7 +50,7 @@ class StaffRole extends Model
             'job_contract_id' => 'integer',
             'start_date' => 'date',
             'end_date' => 'date',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

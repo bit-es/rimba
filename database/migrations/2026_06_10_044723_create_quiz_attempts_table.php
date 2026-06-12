@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('result', ["pass","fail"])->nullable();
             $table->integer('score')->nullable();
             $table->timestamp('attempted_at')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

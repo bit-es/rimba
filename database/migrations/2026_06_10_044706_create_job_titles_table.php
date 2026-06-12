@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('jobgrade')->nullable();
             $table->uuid('uuid')->unique();
             $table->text('description')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->string('masco_code')->nullable();
             $table->timestamps();
         });

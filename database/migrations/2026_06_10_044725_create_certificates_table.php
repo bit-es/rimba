@@ -23,7 +23,7 @@ return new class extends Migration
             $table->enum('status', ["valid","expired","revoked"])->default('valid');
             $table->timestamp('issued_at')->nullable();
             $table->timestamp('expires_at')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

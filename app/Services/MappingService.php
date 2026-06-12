@@ -50,7 +50,7 @@ class MappingService
 
                 // ✅ attribute mapping (no "to", only "into")
                 if (isset($field['into']) && !isset($field['to'])) {
-                    $row['attributes'][$field['into']] = $value;
+                    $row['extra'][$field['into']] = $value;
                     continue;
                 }
 
@@ -85,7 +85,7 @@ class MappingService
             $model = app(ModelSyncService::class)->sync(
                 modelClass: $entity['model'],
                 uniqueBy: $entity['unique_by'] ?? null,
-                addExtra: $entity['add_extra'] ?? false,
+                addAbacs: $entity['add_abac'] ?? false,
                 row: $row
             );
 

@@ -20,7 +20,7 @@ class Module extends Model
         'description',
         'duration_minutes',
         'validity_days',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -32,7 +32,7 @@ class Module extends Model
     {
         return [
             'id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

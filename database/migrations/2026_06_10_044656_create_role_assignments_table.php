@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('org_team_id')->nullable()->constrained();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

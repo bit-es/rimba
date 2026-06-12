@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('org_corp_id')->nullable()->constrained();
             $table->enum('type', ["site","building","area","section","room","zone","other"])->nullable();
             $table->string('name');
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

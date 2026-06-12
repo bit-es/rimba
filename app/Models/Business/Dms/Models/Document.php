@@ -24,7 +24,7 @@ class Document extends Model
         'type',
         'title',
         'description',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -39,7 +39,7 @@ class Document extends Model
             'org_team_id' => 'integer',
             'org_unit_id' => 'integer',
             'location_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

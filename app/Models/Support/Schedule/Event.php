@@ -25,7 +25,7 @@ class Event extends Model
         'start_at',
         'end_at',
         'is_blocking',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -43,7 +43,7 @@ class Event extends Model
             'start_at' => 'timestamp',
             'end_at' => 'timestamp',
             'is_blocking' => 'boolean',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

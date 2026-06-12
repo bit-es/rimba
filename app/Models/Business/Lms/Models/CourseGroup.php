@@ -20,7 +20,7 @@ class CourseGroup extends Model
         'parent_id',
         'name',
         'description',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -33,7 +33,7 @@ class CourseGroup extends Model
         return [
             'id' => 'integer',
             'parent_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

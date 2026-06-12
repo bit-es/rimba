@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
     'jobgrade',
     'uuid',
     'description',
-    'attributes',
+    'extra',
     'masco_code',
 ])]
 class JobTitle extends Model
@@ -19,7 +19,7 @@ class JobTitle extends Model
     protected function casts(): array
     {
         return [
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 }

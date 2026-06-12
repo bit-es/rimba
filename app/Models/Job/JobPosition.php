@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Concerns\HasAttributes;
+use App\Concerns\HasAbacs;
 
 class JobPosition extends Model
 {
-    use HasFactory, HasAttributes;
+    use HasFactory, HasAbacs;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +24,7 @@ class JobPosition extends Model
         'status',
         'title',
         'description',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -37,7 +37,7 @@ class JobPosition extends Model
         return [
             'id' => 'integer',
             'job_contract_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

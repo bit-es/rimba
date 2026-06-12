@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('type', ["approval","operation","admin","reporting"])->nullable();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

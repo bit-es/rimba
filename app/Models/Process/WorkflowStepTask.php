@@ -20,7 +20,7 @@ class WorkflowStepTask extends Model
         'task_template_id',
         'task_list_template_id',
         'is_required',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -36,7 +36,7 @@ class WorkflowStepTask extends Model
             'task_template_id' => 'integer',
             'task_list_template_id' => 'integer',
             'is_required' => 'boolean',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

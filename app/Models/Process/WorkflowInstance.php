@@ -23,7 +23,7 @@ class WorkflowInstance extends Model
         'status',
         'started_at',
         'completed_at',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -39,7 +39,7 @@ class WorkflowInstance extends Model
             'current_step_id' => 'integer',
             'started_at' => 'timestamp',
             'completed_at' => 'timestamp',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

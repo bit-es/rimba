@@ -18,7 +18,7 @@ class AssetType extends Model
     protected $fillable = [
         'name',
         'description',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -30,7 +30,7 @@ class AssetType extends Model
     {
         return [
             'id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

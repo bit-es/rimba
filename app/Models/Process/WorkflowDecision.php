@@ -22,7 +22,7 @@ class WorkflowDecision extends Model
         'decision',
         'comment',
         'decided_at',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -38,7 +38,7 @@ class WorkflowDecision extends Model
             'workflow_step_id' => 'integer',
             'user_id' => 'integer',
             'decided_at' => 'timestamp',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

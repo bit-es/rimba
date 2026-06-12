@@ -21,7 +21,7 @@ class Versionable extends Model
         'type',
         'name',
         'current_version_id',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -34,7 +34,7 @@ class Versionable extends Model
         return [
             'id' => 'integer',
             'current_version_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

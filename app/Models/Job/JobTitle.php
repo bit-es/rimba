@@ -19,7 +19,7 @@ class JobTitle extends Model
         'jobgrade',
         'uuid',
         'description',
-        'attributes',
+        'extra',
         'masco_code',
     ];
 
@@ -32,7 +32,7 @@ class JobTitle extends Model
     {
         return [
             'id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 }

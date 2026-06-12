@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status', ["active","completed","cancelled"])->default('active');
             $table->timestamp('started_at')->nullable();
             $table->timestamp('completed_at')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->morphs('ref');
             $table->timestamps();
         });

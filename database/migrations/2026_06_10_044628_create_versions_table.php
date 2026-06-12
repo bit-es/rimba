@@ -33,7 +33,7 @@ return new class extends Migration
             $table->timestamp('published_at')->nullable();
             $table->timestamp('effective_from')->nullable();
             $table->timestamp('effective_to')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

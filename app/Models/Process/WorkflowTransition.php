@@ -22,7 +22,7 @@ class WorkflowTransition extends Model
         'name',
         'conditions',
         'requires_approval',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -39,7 +39,7 @@ class WorkflowTransition extends Model
             'to_step_id' => 'integer',
             'conditions' => 'array',
             'requires_approval' => 'boolean',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

@@ -15,6 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Http;
 use Filament\Models\Contracts\HasAvatar;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 #[Fillable(['name', 'email', 'password'])]
 #[Hidden(['password', 'remember_token'])]
@@ -37,14 +38,16 @@ class User extends Authenticatable implements HasAvatar
         ];
     }
 
-    public function staff(): BelongsTo
+    public function staff(): HasOne
     {
-        return $this->belongsTo(Staff::class);
+        return $this->hasOne(Staff::class, 'user_id');
     }
 
     public function getFilamentAvatarUrl(): ?string
     {
-        $number = $this->staff?->attribute['staff_old_number'];
+        dump($this->staff);
+        $number = $this->staff?->attributes['attributes'];//->attributes['staff_old_number'];
+        dd($number);
 
         // Always have a safe default
         $default = asset('images/unknown_user.png');

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('status', ["open", "filled", "closed"])->default('open');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

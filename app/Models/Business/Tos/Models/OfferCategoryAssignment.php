@@ -18,7 +18,7 @@ class OfferCategoryAssignment extends Model
     protected $fillable = [
         'offer_id',
         'offer_category_id',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -32,7 +32,7 @@ class OfferCategoryAssignment extends Model
             'id' => 'integer',
             'offer_id' => 'integer',
             'offer_category_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

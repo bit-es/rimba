@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Concerns\HasUniqueCode;
-
+use App\Observers\OrgUnitObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+ 
+#[ObservedBy([OrgUnitObserver::class])]
 class OrgUnit extends Model
 {
     use hasFactory, HasUniqueCode;
@@ -27,7 +30,7 @@ class OrgUnit extends Model
         'uuid',
         'code',
         'description',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -41,7 +44,7 @@ class OrgUnit extends Model
             'id' => 'integer',
             'org_corp_id' => 'integer',
             'parent_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

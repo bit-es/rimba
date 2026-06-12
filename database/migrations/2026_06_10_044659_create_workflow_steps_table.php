@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('requires_tasks')->default(false);
             $table->boolean('requires_decision')->default(false);
             $table->boolean('is_automatic')->default(false);
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

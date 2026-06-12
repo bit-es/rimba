@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('status', ["active","ended","pending"])->default('active');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

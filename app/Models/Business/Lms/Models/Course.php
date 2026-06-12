@@ -22,7 +22,7 @@ class Course extends Model
         'title',
         'description',
         'is_active',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -36,7 +36,7 @@ class Course extends Model
             'id' => 'integer',
             'org_team_id' => 'integer',
             'is_active' => 'boolean',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

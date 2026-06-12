@@ -19,7 +19,7 @@ class CourseModule extends Model
         'course_id',
         'module_id',
         'sequence',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -33,7 +33,7 @@ class CourseModule extends Model
             'id' => 'integer',
             'course_id' => 'integer',
             'module_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

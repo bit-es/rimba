@@ -19,7 +19,7 @@ return new class extends Migration
             $table->enum('type', ["primary","secondary","temporary"])->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->morphs('assignable');
             $table->timestamps();
         });

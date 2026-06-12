@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamp('start_at');
             $table->timestamp('end_at')->nullable();
             $table->boolean('is_blocking')->default(false);
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

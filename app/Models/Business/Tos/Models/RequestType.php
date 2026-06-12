@@ -18,7 +18,7 @@ class RequestType extends Model
     protected $fillable = [
         'workflow_id',
         'name',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -31,7 +31,7 @@ class RequestType extends Model
         return [
             'id' => 'integer',
             'workflow_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

@@ -24,7 +24,7 @@ class WorkflowStep extends Model
         'requires_tasks',
         'requires_decision',
         'is_automatic',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -40,7 +40,7 @@ class WorkflowStep extends Model
             'requires_tasks' => 'boolean',
             'requires_decision' => 'boolean',
             'is_automatic' => 'boolean',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

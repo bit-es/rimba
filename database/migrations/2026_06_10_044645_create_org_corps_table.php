@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('uuid')->unique();
             $table->string('code')->nullable();
             $table->enum('type', ["company","government","vendor","institution"])->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

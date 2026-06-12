@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('jobgrade')->nullable(); // Job grade
             $table->string('uuid')->unique(); // Unique identifier for cross-system mapping
             $table->longText('description')->nullable(); // Detailed description
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             // attributes will store tasks, basic_skills, specific_skills, knowledge, interest
             // Example: { "tasks": "...", "basic_skills": "...", "specific_skills": "...", "knowledge": "...", "interest": "..." }
             $table->string('masco_code')->nullable(); // MASCO code

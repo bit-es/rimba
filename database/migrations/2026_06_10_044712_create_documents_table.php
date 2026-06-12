@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('type', ["sop","work_instruction","policy","drawing","contract","other"])->nullable();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

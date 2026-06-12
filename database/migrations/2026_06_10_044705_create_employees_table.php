@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('employee_no')->nullable();
             $table->date('hire_date')->nullable();
             $table->date('termination_date')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

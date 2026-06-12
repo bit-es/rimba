@@ -11,7 +11,7 @@ class ModelSyncService
     public function sync(
         string $modelClass,
         ?string $uniqueBy,
-        bool $addExtra,
+        bool $addAbacs,
         array $row
     ): ?Model {
         /** @var Model $model */
@@ -32,15 +32,14 @@ class ModelSyncService
         } else {
             $model = $modelClass::query()->create($fillableRow);
         }
-
-        // ✅ Extras
-        if ($addExtra && $remaining !== [] && method_exists($model, 'setExtra')) {
+        // ✅ Abacs
+        if ($addAbacs && $remaining !== [] && method_exists($model, 'setAbac')) {
             foreach ($remaining as $key => $value) {
                 if ($value === null || $value === '') {
                     continue;
                 }
 
-                $model->setExtra($key, $value);
+                $model->setAbac($key, $value);
             }
         }
 

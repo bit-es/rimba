@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('status', ["pending","active","completed","skipped"])->default('pending');
             $table->timestamp('started_at')->nullable();
             $table->timestamp('completed_at')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

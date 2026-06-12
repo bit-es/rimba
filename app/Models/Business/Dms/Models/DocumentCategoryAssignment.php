@@ -18,7 +18,7 @@ class DocumentCategoryAssignment extends Model
     protected $fillable = [
         'document_id',
         'document_category_id',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -32,7 +32,7 @@ class DocumentCategoryAssignment extends Model
             'id' => 'integer',
             'document_id' => 'integer',
             'document_category_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

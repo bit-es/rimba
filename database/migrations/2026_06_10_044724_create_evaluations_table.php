@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('evaluator_id')->nullable()->constrained('users');
             $table->enum('result', ["pass","fail"])->nullable();
             $table->timestamp('evaluated_at')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

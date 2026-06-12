@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('task_template_id')->nullable()->constrained();
             $table->foreignId('task_list_template_id')->nullable()->constrained();
             $table->boolean('is_required')->default(true);
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

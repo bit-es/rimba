@@ -18,7 +18,7 @@ class AssetTypeAssignment extends Model
     protected $fillable = [
         'asset_id',
         'asset_type_id',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -32,7 +32,7 @@ class AssetTypeAssignment extends Model
             'id' => 'integer',
             'asset_id' => 'integer',
             'asset_type_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

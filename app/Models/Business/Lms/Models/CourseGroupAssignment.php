@@ -18,7 +18,7 @@ class CourseGroupAssignment extends Model
     protected $fillable = [
         'course_id',
         'course_group_id',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -32,7 +32,7 @@ class CourseGroupAssignment extends Model
             'id' => 'integer',
             'course_id' => 'integer',
             'course_group_id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

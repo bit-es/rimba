@@ -146,13 +146,12 @@ class ApiConfigSeeder extends Seeder
                         'path' => '',
                         'many' => true,
                         'unique_by' => 'uuid',
-                        'add_extra' => true,
+                        'add_abac' => true,
                         'fields' => [
                             ['from' => 'uuid', 'to' => 'uuid'],
                             ['from' => 'companystartdate', 'to' => 'start_date'],
                             ['from' => 'workenddate', 'to' => 'end_date'],
                             ['from' => 'workcode', 'to' => 'employee_no'],
-                            ['value' => 'FTE', 'to' => 'contract_type'],
                             // ['from' => 'department_uuid', 'to' => 'department_uuid'],
                             // ['from' => 'job_title_uuid', 'to' => 'job_title_uuid'],
                             // ['from' => 'location_uuid', 'to' => 'location_uuid'],
@@ -184,15 +183,20 @@ class ApiConfigSeeder extends Seeder
                             [
                                 'model' => Staff::class,
                                 'unique_by' => 'full_name',
-                                'add_extra' => true,
+                                'add_abac' => true,
                                 'fields' => [
                                     ['from' => 'lastname',   'to' => 'name'],
                                     ['from' => 'workcode',   'to' => 'staff_no'],
-                                    ['value' => 'FTE',       'to' => 'type'],
+                                    ['value' => 'Staff-FTE',       'to' => 'contract_type'],
                                     ['from' => 'field8',    'to' => 'shift_code'],
                                     ['from' => 'field3',    'to' => 'paygrade'],
                                     ['from' => 'loginid',    'into' => 'staff_old_number'],
-                                    ['from' => 'sex',    'to' => 'gender'],
+                                    [
+                                        'from' => 'sex',
+                                        'to'   => 'gender',
+                                        'do'   => '@(in_array(strtoupper((string)$from), ["1", "F"], true) ? "F" : "M")',
+                                    ],
+
                                     [
                                         'from' => 'location_uuid',
                                         'to' => 'org_corp_id',
@@ -217,8 +221,10 @@ class ApiConfigSeeder extends Seeder
 
                                 // Stable external identity for a position/title
                                 'unique_by' => 'title',
-                                'add_extra' => true,
+                                'add_abac' => true,
                                 'fields' => [
+                                    ['from' => 'field4',    'to' => 'cost_center'],
+                                    ['value' => 'Job-Permanent', 'to' => 'contract_type'],
                                     [
                                         'from' => 'job_title_uuid',
                                         'to' => 'title',
@@ -274,14 +280,14 @@ class ApiConfigSeeder extends Seeder
                         'fields' => [
                             ['from' => 'uuid', 'to' => 'uuid'],
                             ['from' => 'departmentname', 'to' => 'name'],
-                            [
-                                'do' => [
-                                    'artisan' => 'permission:create-role $value',
-                                    'transform' => '@"d." . strtolower($from)',
-                                ],
-                                'from' => 'departmentname',
-                                // 'from' => 'uuid',
-                            ],
+                            // [
+                            //     'do' => [
+                            //         'artisan' => 'permission:create-role $value',
+                            //         'transform' => '@"d." . strtolower($from)',
+                            //     ],
+                            //     'from' => 'departmentname',
+                            //     // 'from' => 'uuid',
+                            // ],
                         ],
                     ],
                 ],
@@ -317,14 +323,14 @@ class ApiConfigSeeder extends Seeder
                             ['from' => 'locationname', 'to' => 'name'],
                             ['from' => 'locationdesc', 'to' => 'description'],
                             ['from' => 'uuid', 'to' => 'uuid'],
-                            [
-                                'do' => [
-                                    'artisan' => 'permission:create-role $value',
-                                    'transform' => '@"o." . strtolower($from)',
-                                ],
-                                'from' => 'locationname',
-                                // 'from' => 'uuid',
-                            ],
+                            // [
+                            //     'do' => [
+                            //         'artisan' => 'permission:create-role $value',
+                            //         'transform' => '@"o." . strtolower($from)',
+                            //     ],
+                            //     'from' => 'locationname',
+                            //     // 'from' => 'uuid',
+                            // ],
                         ],
                     ],
                 ],

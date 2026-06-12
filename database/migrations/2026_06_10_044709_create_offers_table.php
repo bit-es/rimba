@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('org_team_id')->constrained();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 

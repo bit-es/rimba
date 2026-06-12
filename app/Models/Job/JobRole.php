@@ -18,7 +18,7 @@ class JobRole extends Model
         'type',
         'name',
         'description',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -30,7 +30,7 @@ class JobRole extends Model
     {
         return [
             'id' => 'integer',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 }

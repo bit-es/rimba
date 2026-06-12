@@ -26,7 +26,7 @@ class Shift extends Model
         'end_time',
         'start_date',
         'end_date',
-        'attributes',
+        'extra',
     ];
 
     /**
@@ -43,7 +43,7 @@ class Shift extends Model
             'staff_id' => 'integer',
             'start_date' => 'date',
             'end_date' => 'date',
-            'attributes' => 'array',
+            'extra' => 'array',
         ];
     }
 

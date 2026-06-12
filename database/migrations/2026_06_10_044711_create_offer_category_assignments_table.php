@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('offer_id')->constrained();
             $table->foreignId('offer_category_id')->constrained();
-            $table->json('attributes')->nullable();
+            $table->json('extra')->nullable();
             $table->timestamps();
         });
 
