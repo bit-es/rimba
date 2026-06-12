@@ -36,3 +36,16 @@
 | | `InventoryService` | For tracking stock movements across warehouses. | `reserveStock()`, `restockItem()` |
 | **System Utilities** | `MarkdownService` | For converting text formats or parsing data. | `toHtml()`, `stripTags()` |
 | | `GeocodingService` | For translating addresses to map coordinates. |
+
+# Concerns or Traits
+
+ | Grouping | Trait Name | When to Use It (Comment) | What It Adds to the Model |
+| :--- | :--- | :--- | :--- |
+| **Capabilities** | `HasProfilePhoto` | Adds the ability to have an avatar image. | `getAvatarUrl()`, `uploadPhoto()` |
+| | `HasAddresses` | Adds shipping or billing address links. | `addresses()`, `primaryAddress()` |
+| | `HasUuid` | Automatically generates a unique text ID on boot. | Sets the key type to UUID. |
+| **Relationships** | `HasTeams` | For models that belong to a group or company. | `teams()`, `currentTeam()` |
+| | `HasRoles` | For giving users access permissions. | `assignRole()`, `hasPermissionTo()` |
+| **Behaviors** | `Publishable` | Allows content to be hidden or made public. | `scopePublished()`, `publish()` |
+| | `Archivable` | Allows records to be safely tucked away. | `scopeArchived()`, `archive()` |
+| | `Likeable` | Allows users to give a thumbs-up to a model. | `likes()`, `like()`, `unlike()` |
