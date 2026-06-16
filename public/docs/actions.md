@@ -88,4 +88,170 @@
 | **Jobs** | `[Verb] + [Noun]` | Async queue workers doing heavy tasks in the background. Wrap around an action class for clean code. | `SendWelcomeEmail`, `ProcessVideoUpload` |
 | **Listeners** | `[Verb] + [EventName]` or `[Action]` | Reactive workers that run automatically when an event fires. Wrap around an action class for clean code. | `SendOrderConfirmation`, `UpdateInventoryCount` |
 
-
+```text
+Rimba Authorization System
+├── Identity Layer (WHO)
+│   ├── User (Authentication only)
+│   │   ├── Login / Logout
+│   │   ├── Credentials / SSO / Face Auth
+│   │   └── Links to Staff (optional or auto-created)
+│   │
+│   └── Staff (Operational Actor)
+│       ├── belongsTo User
+│       ├── assigned JobPosition
+│       ├── assigned OrgTeam
+│       ├── has Spatie Roles (RBAC)
+│       └── has Attributes (ABAC source)
+│
+├── Role-Based Access Layer (RBAC - Spatie)
+│   ├── Roles
+│   │   ├── OrgTeam scoped roles
+│   │   │   ├── Manager
+│   │   │   ├── Supervisor
+│   │   │   ├── Approver
+│   │   │   └── Operator
+│   │   │
+│   │   └── System-wide roles (optional)
+│   │       ├── Super Admin
+│   │       ├── Auditor
+│   │       └── Support
+│   │
+│   ├── Permissions
+│   │   ├── Model-based permissions
+│   │   │   ├── view users
+│   │   │   ├── create tasks
+│   │   │   ├── approve requests
+│   │   │   └── delete records
+│   │   │
+│   │   └── Feature permissions
+│   │       ├── access payroll
+│   │       ├── access reports
+│   │       └── access admin panel
+│   │
+│   └── Role Assignment
+│       ├── Staff::assignRole()
+│       ├── Staff::syncRoles()
+│       └── OrgTeam scoped assignment
+│
+├── Attribute-Based Access Layer (ABAC - Context Rules)
+│   ├── Staff Attributes
+│   │   ├── department
+│   │   ├── clearance_level
+│   │   ├── location
+│   │   └── employment_type
+│   │
+│   ├── JobPosition Attributes
+│   │   ├── max_approval_limit
+│   │   ├── required_clearance
+│   │   ├── allowed_actions
+│   │   └── scope_of_work
+│   │
+│   ├── Resource Attributes
+│   │   ├── sensitivity_level
+│   │   ├── ownership
+│   │   ├── org_team_id
+│   │   └── region
+│   │
+│   └── ABAC Evaluation Engine
+│       ├── Policy Decision Point (PDP)
+│       ├── Policy Enforcement Point (PEP)
+│       ├── Policies/
+│       │   ├── UserPolicy
+│       │   ├── TaskPolicy
+│       │   ├── DocumentPolicy
+│       │   └── PaymentPolicy
+│       └── Rule Evaluators
+│           ├── ClearanceChecker
+│           ├── OwnershipChecker
+│           └── ScopeChecker
+│
+├── Policy Layer (Laravel Policies - Enforcement Bridge)
+│   ├── Models/
+│   │   ├── UserPolicy
+│   │   ├── StaffPolicy
+│   │   ├── JobPositionPolicy
+│   │   ├── TaskPolicy
+│   │   └── DocumentPolicy
+│   │
+│   ├── Policy Rules Pattern
+│   │   ├── canView()
+│   │   ├── canCreate()
+│   │   ├── canUpdate()
+│   │   ├── canDelete()
+│   │   └── canApprove()
+│   │
+│   └── Policy Delegation Flow
+│       ├── Check RBAC (Spatie first)
+│       ├── Then ABAC evaluation
+│       └── Final decision
+│
+├── Org Structure Layer
+│   ├── OrgTeam
+│   │   ├── defines RBAC context
+│   │   ├── contains Roles
+│   │   └── scopes permissions
+│   │
+│   ├── JobPosition
+│   │   ├── defines capability template
+│   │   ├── default roles
+│   │   └── attribute constraints
+│   │
+│   └── Assignment Rules
+│       ├── Staff → JobPosition
+│       ├── Staff → OrgTeam
+│       └── JobPosition → Roles (optional auto-sync)
+│
+├── Authorization Actions Layer (Business Logic Gatekeepers)
+│   ├── Actions/
+│   │   ├── AuthorizeAction
+│   │   ├── CheckPermission
+│   │   ├── EvaluatePolicy
+│   │   ├── AssignRoleToStaff
+│   │   ├── SyncStaffPermissions
+│   │   └── ValidateAccessScope
+│
+├── Events Layer (Audit & Traceability)
+│   ├── Authorization/
+│   │   ├── AccessGranted
+│   │   ├── AccessDenied
+│   │   ├── RoleAssigned
+│   │   ├── RoleRevoked
+│   │   └── PolicyEvaluated
+│
+├── Services Layer (Core Engines)
+│   ├── AuthorizationService
+│   │   ├── check()
+│   │   ├── authorize()
+│   │   └── evaluate()
+│   │
+│   ├── RoleSyncService
+│   │   ├── syncFromJobPosition()
+│   │   └── syncFromOrgTeam()
+│   │
+│   ├── AbacEngineService
+│   │   ├── evaluateStaff()
+│   │   ├── evaluateResource()
+│   │   └── matchRules()
+│   │
+│   └── PermissionResolverService
+│       ├── resolveUserPermissions()
+│       └── mergeRBAC_ABAC()
+│
+└── UI Authorization Layer (Filament)
+    ├── Admin Panel
+    │   ├── Role Management
+    │   ├── Permission Management
+    │   ├── OrgTeam Management
+    │   └── Policy Inspector
+    │
+    ├── Staff Panel
+    │   ├── Self permissions view
+    │   ├── Task visibility rules
+    │   └── Role display (read-only mostly)
+    │
+    └── Filament Gate Integration
+        ├── canView()
+        ├── canCreate()
+        ├── canEdit()
+        └── canDelete()
+```
