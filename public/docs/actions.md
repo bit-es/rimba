@@ -256,7 +256,7 @@ Rimba Authorization System
         └── canDelete()
 ```
 
-# Rimba Tree: VER (Version Management)
+# Rimba Tree: Ver (Version Management)
 
 ```text
 config/
@@ -274,7 +274,7 @@ util/
 └── SemanticVersion.php
 
 
-app/Trees/VER/
+app/Trees/Ver/
 │
 ├── Actions/
 │   ├── CreateVersion.php
@@ -452,44 +452,39 @@ HasVersions
 
 SUPPORTED VERSIONABLE MODELS
 
-DMS
+Dms
 ├── Document
 ├── Policy
 ├── SOP
 ├── WorkInstruction
 └── Manual
 
-PWM
+Pwm
 ├── Workflow
 ├── WorkflowTemplate
 └── TaskTemplate
 
-TOS
+Tos
 ├── ServiceCatalog
 ├── ServiceOffering
 └── ServicePackage
 
-LCM
+Lcm
 ├── ContractTemplate
 └── ClauseLibrary
 
-LMS
+Lms
 ├── Course
 ├── Module
 ├── Quiz
 └── CertificateTemplate
 
-EAM
+Eam
 ├── AssetSpecification
 ├── MaintenanceProcedure
 └── CalibrationProcedure
 
-FARM
-├── ProductionRecipe
-├── ProductionPlanTemplate
-└── HarvestSpecification
-
-GENERAL
+General
 ├── JsonTemplate
 ├── ApiSpecification
 ├── FormTemplate
@@ -587,7 +582,7 @@ VersionResource
 
 DESIGN PRINCIPLE
 
-VER owns:
+Ver owns:
 ├── semantic version number
 ├── lifecycle status
 ├── effective dates
@@ -596,7 +591,7 @@ VER owns:
 ├── dependency graph
 └── content location
 
-VER does NOT own:
+Ver does NOT own:
 ├── actual file contents
 ├── markdown contents
 ├── PDFs
@@ -605,14 +600,13 @@ VER does NOT own:
 └── workflow definitions
 
 Actual content lives in:
-├── DMS
-├── S3
+|── S3
 ├── GitHub
 ├── SharePoint
 ├── External URLs
 └── Any content repository
 
-VER only stores:
+Vms only stores:
 
 content_url
 ```
