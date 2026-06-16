@@ -1,3 +1,5 @@
+# Common structure for Rimba Starter Kit
+
 ```text
 └── config/                         # configuration files
 └── database/                       # database migrations
