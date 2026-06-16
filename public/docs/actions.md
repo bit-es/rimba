@@ -60,3 +60,21 @@
 | **API Resources** | `[ModelName]Resource` | JSON transformers that clean up database data for your API. | `UserResource`, `InvoiceResource` |
 | **Jobs** | `[Verb] + [Noun]` | Async queue workers doing heavy tasks in the background. Wrap around an action class for clean code. | `SendWelcomeEmail`, `ProcessVideoUpload` |
 | **Listeners** | `[Verb] + [EventName]` or `[Action]` | Reactive workers that run automatically when an event fires. Wrap around an action class for clean code. | `SendOrderConfirmation`, `UpdateInventoryCount` |
+
+
+Actions/                  # Single business workflow classes (The "What")
+      ├── Builders/                 # Custom database query scopes (The "Where")
+      ├── Events/                   # Plain data structures reporting past system mutations
+      ├── Http/UI/Admin/Resources   # Filament Resource for Admin Panel
+      ├── Http/UI/Admin/Pages       # Filament Pages for Admin Panel
+      ├── Http/UI/Admin/Widgets     # Filament Widgets for Admin Panel
+      ├── Http/UI/Staff/Resources   # Filament Resource for Staff Panel
+      ├── Http/UI/Staff/Pages       # Filament Pages for Staff Panel
+      ├── Http/UI/Staff/Widgets     # Filament Widgets for Staff Panel
+      ├── Http/API/Resources        # JSON API for Models classes
+      ├── Jobs/                     # Asynchronous queue workers offloading network/heavy tasks
+      ├── Listeners/                # Reactive workers waiting to handle specific Event payloads
+      ├── Models/                   # Database relationships, column casting, and table mappings
+      ├── Observers/                # Automated low-level lifecycle DB hooks
+      ├── Policies/                 # Authorization checks guarding Models and Filament Resources
+      └── Services/
