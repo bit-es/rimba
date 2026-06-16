@@ -1,4 +1,29 @@
-# Action classes
+```text
+└── config/                         # configuration files
+└── database/                       # database migrations
+└── util/                           # any backend use utility classes
+└── app/Trees/<Tree name>/
+      ├── Actions/                  # Single business workflow classes (The "What")
+      ├── Builders/                 # Custom database query scopes (The "Where")
+      ├── Events/                   # Plain data structures reporting past system mutations
+      ├── Http/UI/Admin/Resources   # Filament Resource for Admin Panel
+      ├── Http/UI/Admin/Pages       # Filament Pages for Admin Panel
+      ├── Http/UI/Admin/Widgets     # Filament Widgets for Admin Panel
+      ├── Http/UI/Staff/Resources   # Filament Resource for Staff Panel
+      ├── Http/UI/Staff/Pages       # Filament Pages for Staff Panel
+      ├── Http/UI/Staff/Widgets     # Filament Widgets for Staff Panel
+      ├── Http/API/Resources        # JSON API for Models classes
+      ├── Jobs/                     # Asynchronous queue workers offloading network/heavy tasks
+      ├── Listeners/                # Reactive workers waiting to handle specific Event payloads
+      ├── Models/                   # Database relationships, column casting, and table mappings
+      ├── Observers/                # Automated low-level lifecycle DB hooks
+      ├── Policies/                 # Authorization checks guarding Models and Filament Resources
+      └── Services/                 # Wrapper layer for third-party tools and complex algorithms
+```
+
+# Naming Standards
+
+## Action classes
 
 | Grouping | Verb | When to Use It (Comment) | Example Action Class |
 | :--- | :--- | :--- | :--- |
@@ -25,7 +50,7 @@
 | | **Apply** | When putting a rule or a fee onto a specific total. | `ApplyDiscountCode`, `ApplyLateFee` |
 | **Security** | **Login** / **Logout** | For handling user session entry and exit safely. | `LoginUser`, `LogoutAllDevices` |
 
-# Services classes
+## Services classes
 | Grouping | Service Name | When to Use It (Comment) | Common Methods Inside |
 | :--- | :--- | :--- | :--- |
 | **Third-Party APIs** | `StripeService` | For talking to outside APIs or tools. | `charge()`, `refund()`, `createCustomer()` |
@@ -37,7 +62,7 @@
 | **System Utilities** | `MarkdownService` | For converting text formats or parsing data. | `toHtml()`, `stripTags()` |
 | | `GeocodingService` | For translating addresses to map coordinates. |
 
-# Concerns or Traits
+## Concerns or Traits
 
  | Grouping | Trait Name | When to Use It (Comment) | What It Adds to the Model |
 | :--- | :--- | :--- | :--- |
@@ -50,7 +75,7 @@
 | | `Archivable` | Allows records to be safely tucked away. | `scopeArchived()`, `archive()` |
 | | `Likeable` | Allows users to give a thumbs-up to a model. | `likes()`, `like()`, `unlike()` |
 
-# rest of classes ....
+## rest of classes ....
 
 
 | Grouping / Folder | Naming Rule | When to Use It (Comment) | Clean Example |
@@ -62,19 +87,3 @@
 | **Listeners** | `[Verb] + [EventName]` or `[Action]` | Reactive workers that run automatically when an event fires. Wrap around an action class for clean code. | `SendOrderConfirmation`, `UpdateInventoryCount` |
 
 
-Actions/                  # Single business workflow classes (The "What")
-      ├── Builders/                 # Custom database query scopes (The "Where")
-      ├── Events/                   # Plain data structures reporting past system mutations
-      ├── Http/UI/Admin/Resources   # Filament Resource for Admin Panel
-      ├── Http/UI/Admin/Pages       # Filament Pages for Admin Panel
-      ├── Http/UI/Admin/Widgets     # Filament Widgets for Admin Panel
-      ├── Http/UI/Staff/Resources   # Filament Resource for Staff Panel
-      ├── Http/UI/Staff/Pages       # Filament Pages for Staff Panel
-      ├── Http/UI/Staff/Widgets     # Filament Widgets for Staff Panel
-      ├── Http/API/Resources        # JSON API for Models classes
-      ├── Jobs/                     # Asynchronous queue workers offloading network/heavy tasks
-      ├── Listeners/                # Reactive workers waiting to handle specific Event payloads
-      ├── Models/                   # Database relationships, column casting, and table mappings
-      ├── Observers/                # Automated low-level lifecycle DB hooks
-      ├── Policies/                 # Authorization checks guarding Models and Filament Resources
-      └── Services/
