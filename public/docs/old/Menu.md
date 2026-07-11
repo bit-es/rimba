@@ -7,7 +7,6 @@ RIMBA MENU
 5. Operate
 6. Technology
 
-```
 
 ```text
 
