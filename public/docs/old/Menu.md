@@ -7,6 +7,10 @@ RIMBA MENU
 5. Operate
 6. Technology
 
+```
+
+```text
+
 Enterprise
 │
 ├── Strategy Management
@@ -44,6 +48,10 @@ Enterprise
     ├── Intellectual Property
     └── Regulatory Affairs
 
+```
+
+```text
+
 People
 │
 ├── Workforce Planning
@@ -75,6 +83,10 @@ People
     ├── Compliance Training
     └── Skills Management
 
+```
+
+```text
+
 Market
 │
 ├── Customer Management
@@ -105,6 +117,10 @@ Market
     ├── Vendor Management
     └── External Collaboration
 
+```
+
+```text
+
 Supply
 │
 ├── Supplier Management
@@ -134,6 +150,10 @@ Supply
     ├── Transportation
     ├── Shipment
     └── Delivery Management
+
+```
+
+```text
 
 Operate
 │
@@ -170,6 +190,10 @@ Operate
     ├── Standard Processes
     └── Process Improvement
 
+```
+
+```text
+
 Technology
 │
 ├── Application Management
@@ -201,7 +225,11 @@ Technology
     ├── Analytics
     └── Integration
 
+
+
+```
 in K and S
+```text
 
 Knowledge
 │
@@ -247,6 +275,10 @@ Knowledge
     ├── Semantic Search
     ├── Knowledge Chat
     └── Recommendations
+
+```
+
+```text
 
 Source
 │
@@ -300,4 +332,6 @@ Source
     ├── Interest Groups
     ├── Forums
     └── Marketplace
+
+```
 
